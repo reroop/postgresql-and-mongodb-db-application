@@ -1,7 +1,7 @@
 package com.dbapplication.services.mongo.shared;
 
 import com.dbapplication.models.mongo.shared.Occupation;
-import com.dbapplication.repositories.mongo.shared.MongoDbOccupationsRepository;
+import com.dbapplication.repositories.mongo.shared.MongoDbOccupationRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,25 +13,25 @@ import java.util.List;
 public class MongoDbOccupationsService {
 
     @Autowired
-    MongoDbOccupationsRepository mongoDbOccupationsRepository;
+    MongoDbOccupationRepository mongoDbOccupationRepository;
 
     public List<Occupation> getAllOccupations() {
-        return mongoDbOccupationsRepository.getAllOccupations();
+        return mongoDbOccupationRepository.getAllOccupations();
     }
 
     public Occupation getOccupationByOccupationCode(Integer occupationCode) {
-        return mongoDbOccupationsRepository.getOccupationByOccupationCode(occupationCode);
+        return mongoDbOccupationRepository.getOccupationByOccupationCode(occupationCode);
     }
 
     public Occupation addOccupation(Occupation occupation) {
-        return mongoDbOccupationsRepository.addOccupation(occupation);
+        return mongoDbOccupationRepository.addOccupation(occupation);
     }
 
     public Occupation deleteOccupation(Integer occupationCode) {
-        return mongoDbOccupationsRepository.deleteOccupationByOccupationCode(occupationCode);
+        return mongoDbOccupationRepository.deleteOccupationByOccupationCode(occupationCode);
     }
 
     public boolean updateOccupation(Occupation occupation) {
-        return mongoDbOccupationsRepository.updateOccupation(occupation);
+        return mongoDbOccupationRepository.updateOccupation(occupation);
     }
 }

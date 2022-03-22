@@ -10,8 +10,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -19,7 +17,7 @@ import java.util.List;
 public class MongoDbRefUserAccountRepository {
 
     @Autowired
-    UniversalMongoTemplate universalMongoTemplate;
+    private UniversalMongoTemplate universalMongoTemplate;
 
     public List<UserAccount> getAllUserAccounts() {
         return universalMongoTemplate.getAll(UserAccount.class);

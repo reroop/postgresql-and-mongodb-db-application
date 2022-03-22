@@ -16,7 +16,7 @@ import java.util.List;
 public class MongoDbEmployeeStatusTypeRepository {
 
     @Autowired
-    UniversalMongoTemplate universalMongoTemplate;
+    private UniversalMongoTemplate universalMongoTemplate;
 
     public List<EmployeeStatusType> getAllEmployeeStatusTypes() {
         return universalMongoTemplate.getAll(EmployeeStatusType.class);

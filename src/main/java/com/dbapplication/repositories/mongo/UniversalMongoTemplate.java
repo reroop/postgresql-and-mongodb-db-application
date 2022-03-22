@@ -20,6 +20,10 @@ public class UniversalMongoTemplate {
         return mongoTemplate.findAll(entityClass);
     }
 
+    public <T> List<T> getAllByQuery(Query query, Class<T> entityClass) {
+        return mongoTemplate.find(query, entityClass);
+    }
+
     public <T> T getOneByQuery(Query query, Class<T> entityClass) {
         return mongoTemplate.findOne(query, entityClass);
     }

@@ -3,15 +3,16 @@ package com.dbapplication.models.mongo.reference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "kasutajakonto")
-public class UserAccount {
+@Document(collection = "ametis_tootamine")
+public class Employment {
 
     @Getter
     @Id
@@ -21,27 +22,29 @@ public class UserAccount {
     private String isik_id;
 
     @Getter
-    @Setter
-    private String parool;
+    private Integer amet_kood;
 
     @Getter
-    @Setter
-    private Boolean on_aktiivne;
+    private LocalDateTime alguse_aeg;
+
+    @Getter
+    private LocalDateTime lopu_aeg;
 
     @Override
     public String toString() {
-        return "UserAccount{" +
+        return "EmployeeInOccupation{" +
                 "_id='" + _id + '\'' +
                 ", isik_id='" + isik_id + '\'' +
-                ", parool='" + parool + '\'' +
-                ", on_aktiivne=" + on_aktiivne +
+                ", amet_kood=" + amet_kood +
+                ", alguse_aeg=" + alguse_aeg +
+                ", lopu_aeg=" + lopu_aeg +
                 '}';
     }
 
     @NoArgsConstructor
     @AllArgsConstructor
-    @Document(collection = "kasutajakonto")
-    public static class UserAccountDbEntry {
+    @Document(collection = "ametis_tootamine")
+    public static class EmploymentDbEntry {
 
         @Getter
         @Id
@@ -51,17 +54,18 @@ public class UserAccount {
         private ObjectId isik_id;
 
         @Getter
-        @Setter
-        private String parool;
+        private Integer amet_kood;
 
         @Getter
-        @Setter
-        private Boolean on_aktiivne;
+        private LocalDateTime alguse_aeg;
 
-        public UserAccountDbEntry(String personId, String password, Boolean isActive) {
+        @Getter
+        private LocalDateTime lopu_aeg;
+
+        public EmploymentDbEntry(String personId, Integer occupationCode, LocalDateTime startTime) {
             this.isik_id = new ObjectId(personId);
-            this.parool = password;
-            this.on_aktiivne = isActive;
+            this.amet_kood = occupationCode;
+            this.alguse_aeg = startTime;
         }
     }
 }

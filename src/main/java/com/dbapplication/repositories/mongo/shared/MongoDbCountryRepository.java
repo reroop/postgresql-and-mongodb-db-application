@@ -13,10 +13,10 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class MongoDbCountriesRepository {
+public class MongoDbCountryRepository {
 
     @Autowired
-    UniversalMongoTemplate universalMongoTemplate;
+    private UniversalMongoTemplate universalMongoTemplate;
 
 
     public List<Country> getAllCountries() {

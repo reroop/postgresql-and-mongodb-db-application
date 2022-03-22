@@ -3,14 +3,12 @@ package com.dbapplication.repositories.mongo.reference;
 import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,7 +17,7 @@ import java.util.List;
 public class MongoDbRefPersonRepository {
 
     @Autowired
-    UniversalMongoTemplate universalMongoTemplate;
+    private UniversalMongoTemplate universalMongoTemplate;
 
     public List<Person> getAllPersons() {
         return universalMongoTemplate.getAll(Person.class);

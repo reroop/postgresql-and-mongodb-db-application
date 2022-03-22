@@ -1,10 +1,14 @@
 package com.dbapplication.controllers;
 
+import com.dbapplication.models.mongo.reference.Employee;
+import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.models.mongo.reference.UserAccount;
 import com.dbapplication.models.mongo.shared.Country;
 import com.dbapplication.models.mongo.shared.EmployeeStatusType;
 import com.dbapplication.models.mongo.shared.Occupation;
+import com.dbapplication.services.mongo.reference.MongoDbRefEmployeesService;
+import com.dbapplication.services.mongo.reference.MongoDbRefEmploymentsService;
 import com.dbapplication.services.mongo.reference.MongoDbRefPersonsService;
 import com.dbapplication.services.mongo.reference.MongoDbRefUserAccountsService;
 import com.dbapplication.services.mongo.shared.MongoDbCountriesService;
@@ -35,6 +39,12 @@ public class MongoDbReferenceController {
 
     @Autowired
     private MongoDbRefUserAccountsService mongoDbRefUserAccountsService;
+
+    @Autowired
+    private MongoDbRefEmployeesService mongoDbRefEmployeesService;
+
+    @Autowired
+    private MongoDbRefEmploymentsService mongoDbRefEmploymentsService;
 
     //---health checker----
     @GetMapping
@@ -190,4 +200,61 @@ public class MongoDbReferenceController {
     }
 
     //---------------------------
+
+    //-----employees-------
+    @GetMapping("employees")
+    public List<Employee> getAllEmployees() {
+        return mongoDbRefEmployeesService.getAllEmployees();
+    }
+
+    @GetMapping("employees/{personId}")
+    public Employee getEmployeeByPersonId(@PathVariable(value = "personId") String personId) {
+        return mongoDbRefEmployeesService.getEmployeeByPersonId(personId);
+    }
+
+    @PostMapping("employees")
+    public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee employee) {
+        return mongoDbRefEmployeesService.addEmployee(employee);
+    }
+
+    @DeleteMapping("employees/{personId}")
+    public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
+        return mongoDbRefEmployeesService.deleteEmployeeByPersonId(personId);
+    }
+
+    @PutMapping("employees")
+    public boolean updateEmployee(@RequestBody Employee employee) {
+        return mongoDbRefEmployeesService.updateEmployee(employee);
+    }
+    //--------------------
+
+    //----employments-----
+    @GetMapping("employments")
+    public List<Employment> getAllEmployments() {
+        return mongoDbRefEmploymentsService.getAllEmployments();
+    }
+
+    @GetMapping("employments/occupationCode={occupationCode}")
+    public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
+        return mongoDbRefEmploymentsService.getAllEmploymentsByOccupationCode(occupationCode);
+    }
+
+    @GetMapping("employments/personId={personId}")
+    public List<Employment> getEmployeeActiveEmployments(@PathVariable(value = "personId") String personId) {
+        return mongoDbRefEmploymentsService.getEmployeeActiveEmployments(personId);
+    }
+
+    @PostMapping("employments")
+    public Employment.EmploymentDbEntry addEmployment(@RequestBody Employment employment) {
+        return mongoDbRefEmploymentsService.addEmployment(employment);
+    }
+
+    @PutMapping("employments/personId={personId}/occupationCode={occupationCode}")
+    public boolean endEmployeeActiveEmployment(
+            @PathVariable(value = "personId") String personId,
+            @PathVariable(value = "occupationCode") Integer occupationCode) {
+        return mongoDbRefEmploymentsService.endEmployeeActiveEmployment(personId, occupationCode);
+    }
+
+    //--------------------
 }

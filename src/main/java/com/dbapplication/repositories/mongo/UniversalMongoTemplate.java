@@ -1,10 +1,8 @@
 package com.dbapplication.repositories.mongo;
 
-import com.dbapplication.models.mongo.Country;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
@@ -13,30 +11,24 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class MongoDbCountriesRepository {
+public class UniversalMongoTemplate {
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public List<Country> getAllCountries() {
-        return mongoTemplate.findAll(Country.class);
+    public <T> List<T> getAll(Class<T> entityClass) {
+        return mongoTemplate.findAll(entityClass);
     }
 
-    public Country getCountryByName(String countryCode) {
-        Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(countryCode));
-        Country result = mongoTemplate.findOne(queryFindByCountryCode, Country.class);
-        if (result == null) {
-            return null;
-        }
-        log.info("returning:" + result);
-        return result;
+    public <T> T getOneByQuery(Query query, Class<T> entityClass) {
+        return mongoTemplate.findOne(query, entityClass);
     }
 
-    public Country addCountry(Country country) {
+    public <T> T addEntity(T entity) {
         try {
-            return mongoTemplate.save(country);
+            return mongoTemplate.save(entity);
         } catch (Exception e) {
-            log.info(e.getCause().getMessage());
+            log.info(e.getMessage());
             if (e.getMessage().contains("E11000 duplicate key error collection")) { //todo: make this string as constant somewhere
                 log.info("db already has document with these values");  //todo: query db for entry with queried values and return as error?
             }
@@ -47,22 +39,19 @@ public class MongoDbCountriesRepository {
         }
     }
 
-    public Country deleteCountry(String countryCode) {
-        Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(countryCode));
-        return mongoTemplate.findAndRemove(queryFindByCountryCode, Country.class);
+    public <T> T deleteEntity(Query queryToFindEntity, Class<T> entityClass) {
+        return mongoTemplate.findAndRemove(queryToFindEntity, entityClass);
     }
 
-    public boolean updateCountryName(String countryCode, String newCountryName) {
+    public <T> boolean updateEntity(Query query, Update updatableInfo, Class<T> entityClass) { //returns boolean whether update was successful
         try {
-            Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(countryCode));
-            Update updateCountryName = new Update().set("nimetus", newCountryName);
-            return mongoTemplate.updateFirst(queryFindByCountryCode, updateCountryName, Country.class).wasAcknowledged();
+            return mongoTemplate.updateFirst(query, updatableInfo, entityClass).wasAcknowledged();
         } catch (Exception e) {
+            log.info(e.getMessage());
             if (e.getMessage().contains("Document failed validation")) { //todo: make this string as constant somewhere
                 log.info("entry failed against db validation");  //todo: return validation??
             }
             return false;
         }
-
     }
 }

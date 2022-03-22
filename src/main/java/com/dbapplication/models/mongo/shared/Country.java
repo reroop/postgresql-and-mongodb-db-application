@@ -1,4 +1,4 @@
-package com.dbapplication.models.mongo;
+package com.dbapplication.models.mongo.shared;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ public class Country {
 
     @Getter
     @Id
-    private String id;
+    private String _id;
 
     @Getter
     private String riik_kood;
@@ -28,7 +28,7 @@ public class Country {
     @Override
     public String toString() {
         return "Country{" +
-                "id='" + id + '\'' +
+                "id='" + _id + '\'' +
                 ", countryCode='" + riik_kood + '\'' +
                 ", countryName='" + nimetus + '\'' +
                 '}';

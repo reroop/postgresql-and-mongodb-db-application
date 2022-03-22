@@ -1,7 +1,7 @@
-package com.dbapplication.services.mongo;
+package com.dbapplication.services.mongo.shared;
 
-import com.dbapplication.models.mongo.Country;
-import com.dbapplication.repositories.mongo.MongoDbCountriesRepository;
+import com.dbapplication.models.mongo.shared.Country;
+import com.dbapplication.repositories.mongo.shared.MongoDbCountriesRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,7 @@ public class MongoDbCountriesService {
 
 
     public Country getCountryByCountryCode(String countryCode) {
-        log.info("getcountrybycode: " + countryCode);
-        Country country = mongoDbCountriesRepository.getCountryByName(countryCode);
-        if (country != null) {
-            log.info("country in service: " + country);
-        }
-        return country;
+        return mongoDbCountriesRepository.getCountryByCountryCode(countryCode);
     }
 
     public Country addCountry(Country country) {
@@ -35,10 +30,10 @@ public class MongoDbCountriesService {
     }
 
     public Country deleteCountry(String countryCode) {
-        return mongoDbCountriesRepository.deleteCountry(countryCode);
+        return mongoDbCountriesRepository.deleteCountryByCountryCode(countryCode);
     }
 
-    public boolean updateCountryName(String countryCode, String newCountryName) {
-        return mongoDbCountriesRepository.updateCountryName(countryCode, newCountryName);
+    public boolean updateCountry(Country country) {
+        return mongoDbCountriesRepository.updateCountry(country);
     }
 }

@@ -57,4 +57,12 @@ public class MongoDbEmbPersonsService {
     public boolean endActiveEmployment(String personId, Integer occupationCode) {
         return mongoDbEmbPersonRepository.endActiveEmployment(personId, occupationCode);
     }
+
+    public boolean deletePersonUserAccount(String personId) {
+        return mongoDbEmbPersonRepository.deleteUserAccount(personId);
+    }
+
+    public EmbeddedPerson deletePerson(String personId) {
+        return mongoDbEmbPersonRepository.deletePerson(personId);
+    }
 }

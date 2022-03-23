@@ -104,45 +104,45 @@ The controller basically contains 'sub-controllers' for embedded entities like E
 
 - POST /persons/{objectId}/employee `+ requestBody`
 
-  	{
-  	"tootaja_seisundi_liik_kood": integer, 
-  	"mentor_id": string    
-  	} 
+      {
+      "tootaja_seisundi_liik_kood": integer, 
+      "mentor_id": string    
+      } 
 
   - f.e:
 
-    	 /persons/623ad990acdcf7008e6f2354/employee
-    	 + requestBody: 
-    	{ 
-    	"tootaja_seisundi_liik_kood": 1 
-    	}   
+         /persons/623ad990acdcf7008e6f2354/employee
+         + requestBody: 
+        { 
+        "tootaja_seisundi_liik_kood": 1 
+        }   
 
 - POST /persons/{objectId}/employee/employments `+ requestBody`
   > add a new employment to employee
 
-  	{  
-  	"amet_kood": integer,     
-  	"alguse_aeg": date    
-  	}  
+      {  
+      "amet_kood": integer,     
+      "alguse_aeg": date    
+      }  
   - f.e:
 
-    	/persons/623ad990acdcf7008e6f2354/employee/employments  
-    	+ requestBody: 
-    	{        
-    	"amet_kood": 2,   
-    	"alguse_aeg": "2022-03-15T09:00:00"   
-    	}  
+        /persons/623ad990acdcf7008e6f2354/employee/employments  
+        + requestBody: 
+        {        
+        "amet_kood": 2,   
+        "alguse_aeg": "2022-03-15T09:00:00"   
+        }  
 
 - PUT /persons `+ requestbody`
   >update person information
   - f.e:
 
-    	{    
-    	"_id": "623ad990acdcf7008e6f2354",    
-    	"isikukood": "39501010123",  
-    	"synni_kp": "1995-01-01", 
-    	"eesnimi": "Mait Juss"
-    	}   
+        {    
+        "_id": "623ad990acdcf7008e6f2354",    
+        "isikukood": "39501010123",  
+        "synni_kp": "1995-01-01", 
+        "eesnimi": "Mait Juss"
+        }   
 - PUT /persons/{objectId}/userAccount
   > update user account info
   - f.e:
@@ -150,15 +150,21 @@ The controller basically contains 'sub-controllers' for embedded entities like E
         {    
         "parool": "test parool222",    
         "on_aktiivne": true  
-    	 }   
+         }   
 - PUT persons/{objectId}/employee
   > update Employee status or mentor  
   > **NOTE**: if mentorId is not set in requestBody, then mentorId **will be set as null**
   - f.e:
 
-    	{    
-    	"tootaja_seisundi_liik_kood": 2,    
-    	"mentor_id": "622e5b71498b505a432f222e"    
-    	}   
+        {    
+        "tootaja_seisundi_liik_kood": 2,    
+        "mentor_id": "622e5b71498b505a432f222e"    
+        }   
 - PUT /persons/{objectId}/employee/employments/{occupationCode}
   > end active employment for employee in occupation
+
+- DELETE /persons/{objectId}/userAccount
+  > set person userAccount as null, basically deletes the userAccount
+
+- DELETE /persons/{objectId}
+  > **NB**: deletes the whole person entity, which also contains info about person as Employee and its information about Employments

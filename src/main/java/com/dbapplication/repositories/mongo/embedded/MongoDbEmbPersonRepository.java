@@ -159,4 +159,16 @@ public class MongoDbEmbPersonRepository {
         Update updatableInfo = new Update().set("tootaja.ametis_tootamine", employments);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
+
+    public boolean deleteUserAccount(String personId) {
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
+        Update updatableInfo = new Update().unset("kasutajakonto");
+
+        return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
+    }
+
+    public EmbeddedPerson deletePerson(String personId) {
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
+        return universalMongoTemplate.deleteEntity(queryFindByObjectId, EmbeddedPerson.class);
+    }
 }

@@ -47,7 +47,7 @@ public class MongoDbRefPersonRepository {
 
     public boolean updatePerson(Person person) {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(person.get_id()));
-        Update updatableInfo = new Update();    //todo: set value to null if not assigned and might be null
+        Update updatableInfo = new Update();
         if (person.getIsikukood() != null) {
             updatableInfo.set("isikukood", person.getIsikukood());
         }
@@ -60,14 +60,23 @@ public class MongoDbRefPersonRepository {
         if (person.getSynni_kp() != null) {
             updatableInfo.set("synni_kp", person.getSynni_kp());
         }
+        //set firstname to null if not specified
         if (person.getEesnimi() != null) {
             updatableInfo.set("eesnimi", person.getEesnimi());
+        } else {
+            updatableInfo.unset("eesnimi");
         }
+        //set lastname to null if not specified
         if (person.getPerenimi() != null) {
             updatableInfo.set("perenimi", person.getPerenimi());
+        } else {
+            updatableInfo.unset("perenimi");
         }
+        //set address to null if not specified
         if (person.getElukoht() != null) {
             updatableInfo.set("elukoht", person.getElukoht());
+        } else {
+            updatableInfo.unset("elukoht");
         }
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, Person.class);
     }

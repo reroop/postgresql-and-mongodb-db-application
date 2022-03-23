@@ -187,6 +187,16 @@ public class MongoDbEmbeddedController {
         return mongoDbEmbPersonsService.endActiveEmployment(personId, occupationCode);
     }
 
+    @DeleteMapping("persons/{objectId}/userAccount")
+    public boolean deletePersonUserAccount(@PathVariable(value = "objectId") String personId) {
+        return mongoDbEmbPersonsService.deletePersonUserAccount(personId);
+    }
+
+    @DeleteMapping("persons/{objectId}")
+    public EmbeddedPerson deletePersonBy_id(@PathVariable(value = "objectId") String personId) {
+        return mongoDbEmbPersonsService.deletePerson(personId);
+    }
+
 
     //---------------------------------------
 }

@@ -16,11 +16,13 @@ import com.dbapplication.services.mongo.shared.MongoDbEmployeeStatusTypeService;
 import com.dbapplication.services.mongo.shared.MongoDbOccupationsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
+@Profile("mongoref")
 @RequestMapping("mongoref")
 @RestController
 public class MongoDbReferenceController {

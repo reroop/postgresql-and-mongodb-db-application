@@ -47,7 +47,7 @@ public class MongoDbRefPersonRepository {
 
     public boolean updatePerson(Person person) {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(person.get_id()));
-        Update updatableInfo = new Update();
+        Update updatableInfo = new Update();    //todo: set value to null if not assigned and might be null
         if (person.getIsikukood() != null) {
             updatableInfo.set("isikukood", person.getIsikukood());
         }

@@ -7,7 +7,8 @@ import {Countries, Home, Occupations} from "./pages";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {RootStore} from "./stores/RootStore";
 
-interface MockProps {}
+interface MockProps {
+}
 
 class App extends React.Component<any, any> {
     private readonly rootStore: RootStore;
@@ -36,38 +37,10 @@ class App extends React.Component<any, any> {
                             {'not implemented yet!'}
                         </Route>
                     </Switch>
-                    <Footer/>
                 </BrowserRouter>
             </Provider>
         );
     }
 }
 
-/*
-const rootElement = document.getElementById("root");
-render(
-    <BrowserRouter>
-        <Navigation/>
-        <Switch>
-            <Route exact path={"/"}>
-                <Home/>
-            </Route>
-            <Route exact path={"/countries"}>
-                <Countries/>
-            </Route>
-            <Route exact path={"/occupations"}>
-                <Occupations/>
-            </Route>
-            <Route path={"/*"}>
-                {'not implemented yet!'}
-            </Route>
-        </Switch>
-        <Footer/>
-    </BrowserRouter>,
-    rootElement
-);
-
- */
-render(
-    <App/>,
-    document.getElementById("root"))
+render(<App/>, document.getElementById("root"));

@@ -68,9 +68,8 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("countries")
-    public Country addNewCountry(@RequestBody Country newCountry) {
-        log.info(newCountry.toString());
-        return mongoDbCountriesService.addCountry(newCountry);
+    public Country addNewCountry(@RequestBody Country.CountryDto newCountryDto) {
+        return mongoDbCountriesService.addCountry(newCountryDto.getCountry());
     }
 
     @DeleteMapping("countries/{countryCode}")
@@ -79,8 +78,8 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("countries")
-    public boolean updateCountryName(@RequestBody Country country) {
-        return mongoDbCountriesService.updateCountry(country);
+    public boolean updateCountryName(@RequestBody Country.CountryDto countryDto) {
+        return mongoDbCountriesService.updateCountry(countryDto.getCountry());
     }
     //---------------
 

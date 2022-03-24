@@ -24,7 +24,6 @@ class Occupations extends React.Component<OccupationsProps> {
         let newOccupationDescription: string|null = null;
 
         const handleEditOccupationButtonClick = (occupation: Occupation) => {
-            console.log("handleedit: " + occupation.nimetus);
             if (occupation.kirjeldus === '') {
                 occupation.kirjeldus = undefined;
             }
@@ -36,7 +35,7 @@ class Occupations extends React.Component<OccupationsProps> {
         };
 
         const handleAddOccupationClick = () => {
-            if (newOccupationCode == null) {
+            if (newOccupationCode === null) {
                 return;
             }
             const newOccupation: Occupation = {

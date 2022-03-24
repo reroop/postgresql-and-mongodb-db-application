@@ -26,7 +26,7 @@ class OccupationStore {
     }
 
     @action
-    public addOccupation = async(occupation: Occupation) => {
+    public addOccupation = async (occupation: Occupation) => {
         try {
             await API.post('/occupations', {occupation}).then(this.getOccupations);
         } catch (e) {

@@ -123,9 +123,8 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("employeeStatusTypes")
-    public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType employeeStatusType) {
-        log.info(employeeStatusType.toString());
-        return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusType);
+    public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+        return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
 
     @DeleteMapping("employeeStatusTypes/{employeeStatusTypeCode}")
@@ -134,8 +133,8 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("employeeStatusTypes")
-    public boolean updateEmployeeStatusType(@RequestBody EmployeeStatusType employeeStatusType) {
-        return mongoDbEmployeeStatusTypeService.updateEmployeeStatusType(employeeStatusType);
+    public boolean updateEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+        return mongoDbEmployeeStatusTypeService.updateEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
     //-------------
 
@@ -158,8 +157,8 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("persons")
-    public Person addPerson(@RequestBody Person person) {
-        return mongoDbRefPersonsService.addPerson(person);
+    public Person addPerson(@RequestBody Person.PersonDto personDto) {
+        return mongoDbRefPersonsService.addPerson(personDto.getPerson());
     }
 
     @DeleteMapping("persons/{objectId}")
@@ -168,8 +167,8 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("persons")
-    public boolean updatePerson(@RequestBody Person person) {
-        return mongoDbRefPersonsService.updatePerson(person);
+    public boolean updatePerson(@RequestBody Person.PersonDto personDto) {
+        return mongoDbRefPersonsService.updatePerson(personDto.getPerson());
     }
 
     //---------------

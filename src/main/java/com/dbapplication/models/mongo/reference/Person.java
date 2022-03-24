@@ -54,6 +54,14 @@ public class Person {
         this.elukoht = elukoht;
     }
 
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class PersonDto {
+        private Person person;
+    }
+
     @Override
     public String toString() {
         return "Person{" +

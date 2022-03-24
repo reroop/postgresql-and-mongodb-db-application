@@ -3,6 +3,7 @@ package com.dbapplication.models.mongo.shared;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -32,6 +33,14 @@ public class EmployeeStatusType {
     public EmployeeStatusType(Integer code, String name) {
         this.tootaja_seisundi_liik_kood = code;
         this.nimetus = name;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class EmployeeStatusTypeDto {
+        private EmployeeStatusType employeeStatusType;
     }
 
     @Override

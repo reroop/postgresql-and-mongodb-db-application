@@ -44,6 +44,8 @@ public class MongoDbEmployeeStatusTypeRepository {
         }
         if (employeeStatusType.getKirjeldus() != null) {
             updatableInfo.set("kirjeldus", employeeStatusType.getKirjeldus());
+        } else {
+            updatableInfo.unset("kirjeldus");
         }
         return universalMongoTemplate.updateEntity(queryFindByEmployeeStatusTypeCode, updatableInfo, EmployeeStatusType.class);
     }

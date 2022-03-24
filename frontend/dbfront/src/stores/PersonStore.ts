@@ -7,7 +7,7 @@ export interface Person {
     riik_kood: string,
     e_meil: string,
     synni_kp: string,
-    reg_aeg: string,
+    reg_aeg?: string,
     eesnimi?: string,
     perenimi?: string,
     elukoht?: string

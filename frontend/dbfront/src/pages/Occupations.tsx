@@ -7,9 +7,24 @@ interface OccupationsProps {
     occupationStore?: OccupationStore;
 }
 
+interface State {
+    newOccupationCode: number|null
+    newOccupationName: string,
+    newOccupationDescription: string|null
+}
+
 @inject('occupationStore')
 @observer
-class Occupations extends React.Component<OccupationsProps> {
+class Occupations extends React.Component<OccupationsProps, State> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            newOccupationCode: null,
+            newOccupationName: '',
+            newOccupationDescription: null
+        };
+    }
 
     public componentDidMount() {
         this.props.occupationStore?.getOccupations();
@@ -18,10 +33,6 @@ class Occupations extends React.Component<OccupationsProps> {
     public render() {
         const occupationStore = this.props.occupationStore!!;
         const occupations: Occupation[] = occupationStore.occupations;
-
-        let newOccupationCode: number|null = null;
-        let newOccupationName: string = '';
-        let newOccupationDescription: string|null = null;
 
         const handleEditOccupationButtonClick = (occupation: Occupation) => {
             if (occupation.kirjeldus === '') {
@@ -35,22 +46,21 @@ class Occupations extends React.Component<OccupationsProps> {
         };
 
         const handleAddOccupationClick = () => {
-            if (newOccupationCode === null) {
+            if (this.state.newOccupationCode === null) {
                 return;
             }
             const newOccupation: Occupation = {
-                amet_kood: newOccupationCode,
-                nimetus: newOccupationName
+                amet_kood: this.state.newOccupationCode,
+                nimetus: this.state.newOccupationName
             };
-            if (newOccupationDescription != null) {
-                newOccupation.kirjeldus = newOccupationDescription;
+            if (this.state.newOccupationDescription !== null) {
+                newOccupation.kirjeldus = this.state.newOccupationDescription;
             }
             occupationStore.addOccupation(newOccupation);
-            newOccupationCode = null;
-            newOccupationName = '';
-            newOccupationDescription = null;
+            this.setState({newOccupationCode: null})
+            this.setState({newOccupationName: ''})
+            this.setState({newOccupationDescription: null})
         }
-
 
         return (
             <div>
@@ -65,21 +75,21 @@ class Occupations extends React.Component<OccupationsProps> {
                                 <Form.Control
                                     placeholder="Enter occupation code (number)"
                                     type="number"
-                                    onChange={(e) => newOccupationCode = Number(e.target.value)}
+                                    onChange={(e) => this.setState({newOccupationCode: Number(e.target.value)})}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addOccupationName">
                                 <Form.Label>Occupation name:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter occupation name"
-                                    onChange={(e) => newOccupationName = e.target.value}/>
+                                    onChange={(e) => this.setState({newOccupationName: e.target.value})}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addOccupationDescription">
                                 <Form.Label>Occupation description:</Form.Label>
                                 <Form.Control
                                     as="textarea" rows={3}
                                     placeholder="Enter occupation description (optional)"
-                                    onChange={(e) => newOccupationDescription = e.target.value}/>
+                                    onChange={(e) => this.setState({newOccupationDescription: e.target.value})}/>
                             </Form.Group>
                             <Button variant="success" onClick={() => handleAddOccupationClick()}>Add new occupation</Button>
                         </Form>

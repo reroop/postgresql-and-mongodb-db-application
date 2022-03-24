@@ -90,7 +90,7 @@
      { 
      "_id": "622e5b50498b505a432f222c", 
      "isikukood": "39501010123", 
-     "synni_kp": "1995-01-01", 
+     "synni_kp": "1995-01-01T00:00:00", 
      "eesnimi": "Mait Juss" 
      }
 

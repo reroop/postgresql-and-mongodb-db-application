@@ -21,7 +21,7 @@ class OccupationStore {
             this.occupations = (await API.get('/occupations')).data;
         } catch (e) {
             this.occupations = [];
-            console.log(e);
+            console.error(e);
         }
     }
 

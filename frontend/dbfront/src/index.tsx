@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from 'react-dom'
 import './index.css';
-import {Navigation, Footer} from "./components";
+import {Navigation} from "./components";
 import {Provider} from "mobx-react";
 import {Countries, Home, Occupations} from "./pages";
 import {BrowserRouter, Route, Switch} from "react-router-dom";

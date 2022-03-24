@@ -8,7 +8,7 @@ export interface Country {
 }
 
 class CountryStore {
-    @observable public countries: Country[];
+    @observable public countries: Country[] = [];
 
     constructor() {
         makeObservable(this);
@@ -50,7 +50,6 @@ class CountryStore {
             console.error(e);
         }
     }
-
 
 }
 

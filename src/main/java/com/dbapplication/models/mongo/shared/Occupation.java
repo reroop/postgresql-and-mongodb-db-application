@@ -3,6 +3,7 @@ package com.dbapplication.models.mongo.shared;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -41,5 +42,13 @@ public class Occupation {
                 ", nimetus='" + nimetus + '\'' +
                 ", kirjeldus='" + kirjeldus + '\'' +
                 '}';
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class OccupationDto {
+        private Occupation occupation;
     }
 }

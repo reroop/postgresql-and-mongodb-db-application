@@ -44,6 +44,8 @@ public class MongoDbOccupationRepository {
         }
         if (occupation.getKirjeldus() != null) {
             updatableInfo.set("kirjeldus", occupation.getKirjeldus());
+        } else {
+            updatableInfo.unset("kirjeldus");
         }
         return universalMongoTemplate.updateEntity(queryFindByOccupationCode, updatableInfo, Occupation.class);
     }

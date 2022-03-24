@@ -95,9 +95,8 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("occupations")
-    public Occupation addNewOccupation(@RequestBody Occupation occupation) {
-        log.info(occupation.toString());
-        return mongoDbOccupationsService.addOccupation(occupation);
+    public Occupation addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
+        return mongoDbOccupationsService.addOccupation(occupationDto.getOccupation());
     }
 
     @DeleteMapping("occupations/{occupationCode}")
@@ -106,8 +105,9 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("occupations")
-    public boolean updateOccupation(@RequestBody Occupation occupation) {
-        return mongoDbOccupationsService.updateOccupation(occupation);
+    public boolean updateOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
+        System.out.println(occupationDto.getOccupation());
+        return mongoDbOccupationsService.updateOccupation(occupationDto.getOccupation());
     }
     //-------------
 

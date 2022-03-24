@@ -1,7 +1,7 @@
 import React from "react";
 import {inject, observer} from 'mobx-react';
 import CountryStore, {Country} from "../stores/CountryStore";
-import {Button, Card, Form, FormControl, InputGroup, Modal, Table} from "react-bootstrap";
+import {Button, Card, Form, FormControl, InputGroup, Table} from "react-bootstrap";
 
 interface CountriesProps {
     countryStore?: CountryStore;
@@ -16,20 +16,21 @@ class Countries extends React.Component<CountriesProps> {
     }
 
     public render() {
-        const countries = this.props.countryStore?.countries;
-        const countryStore = this.props.countryStore;
+        const countryStore = this.props.countryStore!!;
+        const countries: Country[] = countryStore.countries;
+
 
         let newCountryCode: string = '';
         let newCountryName: string = '';
 
         //const [newCountryName, setNewCountryName] = useState<string>('');
 
-        const handleEditButtonClick = (country: Country) => {
-            countryStore?.updateCountry(country);
+        const handleEditCountryButtonClick = (country: Country) => {
+            countryStore.updateCountry(country);
         };
 
-        const handleDeleteButtonClick = (countryCode: string) => {
-            countryStore?.deleteCountry(countryCode);
+        const handleDeleteCountryButtonClick = (countryCode: string) => {
+            countryStore.deleteCountry(countryCode);
         };
 
         const handleAddCountryClick = () => {
@@ -37,14 +38,14 @@ class Countries extends React.Component<CountriesProps> {
                 riik_kood: newCountryCode,
                 nimetus: newCountryName
             };
-            countryStore?.addCountry(newCountry);
+            countryStore.addCountry(newCountry);
             newCountryCode = '';
             newCountryName = '';
         }
 
         return (
             <div>
-                <h1 className="font-weight-heavy">Countries</h1>
+                <h1 className="font-weight-heavy">Countries page</h1>
 
                 <Card>
                     <Card.Title>Add new country:</Card.Title>
@@ -100,9 +101,9 @@ class Countries extends React.Component<CountriesProps> {
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"
-                                            onClick={() => handleEditButtonClick(country)}>Update</Button></td>
+                                            onClick={() => handleEditCountryButtonClick(country)}>Update</Button></td>
                                 <td><Button variant="danger"
-                                            onClick={() => handleDeleteButtonClick(country.riik_kood)}>Delete</Button>
+                                            onClick={() => handleDeleteCountryButtonClick(country.riik_kood)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}

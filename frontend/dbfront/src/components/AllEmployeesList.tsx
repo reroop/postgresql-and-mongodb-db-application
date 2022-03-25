@@ -2,6 +2,7 @@ import React from "react";
 import {inject, observer} from "mobx-react";
 import EmployeeStore, {PersonAsEmployee} from "../stores/EmployeeStore";
 import {Button, Col, Container, Row, Table} from "react-bootstrap";
+import { withRouter } from "react-router";
 
 interface EmployeesListProps {
     employeeStore?: EmployeeStore
@@ -9,7 +10,7 @@ interface EmployeesListProps {
 
 @inject('employeeStore')
 @observer
-class AllEmployeesList extends React.Component<EmployeesListProps> {
+class AllEmployeesList extends React.Component<EmployeesListProps & any> {
 
     constructor(props) {
         super(props);
@@ -20,7 +21,8 @@ class AllEmployeesList extends React.Component<EmployeesListProps> {
     }
 
     private handleViewEmployeeDetailsButtonClick(person_id: string) {
-        console.log("view employee details clicked: " + person_id);
+        let employeeDetailsUrl: string = this.props.location.pathname + '/' +person_id;
+        this.props.history.push(employeeDetailsUrl);
     }
 
     public render() {
@@ -99,4 +101,4 @@ class AllEmployeesList extends React.Component<EmployeesListProps> {
     }
 }
 
-export default AllEmployeesList;
+export default withRouter(AllEmployeesList);

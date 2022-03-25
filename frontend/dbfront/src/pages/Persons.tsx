@@ -89,7 +89,7 @@ class Persons extends React.Component<PersonsProps, State> {
                     <Card.Title>Add new person:</Card.Title>
                     <Card.Body>
                         <Form>
-                            <Form.Group className="mb-3" controlId="addCountryCode">
+                            <Form.Group controlId="addCountryCode">
                                 <Form.Label>Country code:</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
@@ -151,10 +151,9 @@ class Persons extends React.Component<PersonsProps, State> {
 
                 <div>
                     <h3 className="font-weight-heavy">All persons:</h3>
-                    <Table striped bordered hover responsive={true} title={"Persons:"}>
+                    <Table striped bordered hover size="sm" responsive={true} title={"Persons:"}>
                         <thead>
                         <tr>
-                            <th>Person_id</th>
                             <th>Country code</th>
                             <th>National identification code</th>
                             <th>E-mail</th>
@@ -170,9 +169,7 @@ class Persons extends React.Component<PersonsProps, State> {
                         <tbody>
                         {persons.map((person) => (
                             <tr key={person._id}>
-                                <td>
-                                    {person._id}
-                                </td>
+
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
@@ -196,6 +193,7 @@ class Persons extends React.Component<PersonsProps, State> {
                                             value={person.e_meil}
                                             onChange={(e) => person.e_meil = e.target.value}/>
                                     </InputGroup>
+                                    {person._id}
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>

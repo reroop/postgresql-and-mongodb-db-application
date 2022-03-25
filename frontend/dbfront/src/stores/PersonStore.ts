@@ -28,16 +28,28 @@ class PersonStore {
             this.persons = (await API.get(personsEndpoint)).data;
         } catch (e) {
             this.persons = [];
-            console.log(e);
+            console.error(e);
+        }
+    }
+
+    @action
+    public getPersonBy_id = async (person_id: string) => {
+        try {
+            return (await API.get(personsEndpoint+'/'+person_id)).data;
+        } catch (e) {
+            console.error(e);
         }
     }
 
     @action
     public addPerson = async (person: Person) => {
         try {
-            await API.post(personsEndpoint, {person}).then(this.getPersons);
+            const response = await API.post(personsEndpoint, {person});
+            await this.getPersons()
+            return response.data;
         } catch (e) {
-            console.log(e);
+            console.error(e);
+            return null;
         }
     }
 
@@ -46,7 +58,7 @@ class PersonStore {
         try {
             await API.put(personsEndpoint, {person}).then(this.getPersons);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
@@ -54,7 +66,7 @@ class PersonStore {
         try {
             await API.delete(personsEndpoint + '/' + person_id).then(this.getPersons);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 

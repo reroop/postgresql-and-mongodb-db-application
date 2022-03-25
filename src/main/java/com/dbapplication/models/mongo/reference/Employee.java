@@ -38,6 +38,14 @@ public class Employee {
 
     @NoArgsConstructor
     @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class EmployeeDto {
+        private Employee employee;
+    }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
     @Document(collection = "tootaja")
     public static class EmployeeDbEntry {
 

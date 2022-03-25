@@ -213,8 +213,8 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("employees")
-    public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee employee) {
-        return mongoDbRefEmployeesService.addEmployee(employee);
+    public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+        return mongoDbRefEmployeesService.addEmployee(employeeDto.getEmployee());
     }
 
     @DeleteMapping("employees/{personId}")
@@ -223,8 +223,8 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("employees")
-    public boolean updateEmployee(@RequestBody Employee employee) {
-        return mongoDbRefEmployeesService.updateEmployee(employee);
+    public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+        return mongoDbRefEmployeesService.updateEmployee(employeeDto.getEmployee());
     }
     //--------------------
 

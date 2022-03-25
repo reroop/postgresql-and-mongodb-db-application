@@ -8,6 +8,8 @@ export interface EmployeeStatusType {
     kirjeldus?: string
 }
 
+const employeeStatusTypesEndpoint: string = '/employeeStatusTypes';
+
 class EmployeeStatusTypeStore {
     @observable public employeeStatusTypes: EmployeeStatusType[] = [];
 
@@ -18,37 +20,47 @@ class EmployeeStatusTypeStore {
     @action
     public getEmployeeStatusTypes = async () => {
         try {
-            this.employeeStatusTypes = (await API.get('/employeeStatusTypes')).data;
+            this.employeeStatusTypes = (await API.get(employeeStatusTypesEndpoint)).data;
         } catch (e) {
             this.employeeStatusTypes = [];
-            console.log(e);
+            console.error(e);
+        }
+    }
+
+    @action
+    public getEmployeeStatusTypeByStatusCode = async (statusCode: number) => {
+        try {
+            return (await API.get(employeeStatusTypesEndpoint+'/'+statusCode)).data;
+        } catch (e) {
+            this.employeeStatusTypes = [];
+            console.error(e);
         }
     }
 
     @action
     public addEmployeeStatusType = async (employeeStatusType: EmployeeStatusType) => {
         try {
-           await API.post('/employeeStatusTypes' ,{employeeStatusType}).then(this.getEmployeeStatusTypes);
+           await API.post(employeeStatusTypesEndpoint,{employeeStatusType}).then(this.getEmployeeStatusTypes);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
     @action
     public updateEmployeeStatusType = async (employeeStatusType: EmployeeStatusType) => {
         try {
-            await API.put('/employeeStatusTypes' ,{employeeStatusType}).then(this.getEmployeeStatusTypes);
+            await API.put(employeeStatusTypesEndpoint,{employeeStatusType}).then(this.getEmployeeStatusTypes);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 
     @action
     public deleteEmployeeStatusType = async (employeeStatusTypeCode: number) => {
         try {
-            await API.delete(('/employeeStatusTypes/'+employeeStatusTypeCode)).then(this.getEmployeeStatusTypes)
+            await API.delete((employeeStatusTypesEndpoint+'/'+employeeStatusTypeCode)).then(this.getEmployeeStatusTypes)
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
     }
 

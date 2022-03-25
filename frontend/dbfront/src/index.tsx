@@ -3,7 +3,7 @@ import {render} from 'react-dom'
 import './index.css';
 import {Navigation} from "./components";
 import {Provider} from "mobx-react";
-import {Countries, Home, Occupations, EmployeeStatusTypes, Persons} from "./pages";
+import {Countries, Home, Occupations, EmployeeStatusTypes, Persons, Employees} from "./pages";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {RootStore} from "./stores/RootStore";
 
@@ -38,6 +38,9 @@ class App extends React.Component<any, any> {
                         </Route>
                         <Route exact path={"/persons"}>
                             <Persons/>
+                        </Route>
+                        <Route exact path={"/employees"}>
+                            <Employees/>
                         </Route>
                         <Route path={"/*"}>
                             {'not implemented yet!'}

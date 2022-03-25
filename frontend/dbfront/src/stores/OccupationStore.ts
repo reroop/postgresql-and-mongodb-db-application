@@ -8,6 +8,8 @@ export interface Occupation {
     kirjeldus?: string
 }
 
+const occupationsEndpoint: string = '/occupations';
+
 class OccupationStore {
     @observable public occupations: Occupation[] = [];
 
@@ -18,7 +20,17 @@ class OccupationStore {
     @action
     public getOccupations = async () => {
         try {
-            this.occupations = (await API.get('/occupations')).data;
+            this.occupations = (await API.get(occupationsEndpoint)).data;
+        } catch (e) {
+            this.occupations = [];
+            console.error(e);
+        }
+    }
+
+    @action
+    public getOccupationByOccupationCode = async (occupationCode: number) => {
+        try {
+            this.occupations = (await API.get(occupationsEndpoint+'/'+occupationCode)).data;
         } catch (e) {
             this.occupations = [];
             console.error(e);
@@ -28,7 +40,7 @@ class OccupationStore {
     @action
     public addOccupation = async (occupation: Occupation) => {
         try {
-            await API.post('/occupations', {occupation}).then(this.getOccupations);
+            await API.post(occupationsEndpoint, {occupation}).then(this.getOccupations);
         } catch (e) {
             console.error(e);
         }
@@ -37,7 +49,7 @@ class OccupationStore {
     @action
     public updateOccupation = async (occupation: Occupation) => {
         try {
-            await API.put('/occupations', {occupation}).then(this.getOccupations);
+            await API.put(occupationsEndpoint, {occupation}).then(this.getOccupations);
         } catch (e) {
             console.error(e);
         }
@@ -46,7 +58,7 @@ class OccupationStore {
     @action
     public deleteOccupation = async (occupationCode: number) => {
         try {
-            await API.delete('/occupations/'+occupationCode).then(this.getOccupations);
+            await API.delete(occupationsEndpoint+'/'+occupationCode).then(this.getOccupations);
         } catch (e) {
             console.error(e);
         }

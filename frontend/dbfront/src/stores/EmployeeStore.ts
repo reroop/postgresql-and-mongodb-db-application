@@ -78,7 +78,7 @@ class EmployeeStore {
     @action
     public getEmployeeByPerson_id = async (person_id: string) => {
         try {
-            return (await API.get(employeesEndpoint+''+person_id)).data;
+            return (await API.get(employeesEndpoint+'/'+person_id)).data;
         } catch (e) {
             console.error(e);
         }

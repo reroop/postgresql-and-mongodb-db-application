@@ -1,5 +1,6 @@
 import {action, makeObservable, observable} from "mobx";
 import API from '../util/ApiUtil';
+import OccupationStore, {Occupation} from "./OccupationStore";
 
 export interface Employment {
     _id?: string,
@@ -9,14 +10,33 @@ export interface Employment {
     lopu_aeg?: string
 }
 
+export interface EmploymentWithOccupation {
+    employment: Employment,
+    occupation?: Occupation
+}
+
 const employmentsEndPoint: string = '/employments';
 
 class EmploymentStore {
     @observable public allEmployments: Employment[] = [];
-    //@observable public personEmployments: Employment[] =[];
+    @observable public personEmploymentsWithOccupations: EmploymentWithOccupation[] = [];
+    @observable public personEmployments: Employment[] = [];
+    private occupationStore: OccupationStore = new OccupationStore();
 
     constructor() {
         makeObservable(this);
+    }
+
+
+    public mapPersonEmploymentsToOccupations() {
+        this.personEmploymentsWithOccupations = [];
+        this.personEmployments.forEach(async (employment) => {
+            let entry: EmploymentWithOccupation = {
+                employment: employment
+            }
+            entry.occupation = await this.occupationStore.getOccupationByOccupationCode(employment.amet_kood)
+            this.personEmploymentsWithOccupations.push(entry);
+        })
     }
 
     @action
@@ -29,11 +49,11 @@ class EmploymentStore {
         }
     }
 
-    //todo: change backend to return all employments for person
     @action
     public getAllEmploymentsForEmployee = async (person_id: string) => {
         try {
-            return (await API.get(employmentsEndPoint+'/personId='+person_id)).data;
+            this.personEmployments = (await API.get(employmentsEndPoint+'/personId='+person_id)).data;
+            this.mapPersonEmploymentsToOccupations();
         } catch (e) {
             console.error(e);
         }

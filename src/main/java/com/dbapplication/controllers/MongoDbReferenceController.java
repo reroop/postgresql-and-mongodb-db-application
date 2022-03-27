@@ -240,8 +240,8 @@ public class MongoDbReferenceController {
     }
 
     @GetMapping("employments/personId={personId}")
-    public List<Employment> getEmployeeActiveEmployments(@PathVariable(value = "personId") String personId) {
-        return mongoDbRefEmploymentsService.getEmployeeActiveEmployments(personId);
+    public List<Employment> getEmployeeAllEmployments(@PathVariable(value = "personId") String personId) {
+        return mongoDbRefEmploymentsService.getEmployeeAllEmployments(personId);
     }
 
     @PostMapping("employments")

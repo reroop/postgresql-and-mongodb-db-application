@@ -1,13 +1,16 @@
 import React from "react";
 import {inject, observer} from "mobx-react";
+import { useParams } from "react-router-dom";
 import { AllPersonEmploymentsList } from "../components"
 import PersonStore, {Person} from "../stores/PersonStore";
-import CountryStore from "../stores/CountryStore";
-import EmployeeStore, {Employee} from "../stores/EmployeeStore";
-import employeeStatusTypeStore from "../stores/EmployeeStatusTypeStore";
+import CountryStore, {Country} from "../stores/CountryStore";
+import EmployeeStore, {Employee, PersonAsEmployee} from "../stores/EmployeeStore";
+import employeeStatusTypeStore, {EmployeeStatusType} from "../stores/EmployeeStatusTypeStore";
 import OccupationStore from "../stores/OccupationStore";
 import {withRouter} from "react-router";
-import {Button, Col, Dropdown, Form, Row} from "react-bootstrap";
+import {Button, Col, Dropdown, Form, FormControl, Row} from "react-bootstrap";
+import EmploymentStore from "../stores/EmploymentStore";
+import {createDeflateRaw} from "zlib";
 
 
 interface EmployeeDetailsProps {
@@ -16,7 +19,7 @@ interface EmployeeDetailsProps {
     employeeStore?: EmployeeStore,
     employeeStatusTypeStore?: employeeStatusTypeStore,
     occupationStore?: OccupationStore,
-    //todo: employmentStore
+    employmentStore?: EmploymentStore
 }
 
 interface State {
@@ -25,11 +28,14 @@ interface State {
     employee?: Employee
 }
 
-class EmployeeDetails extends React.Component<EmployeeDetailsProps & any, State> {
+@inject('personStore', 'countryStore', 'employeeStore', 'employeeStatusTypeStore', 'occupationStore')
+@observer
+class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
 
     constructor(props) {
         super(props);
 
+        // @ts-ignore
         const {id} = this.props.match.params;
         this.state = {
             person_id: id.toString()
@@ -37,11 +43,28 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps & any, State>
     }
 
     public componentDidMount() {
-        console.warn(this.state.person_id);
-        //todo: fetch infos -> person, employee, employments
+        this.props.countryStore?.getCountries();
+        this.props.employeeStatusTypeStore?.getEmployeeStatusTypes();
+        this.props.employeeStore?.getEmployees();
+        this.props.personStore?.getPersonBy_id(this.state.person_id!!).then((response) => {
+            this.setState({person: response});
+        });
+        this.props.employeeStore?.getEmployeeByPerson_id(this.state.person_id!!).then((response) => {
+            this.setState({employee: response});
+        });
+    }
+
+    private refreshPage() {
+        window.location.reload();
     }
 
     public render() {
+        const countries: Country[] = this.props.countryStore!!.countries;
+        const employeeStatusTypes: EmployeeStatusType[] = this.props.employeeStatusTypeStore!!.employeeStatusTypes;
+        const possibleMentors: PersonAsEmployee[] = this.props.employeeStore!!.personsAsEmployees.filter(employee => employee.person_id !== this.state.person_id);
+
+        console.warn(possibleMentors);
+
         return (
             <div>
                 <h3 className={'ml-2'}>Person detail page:</h3>
@@ -53,48 +76,63 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps & any, State>
                                 <Form.Label>Country code:</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        riik
+                                        {this.state.person?.riik_kood}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>
-                                            mingi riik
-                                        </Dropdown.Item>
+                                        {countries.map( country => (
+                                            <Dropdown.Item>
+                                                {country.riik_kood + ' - ' + country.nimetus}
+                                            </Dropdown.Item>
+                                        ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addNatIdCode">
                                 <Form.Label>Nat. Id. code:</Form.Label>
                                 <Form.Control
+                                    value={this.state.person?.isikukood}
                                     placeholder="Enter nat. id. code"
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addEmail">
                                 <Form.Label>Email:</Form.Label>
                                 <Form.Control
+                                    value={this.state.person?.e_meil}
                                     placeholder="Enter email"/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addBirthdate">
                                 <Form.Label>Birthdate:</Form.Label>
                                 <Form.Control
                                     type={"date"}
+                                    value={new Date(this.state.person?.synni_kp!!).toLocaleDateString("sv-SE")}
                                 />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="regDate">
+                                <Form.Label>Reg. date:</Form.Label>
+                                <FormControl
+                                    type={"date"}
+                                    value={new Date(this.state.person?.reg_aeg!!).toLocaleDateString("sv-SE")}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addFirstName">
                                 <Form.Label>First name:</Form.Label>
                                 <Form.Control
+                                    value={this.state.person?.eesnimi}
                                     placeholder="Enter first name (optional, at least first or last name must be set)"/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addLastName">
                                 <Form.Label>Last name:</Form.Label>
                                 <Form.Control
+                                    value={this.state.person?.perenimi}
                                     placeholder="Enter last name (optional, at least first or last name must be set)"/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addAddress">
                                 <Form.Label>Address:</Form.Label>
                                 <Form.Control
+                                    value={this.state.person?.elukoht}
                                     placeholder="Enter address (optional)"/>
                             </Form.Group>
                             <Button variant="success">Update person info</Button>
+                            <Button variant="warning" className={'ml-2'} onClick={() => this.refreshPage()}>Undo changes</Button>
                         </Form>
                     </Col>
 
@@ -106,12 +144,14 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps & any, State>
                             <Col>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        staatus
+                                        {this.state.employee?.tootaja_seisundi_liik_kood}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>
-                                            mingi staatus
-                                        </Dropdown.Item>
+                                        {employeeStatusTypes.map(status => (
+                                            <Dropdown.Item>
+                                                {status.tootaja_seisundi_liik_kood + ' - ' + status.nimetus}
+                                            </Dropdown.Item>
+                                        ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>
@@ -122,12 +162,14 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps & any, State>
                             <Col>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        staatus
+                                        {this.state.employee?.mentor_id}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item>
-                                            mingi staatus
-                                        </Dropdown.Item>
+                                        {possibleMentors.map(mentor => (
+                                            <Dropdown.Item>
+                                                {mentor.personGivenName + ' ' + mentor.personSurname}
+                                            </Dropdown.Item>
+                                        ))}
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Col>

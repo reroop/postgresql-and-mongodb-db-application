@@ -30,7 +30,7 @@ class OccupationStore {
     @action
     public getOccupationByOccupationCode = async (occupationCode: number) => {
         try {
-            this.occupations = (await API.get(occupationsEndpoint+'/'+occupationCode)).data;
+            return (await API.get(occupationsEndpoint+'/'+occupationCode)).data;
         } catch (e) {
             this.occupations = [];
             console.error(e);

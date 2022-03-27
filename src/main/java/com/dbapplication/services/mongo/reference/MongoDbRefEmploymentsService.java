@@ -1,6 +1,5 @@
 package com.dbapplication.services.mongo.reference;
 
-import com.dbapplication.models.mongo.reference.Employee;
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.repositories.mongo.reference.MongoDbRefEmploymentsRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +23,8 @@ public class MongoDbRefEmploymentsService {
         return mongoDbRefEmploymentsRepository.getEmploymentsByOccupationCode(occupationCode);
     }
 
-    public List<Employment> getEmployeeActiveEmployments(String personId) {
-        return mongoDbRefEmploymentsRepository.getEmployeeActiveEmployments(personId);
+    public List<Employment> getEmployeeAllEmployments(String personId) {
+        return mongoDbRefEmploymentsRepository.getEmployeeAllEmployments(personId);
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) {

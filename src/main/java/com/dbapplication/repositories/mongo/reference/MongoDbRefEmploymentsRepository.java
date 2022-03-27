@@ -1,6 +1,5 @@
 package com.dbapplication.repositories.mongo.reference;
 
-import com.dbapplication.models.mongo.reference.Employee;
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
 import lombok.extern.slf4j.Slf4j;
@@ -30,12 +29,11 @@ public class MongoDbRefEmploymentsRepository {
         return universalMongoTemplate.getAllByQuery(queryFindByOccupationCode, Employment.class);
     }
 
-    public List<Employment> getEmployeeActiveEmployments(String personId) {
-        Query queryFindPersonActiveEmployments = new Query();
-        queryFindPersonActiveEmployments.addCriteria(Criteria.where("isik_id").is(new ObjectId(personId)));
-        queryFindPersonActiveEmployments.addCriteria(Criteria.where("lopu_aeg").is(null));
+    public List<Employment> getEmployeeAllEmployments(String personId) {
+        Query queryFindPersonAllEmployments = new Query();
+        queryFindPersonAllEmployments.addCriteria(Criteria.where("isik_id").is(new ObjectId(personId)));
 
-        return universalMongoTemplate.getAllByQuery(queryFindPersonActiveEmployments, Employment.class);
+        return universalMongoTemplate.getAllByQuery(queryFindPersonAllEmployments, Employment.class);
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) {

@@ -5,9 +5,15 @@ import OccupationStore, {Occupation} from "./OccupationStore";
 export interface Employment {
     _id?: string,
     isik_id: string,
-    amet_kood: number;
-    alguse_aeg: string,
+    amet_kood?: number;
+    alguse_aeg?: string,
     lopu_aeg?: string
+}
+
+export interface OccupationToEmployments {
+    occupationCode: number,
+    occupationName: string,
+    numberOfEmployments: number
 }
 
 export interface EmploymentWithOccupation {
@@ -27,14 +33,31 @@ class EmploymentStore {
         makeObservable(this);
     }
 
+    public async mapOccupationsToEmployments():Promise<OccupationToEmployments[]> {
+        await this.occupationStore.getOccupations();
+        const result: OccupationToEmployments[] = [];
 
+        for (const occupation of this.occupationStore.occupations) {
+            const employmentsInOccupation: Employment[] = await this.getAllEmploymentsByOccupationCode(occupation.amet_kood);
+
+            let entry: OccupationToEmployments = {
+                occupationCode: occupation.amet_kood,
+                occupationName: occupation.nimetus,
+                numberOfEmployments: employmentsInOccupation.length
+            }
+            result.push(entry);
+        }
+        return result;
+    }
+
+    @action
     public mapPersonEmploymentsToOccupations() {
         this.personEmploymentsWithOccupations = [];
         this.personEmployments.forEach(async (employment) => {
             let entry: EmploymentWithOccupation = {
                 employment: employment
             }
-            entry.occupation = await this.occupationStore.getOccupationByOccupationCode(employment.amet_kood)
+            entry.occupation = await this.occupationStore.getOccupationByOccupationCode(employment.amet_kood!!)
             this.personEmploymentsWithOccupations.push(entry);
         })
     }
@@ -62,7 +85,7 @@ class EmploymentStore {
     @action
     public getAllEmploymentsByOccupationCode = async (occupationCode: number) => {
         try {
-            return (await API.get(employmentsEndPoint+'/employments/=occupationCode='+occupationCode)).data;
+            return (await API.get(employmentsEndPoint+'/occupationCode='+occupationCode)).data;
         } catch (e) {
             console.error(e);
         }
@@ -78,9 +101,18 @@ class EmploymentStore {
     }
 
     @action
-    public endEmployment = async (person_id: string, occupationCode: number) => {
+    public endEmployment = async (employment: Employment) => {
         try {
-            return (await API.put(employmentsEndPoint+'/personId='+person_id+'/occupationCode='+occupationCode)).data;
+            return (await API.put(employmentsEndPoint, {employment})).data;
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    @action
+    public endAllEmployments = async (employment: Employment) => {
+        try {
+            return (await API.put(employmentsEndPoint+'/endEmployments', {employment})).data;
         } catch (e) {
             console.error(e);
         }

@@ -7,7 +7,7 @@ const Home = () => (
                 <div className="col-lg-5">
                     <h1 className="font-weight-light">Home</h1>
                     <p>
-                        Wilkommen to the home page. Here should be buttons for navigation 2 other pages
+                        Welcome to the database management application. Use the navigation bar to use the application features.
                     </p>
                 </div>
             </div>

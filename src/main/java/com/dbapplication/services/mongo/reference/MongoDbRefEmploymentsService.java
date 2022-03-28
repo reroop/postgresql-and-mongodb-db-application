@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -31,7 +32,11 @@ public class MongoDbRefEmploymentsService {
         return mongoDbRefEmploymentsRepository.addEmployment(employment);
     }
 
-    public boolean endEmployeeActiveEmployment(String personId, Integer occupationCode) {
-        return mongoDbRefEmploymentsRepository.endEmployeeActiveEmployment(personId, occupationCode);
+    public boolean endEmployeeActiveEmployment(Employment employment) {
+        return mongoDbRefEmploymentsRepository.endEmployeeActiveEmployment(employment);
+    }
+
+    public boolean endEmployeeAllEmployments(Employment employment) {
+        return mongoDbRefEmploymentsRepository.endEmployeeAllEmployments(employment);
     }
 }

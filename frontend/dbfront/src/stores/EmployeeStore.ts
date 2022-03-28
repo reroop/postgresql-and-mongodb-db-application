@@ -8,7 +8,7 @@ export interface Employee {
     _id?: string,
     isik_id: string,
     tootaja_seisundi_liik_kood: number,
-    mentor_id?: string
+    mentor_id?: string|null
 }
 
 export interface PersonAsEmployee {
@@ -24,6 +24,7 @@ export interface PersonAsEmployee {
 
 
 const employeesEndpoint: string = '/employees';
+export const EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE: number = 6;
 
 class EmployeeStore {
     @observable public employees: Employee[] = [];
@@ -51,7 +52,7 @@ class EmployeeStore {
                 personSurname: person.perenimi,
                 employeeStatus: employeeStatus.nimetus,
                 personRegDate: person.reg_aeg,
-                mentor_id: employee.mentor_id
+                mentor_id: employee.mentor_id!!
             }
             this.personsAsEmployees.push(personAsEmployee);
         })
@@ -60,6 +61,14 @@ class EmployeeStore {
     public async reloadData() {
         await this.getEmployees();
         this.mapEmployeesToPersons()
+    }
+
+    public setEmployeeStatusToEnded(person_id: string) {
+        const employee: Employee = {
+            isik_id: person_id,
+            tootaja_seisundi_liik_kood: EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE
+        };
+        return this.updateEmployee(employee);
     }
 
 
@@ -87,7 +96,7 @@ class EmployeeStore {
     @action
     public addEmployee = async (employee: Employee) => {
         try {
-            return await API.post(employeesEndpoint, {employee});
+            return (await API.post(employeesEndpoint, {employee})).data;
         } catch (e) {
             console.error(e);
         }
@@ -96,7 +105,7 @@ class EmployeeStore {
     @action
     public updateEmployee = async (employee: Employee) => {
         try {
-            await API.put(employeesEndpoint, {employee});
+            return  (await API.put(employeesEndpoint, {employee})).data;
         } catch (e) {
             console.error(e);
         }
@@ -105,7 +114,7 @@ class EmployeeStore {
     @action
     public deleteEmployee = async (person_id: string) => {
         try {
-            await API.delete(employeesEndpoint + '/' + person_id);
+            return (await API.delete(employeesEndpoint + '/' + person_id)).data;
         } catch (e) {
             console.error(e);
         }

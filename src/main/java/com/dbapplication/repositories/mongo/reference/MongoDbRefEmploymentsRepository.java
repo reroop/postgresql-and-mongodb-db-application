@@ -26,6 +26,8 @@ public class MongoDbRefEmploymentsRepository {
 
     public List<Employment> getEmploymentsByOccupationCode(Integer occupationCode) {
         Query queryFindByOccupationCode = new Query(Criteria.where("amet_kood").is(occupationCode));
+        queryFindByOccupationCode.addCriteria(Criteria.where("lopu_aeg").is(null));
+
         return universalMongoTemplate.getAllByQuery(queryFindByOccupationCode, Employment.class);
     }
 
@@ -45,14 +47,27 @@ public class MongoDbRefEmploymentsRepository {
         return universalMongoTemplate.addEntity(dbEntry);
     }
 
-    public boolean endEmployeeActiveEmployment(String personId, Integer occupationCode) {
+    public boolean endEmployeeActiveEmployment(Employment employment) {
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("isik_id").is(new ObjectId(personId)));
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("amet_kood").is(occupationCode));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("isik_id").is(new ObjectId(employment.getIsik_id())));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("amet_kood").is(employment.getAmet_kood()));
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("lopu_aeg").is(null));
 
-        Update updatableInfo = new Update().set("lopu_aeg", LocalDateTime.now());
+        Update updatableInfo = new Update().set("lopu_aeg", employment.getLopu_aeg());
         return universalMongoTemplate.updateEntity(
+                queryFindPersonActiveEmploymentInOccupation,
+                updatableInfo,
+                Employment.class
+        );
+    }
+
+    public boolean endEmployeeAllEmployments(Employment employment) {
+        Query queryFindPersonActiveEmploymentInOccupation = new Query();
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("isik_id").is(new ObjectId(employment.getIsik_id())));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("lopu_aeg").is(null));
+
+        Update updatableInfo = new Update().set("lopu_aeg", employment.getLopu_aeg());
+        return universalMongoTemplate.updateAllEntities(
                 queryFindPersonActiveEmploymentInOccupation,
                 updatableInfo,
                 Employment.class

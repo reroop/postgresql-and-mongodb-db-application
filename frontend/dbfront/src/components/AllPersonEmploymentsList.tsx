@@ -49,18 +49,25 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             isik_id: this.props.person_id
         }
 
-        console.log(newEmployment);
-        //todo: lisamine backi; refresh et tuleks tootamine ka alla listi
-        this.setState({newEmploymentStartDate: undefined, newEmploymentOccupation: undefined});
+        this.props.employmentStore?.addNewEmployment(newEmployment).then(() => {
+            this.setState({newEmploymentStartDate: undefined, newEmploymentOccupation: undefined});
+            this.props.employmentStore?.getAllEmploymentsForEmployee(this.props.person_id);
+        });
     }
 
     private handleEndEmployment() {
-        console.log("end occupation for oCode: " + this.state.endEmploymentOccupationCode + ", personId: " + this.props.person_id + ", enddate: " + this.state.endEmploymentEndDate);
-        //todo: backis teha l6petamine requestBodyga; saata siit backi; teha refresh listi state uuendamiseks
-        this.setState({
-            endEmploymentOccupationCode: undefined,
-            endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")
-        })
+        const endEmployment: Employment = {
+            lopu_aeg: this.state.endEmploymentEndDate,
+            amet_kood: this.state.endEmploymentOccupationCode!!,
+            isik_id: this.props.person_id
+        }
+        this.props.employmentStore?.endEmployment(endEmployment).then(() => {
+            this.props.employmentStore?.getAllEmploymentsForEmployee(this.props.person_id);
+            this.setState({
+                endEmploymentOccupationCode: undefined,
+                endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")
+            });
+        });
     }
 
     render() {
@@ -71,7 +78,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             <div>
                 <h3>All employments:</h3>
 
-                <Card>
+                <Card style={{ width: '36rem' }}>
                     <Card.Title>Add new employment:</Card.Title>
                     <Card.Body>
                         <Form>
@@ -105,7 +112,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                     </Card.Body>
                 </Card>
 
-                <Container fluid>
+                <Container fluid className={'mt-5'}>
                     <Row>
                         <Col>
                             <Table striped bordered hover responsive={true} title={"List of employments:"}>

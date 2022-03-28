@@ -219,6 +219,12 @@ public class MongoDbReferenceController {
 
     @DeleteMapping("employees/{personId}")
     public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
+        List<Employment> employments = this.getEmployeeAllEmployments(personId);
+        for (Employment employment: employments) {
+            if (employment.getLopu_aeg() != null) {
+                return this.getEmployeeByPersonId(personId);
+            }
+        }
         return mongoDbRefEmployeesService.deleteEmployeeByPersonId(personId);
     }
 
@@ -245,15 +251,18 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("employments")
-    public Employment.EmploymentDbEntry addEmployment(@RequestBody Employment employment) {
-        return mongoDbRefEmploymentsService.addEmployment(employment);
+    public Employment.EmploymentDbEntry addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+        return mongoDbRefEmploymentsService.addEmployment(employmentDto.getEmployment());
     }
 
-    @PutMapping("employments/personId={personId}/occupationCode={occupationCode}")
-    public boolean endEmployeeActiveEmployment(
-            @PathVariable(value = "personId") String personId,
-            @PathVariable(value = "occupationCode") Integer occupationCode) {
-        return mongoDbRefEmploymentsService.endEmployeeActiveEmployment(personId, occupationCode);
+    @PutMapping("employments")
+    public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+        return mongoDbRefEmploymentsService.endEmployeeActiveEmployment(employmentDto.getEmployment());
+    }
+
+    @PutMapping("employments/endEmployments")
+    public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+        return mongoDbRefEmploymentsService.endEmployeeAllEmployments(employmentDto.getEmployment());
     }
 
     //--------------------

@@ -3,6 +3,7 @@ package com.dbapplication.models.mongo.reference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -40,6 +41,15 @@ public class Employment {
                 ", lopu_aeg=" + lopu_aeg +
                 '}';
     }
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class EmploymentDto {
+        private Employment employment;
+    }
+
 
     @NoArgsConstructor
     @AllArgsConstructor

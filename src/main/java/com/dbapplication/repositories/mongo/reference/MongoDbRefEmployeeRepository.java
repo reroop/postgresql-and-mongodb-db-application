@@ -46,7 +46,6 @@ public class MongoDbRefEmployeeRepository {
     }
 
     public boolean updateEmployee(Employee employee) {
-        log.info(employee.toString());
         Query queryFindByPersonId = new Query(Criteria.where("isik_id").is(new ObjectId(employee.getIsik_id())));
 
         Update updatableInfo = new Update();

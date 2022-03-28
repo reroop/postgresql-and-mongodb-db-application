@@ -16,33 +16,8 @@ const Navigation = () => (
                             </NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/countries">
-                                Countries
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/persons">
-                                Persons
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/userAccount">
-                                User accounts
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
                             <NavLink className="nav-link" to="/employees">
                                 Employees
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/employments">
-                                Employments
-                            </NavLink>
-                        </li>
-                        <li className="nav-item">
-                            <NavLink className="nav-link" to="/employeeStatusTypes">
-                                Employee status types
                             </NavLink>
                         </li>
                         <li className="nav-item">

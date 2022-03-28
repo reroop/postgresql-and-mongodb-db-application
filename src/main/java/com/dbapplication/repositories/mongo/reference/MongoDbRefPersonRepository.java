@@ -61,19 +61,19 @@ public class MongoDbRefPersonRepository {
             updatableInfo.set("synni_kp", person.getSynni_kp());
         }
         //set firstname to null if not specified
-        if (person.getEesnimi() != null) {
+        if (person.getEesnimi() != null && person.getEesnimi().length() != 0) {
             updatableInfo.set("eesnimi", person.getEesnimi());
         } else {
             updatableInfo.unset("eesnimi");
         }
         //set lastname to null if not specified
-        if (person.getPerenimi() != null) {
+        if (person.getPerenimi() != null && person.getPerenimi().length() != 0) {
             updatableInfo.set("perenimi", person.getPerenimi());
         } else {
             updatableInfo.unset("perenimi");
         }
         //set address to null if not specified
-        if (person.getElukoht() != null) {
+        if (person.getElukoht() != null && person.getElukoht().length() != 0) {
             updatableInfo.set("elukoht", person.getElukoht());
         } else {
             updatableInfo.unset("elukoht");

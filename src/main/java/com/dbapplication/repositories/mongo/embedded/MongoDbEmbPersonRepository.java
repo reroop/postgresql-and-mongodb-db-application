@@ -94,19 +94,19 @@ public class MongoDbEmbPersonRepository {
             updatableInfo.set("synni_kp", embeddedPerson.getSynni_kp());
         }
         //set firstname to null if not specified
-        if (embeddedPerson.getEesnimi() != null) {
+        if (embeddedPerson.getEesnimi() != null && embeddedPerson.getEesnimi().length() != 0) {
             updatableInfo.set("eesnimi", embeddedPerson.getEesnimi());
         } else {
             updatableInfo.unset("eesnimi");
         }
         //set lastname to null if not specified
-        if (embeddedPerson.getPerenimi() != null) {
+        if (embeddedPerson.getPerenimi() != null && embeddedPerson.getPerenimi().length() != 0) {
             updatableInfo.set("perenimi", embeddedPerson.getPerenimi());
         } else {
             updatableInfo.unset("perenimi");
         }
         //set address to null if not specified
-        if (embeddedPerson.getElukoht() != null) {
+        if (embeddedPerson.getElukoht() != null && embeddedPerson.getElukoht().length() != 0) {
             updatableInfo.set("elukoht", embeddedPerson.getElukoht());
         } else {
             updatableInfo.unset("elukoht");

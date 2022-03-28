@@ -58,4 +58,16 @@ public class UniversalMongoTemplate {
             return false;
         }
     }
+
+    public <T> boolean updateAllEntities(Query query, Update updatableInfo, Class<T> entityClass) { //returns boolean whether update was successful
+        try {
+            return mongoTemplate.updateMulti(query, updatableInfo, entityClass).wasAcknowledged();
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            if (e.getMessage().contains("Document failed validation")) { //todo: make this string as constant somewhere
+                log.info("entry failed against db validation");  //todo: return validation??
+            }
+            return false;
+        }
+    }
 }

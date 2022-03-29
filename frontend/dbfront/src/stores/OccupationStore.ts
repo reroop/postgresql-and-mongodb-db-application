@@ -40,7 +40,7 @@ class OccupationStore {
     @action
     public addOccupation = async (occupation: Occupation) => {
         try {
-            await API.post(occupationsEndpoint, {occupation}).then(this.getOccupations);
+            return (await API.post(occupationsEndpoint, {occupation})).data;
         } catch (e) {
             console.error(e);
         }
@@ -49,7 +49,7 @@ class OccupationStore {
     @action
     public updateOccupation = async (occupation: Occupation) => {
         try {
-            await API.put(occupationsEndpoint, {occupation}).then(this.getOccupations);
+            return (await API.put(occupationsEndpoint, {occupation})).data;
         } catch (e) {
             console.error(e);
         }
@@ -58,7 +58,7 @@ class OccupationStore {
     @action
     public deleteOccupation = async (occupationCode: number) => {
         try {
-            await API.delete(occupationsEndpoint+'/'+occupationCode).then(this.getOccupations);
+            return (await API.delete(occupationsEndpoint+'/'+occupationCode)).data;
         } catch (e) {
             console.error(e);
         }

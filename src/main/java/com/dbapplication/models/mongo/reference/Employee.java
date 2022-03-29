@@ -46,29 +46,17 @@ public class Employee {
 
     @NoArgsConstructor
     @AllArgsConstructor
+    @Getter
+    @Setter
     @Document(collection = "tootaja")
     public static class EmployeeDbEntry {
 
-        @Getter
         @Id
         private String _id;
 
-        @Getter
         private ObjectId isik_id;
-
-        @Getter
-        @Setter
         private Integer tootaja_seisundi_liik_kood;
-
-        @Getter
-        @Setter
         private ObjectId mentor_id;
-
-        public EmployeeDbEntry(String personId, Integer employeeStatusCode, String mentorId) {
-            this.isik_id = new ObjectId(personId);
-            this.tootaja_seisundi_liik_kood = employeeStatusCode;
-            this.mentor_id = new ObjectId(mentorId);
-        }
 
         public EmployeeDbEntry(String isik_id, Integer tootaja_seisundi_liik_kood) {
             this.isik_id = new ObjectId(isik_id);

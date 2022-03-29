@@ -1,12 +1,11 @@
 package com.dbapplication.services.mongo.reference;
 
 import com.dbapplication.models.mongo.reference.Employment;
-import com.dbapplication.repositories.mongo.reference.MongoDbRefEmploymentsRepository;
+import com.dbapplication.repositories.mongo.reference.MongoDbRefEmploymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -14,29 +13,29 @@ import java.util.List;
 public class MongoDbRefEmploymentsService {
 
     @Autowired
-    private MongoDbRefEmploymentsRepository mongoDbRefEmploymentsRepository;
+    private MongoDbRefEmploymentRepository mongoDbRefEmploymentRepository;
 
     public List<Employment> getAllEmployments() {
-        return mongoDbRefEmploymentsRepository.getAllEmployments();
+        return mongoDbRefEmploymentRepository.getAllEmployments();
     }
 
     public List<Employment> getAllEmploymentsByOccupationCode(Integer occupationCode) {
-        return mongoDbRefEmploymentsRepository.getEmploymentsByOccupationCode(occupationCode);
+        return mongoDbRefEmploymentRepository.getEmploymentsByOccupationCode(occupationCode);
     }
 
     public List<Employment> getEmployeeAllEmployments(String personId) {
-        return mongoDbRefEmploymentsRepository.getEmployeeAllEmployments(personId);
+        return mongoDbRefEmploymentRepository.getEmployeeAllEmployments(personId);
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) {
-        return mongoDbRefEmploymentsRepository.addEmployment(employment);
+        return mongoDbRefEmploymentRepository.addEmployment(employment);
     }
 
     public boolean endEmployeeActiveEmployment(Employment employment) {
-        return mongoDbRefEmploymentsRepository.endEmployeeActiveEmployment(employment);
+        return mongoDbRefEmploymentRepository.endEmployeeActiveEmployment(employment);
     }
 
     public boolean endEmployeeAllEmployments(Employment employment) {
-        return mongoDbRefEmploymentsRepository.endEmployeeAllEmployments(employment);
+        return mongoDbRefEmploymentRepository.endEmployeeAllEmployments(employment);
     }
 }

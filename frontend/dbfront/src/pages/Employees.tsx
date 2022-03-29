@@ -91,7 +91,11 @@ class Employees extends React.Component<EmployeesProps, State> {
             if (this.state.currentEmployeeMentorId !== null) {
                 newEmployee.mentor_id = this.state.currentEmployeeMentorId;
             }
-            this.props.employeeStore?.addEmployee(newEmployee).then(this.props.employeeStore?.getEmployees);
+            this.props.employeeStore?.addEmployee(newEmployee).then(r => {
+                this.props.employeeStore?.getEmployees();
+                this.resetNewPersonStateVariables();
+                this.resetCurrentEmployeeStateVariables();
+            });
         } else {
             const newPerson: Person = {
                 riik_kood: this.state.newPersonCountryCode,
@@ -117,13 +121,14 @@ class Employees extends React.Component<EmployeesProps, State> {
                 if (this.state.currentEmployeeMentorId !== null) {
                     newEmployee.mentor_id = this.state.currentEmployeeMentorId;
                 }
-                this.props.employeeStore?.addEmployee(newEmployee).then(this.props.employeeStore?.getEmployees);
+                this.props.employeeStore?.addEmployee(newEmployee).then(r => {
+                    this.props.employeeStore?.getEmployees();
+                    this.resetNewPersonStateVariables();
+                    this.resetCurrentEmployeeStateVariables();
+                })
             })
         }
 
-        //------
-        this.resetNewPersonStateVariables();
-        this.resetCurrentEmployeeStateVariables();
     }
 
     private handleShowCreateNewPersonButtonClick() {
@@ -206,12 +211,6 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                         placeholder="Enter nat. id. code"
                                                                         onChange={(e) => this.setState({newPersonNationalIdCode: e.target.value})}/>
                                                                 </Form.Group>
-                                                                <Form.Group className="mb-3" controlId="addEmail">
-                                                                    <Form.Label>Email:</Form.Label>
-                                                                    <Form.Control
-                                                                        placeholder="Enter email"
-                                                                        onChange={(e) => this.setState({newPersonEmail: e.target.value})}/>
-                                                                </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addBirthdate">
                                                                     <Form.Label>Birthdate:</Form.Label>
                                                                     <Form.Control
@@ -220,6 +219,12 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                             this.setState({newPersonBirthdate: e.target.value + 'T00:00:00'}) //hack for localdatetime in backend
                                                                         }}
                                                                     />
+                                                                </Form.Group>
+                                                                <Form.Group className="mb-3" controlId="addEmail">
+                                                                    <Form.Label>Email:</Form.Label>
+                                                                    <Form.Control
+                                                                        placeholder="Enter email"
+                                                                        onChange={(e) => this.setState({newPersonEmail: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addFirstName">
                                                                     <Form.Label>Given name:</Form.Label>
@@ -335,8 +340,7 @@ class Employees extends React.Component<EmployeesProps, State> {
                                             </Col>
                                             <Col>
                                                 <Button className={'ml-5'} variant="success"
-                                                        onClick={() => this.handleAddNewEmployee()}>Add new
-                                                    employee</Button>
+                                                        onClick={() => this.handleAddNewEmployee()}>Add new employee</Button>
                                             </Col>
                                         </Row>
                                     </Col>

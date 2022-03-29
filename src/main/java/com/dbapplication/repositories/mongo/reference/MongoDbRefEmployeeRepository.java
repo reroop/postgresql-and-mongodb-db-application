@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Component
@@ -34,7 +35,7 @@ public class MongoDbRefEmployeeRepository {
                 employee.getIsik_id(),
                 employee.getTootaja_seisundi_liik_kood()
         );
-        if (employee.getMentor_id() != null) {
+        if (employee.getMentor_id() != null && !Objects.equals(employee.getIsik_id(), employee.getMentor_id())) {
             dbEntry.setMentor_id(new ObjectId(employee.getMentor_id()));
         }
         return universalMongoTemplate.addEntity(dbEntry);
@@ -53,7 +54,7 @@ public class MongoDbRefEmployeeRepository {
             updatableInfo.set("tootaja_seisundi_liik_kood", employee.getTootaja_seisundi_liik_kood());
         }
         //NOTE: mentorId is deleted if it is not set in Employee
-        if (employee.getMentor_id() != null) {
+        if (employee.getMentor_id() != null && !Objects.equals(employee.getIsik_id(), employee.getMentor_id())) {
             updatableInfo.set("mentor_id", new ObjectId(employee.getMentor_id()));
         } else {
             updatableInfo.unset("mentor_id");

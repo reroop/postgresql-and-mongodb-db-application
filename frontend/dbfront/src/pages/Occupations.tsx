@@ -9,9 +9,9 @@ interface OccupationsProps {
 }
 
 interface State {
-    newOccupationCode: number|null
+    newOccupationCode?: number
     newOccupationName: string,
-    newOccupationDescription: string|null,
+    newOccupationDescription?: string,
     showStatsModal: boolean
 }
 
@@ -22,9 +22,9 @@ class Occupations extends React.Component<OccupationsProps, State> {
     constructor(props) {
         super(props);
         this.state = {
-            newOccupationCode: null,
+            //newOccupationCode: null,
             newOccupationName: '',
-            newOccupationDescription: null,
+            //newOccupationDescription: null,
             showStatsModal: false
 
         };
@@ -50,11 +50,11 @@ class Occupations extends React.Component<OccupationsProps, State> {
             if (occupation.kirjeldus === '') {
                 occupation.kirjeldus = undefined;
             }
-            occupationStore.updateOccupation(occupation);
+            occupationStore.updateOccupation(occupation).then(occupationStore.getOccupations);
         };
 
         const handleDeleteOccupationButtonClick = (occupationCode: number) => {
-            occupationStore.deleteOccupation(occupationCode);
+            occupationStore.deleteOccupation(occupationCode).then(occupationStore.getOccupations);
         };
 
         const handleAddOccupationClick = () => {
@@ -62,16 +62,18 @@ class Occupations extends React.Component<OccupationsProps, State> {
                 return;
             }
             const newOccupation: Occupation = {
-                amet_kood: this.state.newOccupationCode,
+                amet_kood: this.state.newOccupationCode!!,
                 nimetus: this.state.newOccupationName
             };
             if (this.state.newOccupationDescription !== null) {
                 newOccupation.kirjeldus = this.state.newOccupationDescription;
             }
-            occupationStore.addOccupation(newOccupation);
-            this.setState({newOccupationCode: null})
-            this.setState({newOccupationName: ''})
-            this.setState({newOccupationDescription: null})
+            occupationStore.addOccupation(newOccupation).then(r => this.setState({
+                newOccupationCode: undefined,
+                newOccupationName: '',
+                newOccupationDescription: undefined
+            }));
+
         }
 
         return (
@@ -80,7 +82,7 @@ class Occupations extends React.Component<OccupationsProps, State> {
 
                 <Row>
                     <Col>
-                        <Card className={'m-3'} style={{ width: '36rem' }}>
+                        <Card className={'m-3'} style={{width: '36rem'}}>
                             <Card.Title>Add new occupation:</Card.Title>
                             <Card.Body>
                                 <Form>
@@ -89,6 +91,7 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                         <Form.Control
                                             placeholder="Enter occupation code (number)"
                                             type="number"
+                                            value={this.state.newOccupationCode == undefined ? '' : this.state.newOccupationCode}
                                             onChange={(e) => this.setState({newOccupationCode: Number(e.target.value)})}
                                         />
                                     </Form.Group>
@@ -96,23 +99,27 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                         <Form.Label>Occupation name:</Form.Label>
                                         <Form.Control
                                             placeholder="Enter occupation name"
+                                            value={this.state.newOccupationName}
                                             onChange={(e) => this.setState({newOccupationName: e.target.value})}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="addOccupationDescription">
                                         <Form.Label>Occupation description:</Form.Label>
                                         <Form.Control
                                             as="textarea" rows={3}
+                                            value={this.state.newOccupationDescription}
                                             placeholder="Enter occupation description (optional)"
                                             onChange={(e) => this.setState({newOccupationDescription: e.target.value})}/>
                                     </Form.Group>
-                                    <Button variant="success" onClick={() => handleAddOccupationClick()}>Add new occupation</Button>
+                                    <Button variant="success" onClick={() => handleAddOccupationClick()}>Add new
+                                        occupation</Button>
                                 </Form>
 
                             </Card.Body>
                         </Card>
                     </Col>
 
-                    <Col><Button variant="info" onClick={() => this.handleShowStatsModalButtonClick()}>Show statistics</Button></Col>
+                    <Col><Button variant="info" onClick={() => this.handleShowStatsModalButtonClick()}>Show
+                        statistics</Button></Col>
                     <Modal show={this.state.showStatsModal}>
                         <Modal.Header>
                             <Modal.Title>Statistics</Modal.Title>
@@ -127,7 +134,6 @@ class Occupations extends React.Component<OccupationsProps, State> {
                         </Modal.Footer>
                     </Modal>
                 </Row>
-
 
 
                 <div className={'m-3'}>
@@ -159,13 +165,15 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
-                                            placeholder={"Occupation description"}
+                                            as="textarea" rows={3}
+                                            placeholder={"Occupation description (optional)"}
                                             value={occupation.kirjeldus}
                                             onChange={(e) => occupation.kirjeldus = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"
-                                            onClick={() => handleEditOccupationButtonClick(occupation)}>Update</Button></td>
+                                            onClick={() => handleEditOccupationButtonClick(occupation)}>Update</Button>
+                                </td>
                                 <td><Button variant="danger"
                                             onClick={() => handleDeleteOccupationButtonClick(occupation.amet_kood)}>Delete</Button>
                                 </td>

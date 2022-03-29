@@ -2,6 +2,7 @@ package com.dbapplication.repositories.mongo.reference;
 
 import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
+import com.dbapplication.utils.mongodb.ValidationChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -18,6 +19,7 @@ public class MongoDbRefPersonRepository {
 
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
+    private final ValidationChecks validationChecks = new ValidationChecks();
 
     public List<Person> getAllPersons() {
         return universalMongoTemplate.getAll(Person.class);
@@ -36,7 +38,24 @@ public class MongoDbRefPersonRepository {
     }
 
     public Person addPerson(Person person) {
+        if (!validationChecks.isDateInRange1900to2100(person.getSynni_kp())) {
+            log.info("add person, birthdate not in range 1900-2100");
+            return null;
+        }
+        if (person.getEesnimi() == null && person.getPerenimi() == null) {
+            log.info("add person, given name or surname must be set");
+            return null;
+        }
         person.setReg_aeg(LocalDateTime.now());
+        if (!validationChecks.isFirstDateBeforeSecondDate(person.getSynni_kp(), person.getReg_aeg())) {
+            log.info("add person, birth date not before reg time");
+            return null;
+        }
+        if (!validationChecks.isDateInRange2010to2100(person.getReg_aeg())) {
+            log.info("add person, reg time not in rage 2010-2100");
+            return null;
+        }
+
         return universalMongoTemplate.addEntity(person);
     }
 

@@ -24,7 +24,7 @@ export interface PersonAsEmployee {
 
 
 const employeesEndpoint: string = '/employees';
-export const EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE: number = 6;
+export const EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE: number = 5;      //CHANGE ONLY IF CHANGE IS DONE IN DATABASE ASWELL
 
 class EmployeeStore {
     @observable public employees: Employee[] = [];

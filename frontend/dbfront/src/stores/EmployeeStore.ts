@@ -6,8 +6,8 @@ import EmployeeStatusTypeStore, {EmployeeStatusType} from "./EmployeeStatusTypeS
 
 export interface Employee {
     _id?: string,
-    isik_id: string,
-    tootaja_seisundi_liik_kood: number,
+    person_id: string,
+    employee_status_type_code: number,
     mentor_id?: string|null
 }
 
@@ -40,18 +40,18 @@ class EmployeeStore {
     public mapEmployeesToPersons() {
         this.personsAsEmployees = [];
         this.employees.forEach(async (employee) => {
-            let person: Person = await this.personStore.getPersonBy_id(employee.isik_id);
-            let personCountry: Country = await this.countryStore.getCountryByCountryCode(person.riik_kood);
-            let employeeStatus: EmployeeStatusType = await this.employeeStatusStore.getEmployeeStatusTypeByStatusCode(employee.tootaja_seisundi_liik_kood);
+            let person: Person = await this.personStore.getPersonBy_id(employee.person_id);
+            let personCountry: Country = await this.countryStore.getCountryByCountryCode(person.country_code);
+            let employeeStatus: EmployeeStatusType = await this.employeeStatusStore.getEmployeeStatusTypeByStatusCode(employee.employee_status_type_code);
 
             let personAsEmployee: PersonAsEmployee = {
                 person_id: person._id!!,
-                personCountryCode: person.riik_kood,
-                personIdCode: person.isikukood,
-                personGivenName: person.eesnimi,
-                personSurname: person.perenimi,
-                employeeStatus: employeeStatus.nimetus,
-                personRegDate: person.reg_aeg,
+                personCountryCode: person.country_code,
+                personIdCode: person.nat_id_code,
+                personGivenName: person.given_name,
+                personSurname: person.surname,
+                employeeStatus: employeeStatus.name,
+                personRegDate: person.reg_time,
                 mentor_id: employee.mentor_id!!
             }
             this.personsAsEmployees.push(personAsEmployee);
@@ -65,8 +65,8 @@ class EmployeeStore {
 
     public setEmployeeStatusToEnded(person_id: string) {
         const employee: Employee = {
-            isik_id: person_id,
-            tootaja_seisundi_liik_kood: EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE
+            person_id: person_id,
+            employee_status_type_code: EMPLOYEE_END_EMPLOYMENTS_STATUS_CODE
         };
         return this.updateEmployee(employee);
     }

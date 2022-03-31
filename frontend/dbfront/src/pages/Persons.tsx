@@ -56,19 +56,19 @@ class Persons extends React.Component<PersonsProps, State> {
 
         const handleAddPersonButtonClick = () => {
             const newPerson: Person = {
-                riik_kood: this.state.newPersonCountryCode,
-                isikukood: this.state.newPersonNationalIdCode,
-                e_meil: this.state.newPersonEmail,
-                synni_kp: this.state.newPersonBirthdate,
+                country_code: this.state.newPersonCountryCode,
+                nat_id_code: this.state.newPersonNationalIdCode,
+                e_mail: this.state.newPersonEmail,
+                birth_date: this.state.newPersonBirthdate,
             };
             if (this.state.newPersonFirstName !== '') {
-                newPerson.eesnimi = this.state.newPersonFirstName;
+                newPerson.given_name = this.state.newPersonFirstName;
             }
             if (this.state.newPersonLastName !== '') {
-                newPerson.perenimi = this.state.newPersonLastName;
+                newPerson.surname = this.state.newPersonLastName;
             }
             if (this.state.newPersonAddress !== '') {
-                newPerson.elukoht = this.state.newPersonAddress;
+                newPerson.address = this.state.newPersonAddress;
             }
 
             this.setState({newPersonCountryCode: '(select country)'});
@@ -97,8 +97,8 @@ class Persons extends React.Component<PersonsProps, State> {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {countries.map((country) => (
-                                            <Dropdown.Item onClick={() => {this.setState({newPersonCountryCode: country.riik_kood})}}>
-                                                {country.riik_kood + ' - ' + country.nimetus}
+                                            <Dropdown.Item onClick={() => {this.setState({newPersonCountryCode: country.country_code})}}>
+                                                {country.country_code + ' - ' + country.name}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
@@ -159,8 +159,8 @@ class Persons extends React.Component<PersonsProps, State> {
                             <th>E-mail</th>
                             <th>Birthdate (dd/mm/yyyy)</th>
                             <th>Reg. date (yyyy-mm-dd)</th>
-                            <th>First name</th>
-                            <th>Last name</th>
+                            <th>Given name</th>
+                            <th>Surname</th>
                             <th>Address</th>
                             <th>Edit</th>
                             <th>Delete</th>
@@ -174,24 +174,24 @@ class Persons extends React.Component<PersonsProps, State> {
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Country code"}
-                                            value={person.riik_kood}
-                                            onChange={(e) => person.riik_kood = e.target.value}/>
+                                            value={person.country_code}
+                                            onChange={(e) => person.country_code = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"National identification code"}
-                                            value={person.isikukood}
-                                            onChange={(e) => person.isikukood = e.target.value}/>
+                                            value={person.nat_id_code}
+                                            onChange={(e) => person.nat_id_code = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"E-mail"}
-                                            value={person.e_meil}
-                                            onChange={(e) => person.e_meil = e.target.value}/>
+                                            value={person.e_mail}
+                                            onChange={(e) => person.e_mail = e.target.value}/>
                                     </InputGroup>
                                     {person._id}
                                 </td>
@@ -199,10 +199,10 @@ class Persons extends React.Component<PersonsProps, State> {
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             //placeholder={"Birthdate (dd/mm/yyyy)"}
-                                            value={new Date(person.synni_kp).toLocaleDateString("sv-SE")}
+                                            value={new Date(person.birth_date).toLocaleDateString("sv-SE")}
                                             type={"date"}
                                             onChange={(e) => {
-                                                person.synni_kp = e.target.value+'T00:00:00';   //hack for localdatetime in backend
+                                                person.birth_date = e.target.value+'T00:00:00';   //hack for localdatetime in backend
                                             }}/>
                                     </InputGroup>
                                 </td>
@@ -211,31 +211,31 @@ class Persons extends React.Component<PersonsProps, State> {
                                         <FormControl
                                             placeholder={"Registration date (yyyy-mm-dd)"}
                                             type={"date"}
-                                            value={new Date(person.reg_aeg!!).toLocaleDateString("sv-SE")}/>
+                                            value={new Date(person.reg_time!!).toLocaleDateString("sv-SE")}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"First name"}
-                                            value={person.eesnimi}
-                                            onChange={(e) => person.eesnimi = e.target.value}/>
+                                            value={person.given_name}
+                                            onChange={(e) => person.given_name = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Last name"}
-                                            value={person.perenimi}
-                                            onChange={(e) => person.perenimi = e.target.value}/>
+                                            value={person.surname}
+                                            onChange={(e) => person.surname = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Address"}
-                                            value={person.elukoht}
-                                            onChange={(e) => person.elukoht = e.target.value}/>
+                                            value={person.address}
+                                            onChange={(e) => person.address = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"

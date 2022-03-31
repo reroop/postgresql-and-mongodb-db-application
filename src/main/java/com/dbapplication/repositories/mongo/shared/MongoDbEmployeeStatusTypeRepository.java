@@ -23,7 +23,7 @@ public class MongoDbEmployeeStatusTypeRepository {
     }
 
     public EmployeeStatusType getEmployeeStatusTypeByEmployeeStatusTypeCode(Integer employeeStatusTypeCode) {
-        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("tootaja_seisundi_liik_kood").is(employeeStatusTypeCode));
+        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("employee_status_type_code").is(employeeStatusTypeCode));
         return universalMongoTemplate.getOneByQuery(queryFindByEmployeeStatusTypeCode, EmployeeStatusType.class);
     }
 
@@ -32,20 +32,20 @@ public class MongoDbEmployeeStatusTypeRepository {
     }
 
     public EmployeeStatusType deleteEmployeeStatusTypeByEmployeeStatusTypeCode(Integer employeeStatusTypeCode) {
-        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("tootaja_seisundi_liik_kood").is(employeeStatusTypeCode));
+        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("employee_status_type_code").is(employeeStatusTypeCode));
         return universalMongoTemplate.deleteEntity(queryFindByEmployeeStatusTypeCode, EmployeeStatusType.class);
     }
 
     public boolean updateEmployeeStatusType(EmployeeStatusType employeeStatusType) {
-        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("tootaja_seisundi_liik_kood").is(employeeStatusType.getTootaja_seisundi_liik_kood()));
+        Query queryFindByEmployeeStatusTypeCode = new Query(Criteria.where("employee_status_type_code").is(employeeStatusType.getEmployee_status_type_code()));
         Update updatableInfo = new Update();
-        if (employeeStatusType.getNimetus() != null) {
-            updatableInfo.set("nimetus", employeeStatusType.getNimetus());
+        if (employeeStatusType.getName() != null) {
+            updatableInfo.set("name", employeeStatusType.getName());
         }
-        if (employeeStatusType.getKirjeldus() != null) {
-            updatableInfo.set("kirjeldus", employeeStatusType.getKirjeldus());
+        if (employeeStatusType.getDescription() != null) {
+            updatableInfo.set("description", employeeStatusType.getDescription());
         } else {
-            updatableInfo.unset("kirjeldus");
+            updatableInfo.unset("description");
         }
         return universalMongoTemplate.updateEntity(queryFindByEmployeeStatusTypeCode, updatableInfo, EmployeeStatusType.class);
     }

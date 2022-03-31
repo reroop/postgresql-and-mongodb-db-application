@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "amet")
+@Document(collection = "occupation")
 public class Occupation {
 
     @Getter
@@ -17,30 +17,30 @@ public class Occupation {
     private String _id;
 
     @Getter
-    private Integer amet_kood;
+    private Integer occupation_code;
     @Getter
-    private String nimetus;
+    private String name;
     @Getter
-    private String kirjeldus;
+    private String description;
 
     public Occupation(Integer code, String name) {
-        this.amet_kood = code;
-        this.nimetus = name;
+        this.occupation_code = code;
+        this.name = name;
     }
 
     public Occupation(Integer code, String name, String description) {
-        this.amet_kood = code;
-        this.nimetus = name;
-        this.kirjeldus = description;
+        this.occupation_code = code;
+        this.name = name;
+        this.description = description;
     }
 
     @Override
     public String toString() {
         return "Occupation{" +
-                "id='" + _id + '\'' +
-                ", amet_kood='" + amet_kood + '\'' +
-                ", nimetus='" + nimetus + '\'' +
-                ", kirjeldus='" + kirjeldus + '\'' +
+                "_id='" + _id + '\'' +
+                ", occupation_code=" + occupation_code +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 

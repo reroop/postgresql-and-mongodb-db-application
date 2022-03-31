@@ -31,20 +31,20 @@ public class ValidationChecks {
 
 
     public boolean isMongoPersonInfoValid(Person person) {
-        if (!isDateInRange1900to2100(person.getSynni_kp())) {
+        if (!isDateInRange1900to2100(person.getBirth_date())) {
             log.info("add person, birthdate not in range 1900-2100");
             return false;
         }
-        if (person.getEesnimi() == null && person.getPerenimi() == null ||
-                Objects.equals(person.getEesnimi(), "") && Objects.equals(person.getPerenimi(), "")) {
+        if (person.getGiven_name() == null && person.getSurname() == null ||
+                Objects.equals(person.getGiven_name(), "") && Objects.equals(person.getSurname(), "")) {
             log.info("add person, given name or surname must be set");
             return false;
         }
-        if (!isFirstDateBeforeSecondDate(person.getSynni_kp(), person.getReg_aeg())) {
+        if (!isFirstDateBeforeSecondDate(person.getBirth_date(), person.getReg_time())) {
             log.info("add person, birth date not before reg time");
             return false;
         }
-        if (!isDateInRange2010to2100(person.getReg_aeg())) {
+        if (!isDateInRange2010to2100(person.getReg_time())) {
             log.info("add person, reg time not in rage 2010-2100");
             return false;
         }

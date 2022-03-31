@@ -179,11 +179,11 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endActiveEmployment(Employment endEmploymentInfo) {
-        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getLopu_aeg())) {
+        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
             log.info("end active employment, end date not in range");
             return false;
         }
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getIsik_id()));
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
         List<EmbeddedEmployment> employments = person.getTootaja().getAmetis_tootamine() != null ?  person.getTootaja().getAmetis_tootamine() : new ArrayList<>();
         if (employments.size() == 0) {
@@ -191,12 +191,12 @@ public class MongoDbEmbPersonRepository {
         }
 
         for (EmbeddedEmployment embeddedEmployment : employments) {
-            if (Objects.equals(endEmploymentInfo.getAmet_kood(), embeddedEmployment.getAmet_kood()) && embeddedEmployment.getLopu_aeg() == null) {
-                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getLopu_aeg())) {
+            if (Objects.equals(endEmploymentInfo.getOccupation_code(), embeddedEmployment.getAmet_kood()) && embeddedEmployment.getLopu_aeg() == null) {
+                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getEnd_time())) {
                     log.info("end active employment, end date is before start date");
                     return false;
                 }
-                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getLopu_aeg());
+                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getEnd_time());
                 break;
             }
         }
@@ -206,11 +206,11 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endAllEmployments(Employment endEmploymentInfo) {
-        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getLopu_aeg())) {
+        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
             log.info("end all employments, end date not in range 2010-2100");
             return false;
         }
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getIsik_id()));
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
 
         List<EmbeddedEmployment> employments = person.getTootaja().getAmetis_tootamine() != null ?  person.getTootaja().getAmetis_tootamine() : new ArrayList<>();
@@ -220,11 +220,11 @@ public class MongoDbEmbPersonRepository {
 
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (embeddedEmployment.getLopu_aeg() == null) {
-                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getLopu_aeg())) {
+                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getEnd_time())) {
                     log.info("end all employments, end date is before start date");
                     return false;
                 }
-                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getLopu_aeg());
+                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getEnd_time());
             }
         }
 

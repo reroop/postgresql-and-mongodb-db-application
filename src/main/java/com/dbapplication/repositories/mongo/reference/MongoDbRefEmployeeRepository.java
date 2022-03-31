@@ -26,35 +26,35 @@ public class MongoDbRefEmployeeRepository {
     }
 
     public Employee getEmployeeByPersonId(String personId) {
-        Query queryFindByPersonId = new Query(Criteria.where("isik_id").is(new ObjectId(personId)));
+        Query queryFindByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(personId)));
         return universalMongoTemplate.getOneByQuery(queryFindByPersonId, Employee.class);
     }
 
     public Employee.EmployeeDbEntry addEmployee(Employee employee) {
         Employee.EmployeeDbEntry dbEntry = new Employee.EmployeeDbEntry(
-                employee.getIsik_id(),
-                employee.getTootaja_seisundi_liik_kood()
+                employee.getPerson_id(),
+                employee.getEmployee_status_type_code()
         );
-        if (employee.getMentor_id() != null && !Objects.equals(employee.getIsik_id(), employee.getMentor_id())) {
+        if (employee.getMentor_id() != null && !Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
             dbEntry.setMentor_id(new ObjectId(employee.getMentor_id()));
         }
         return universalMongoTemplate.addEntity(dbEntry);
     }
 
     public Employee deleteEmployeeByPersonId(String personId) {
-        Query queryFindByPersonId = new Query(Criteria.where("isik_id").is(new ObjectId(personId)));
+        Query queryFindByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(personId)));
         return universalMongoTemplate.deleteEntity(queryFindByPersonId, Employee.class);
     }
 
     public boolean updateEmployee(Employee employee) {
-        Query queryFindByPersonId = new Query(Criteria.where("isik_id").is(new ObjectId(employee.getIsik_id())));
+        Query queryFindByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(employee.getPerson_id())));
 
         Update updatableInfo = new Update();
-        if (employee.getTootaja_seisundi_liik_kood() != null) {
-            updatableInfo.set("tootaja_seisundi_liik_kood", employee.getTootaja_seisundi_liik_kood());
+        if (employee.getEmployee_status_type_code() != null) {
+            updatableInfo.set("employee_status_type_code", employee.getEmployee_status_type_code());
         }
         //NOTE: mentorId is deleted if it is not set in Employee
-        if (employee.getMentor_id() != null && !Objects.equals(employee.getIsik_id(), employee.getMentor_id())) {
+        if (employee.getMentor_id() != null && !Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
             updatableInfo.set("mentor_id", new ObjectId(employee.getMentor_id()));
         } else {
             updatableInfo.unset("mentor_id");

@@ -26,29 +26,29 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public List<Employment> getEmploymentsByOccupationCode(Integer occupationCode) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("amet_kood").is(occupationCode));
-        queryFindByOccupationCode.addCriteria(Criteria.where("lopu_aeg").is(null));
+        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupationCode));
+        queryFindByOccupationCode.addCriteria(Criteria.where("end_time").is(null));
 
         return universalMongoTemplate.getAllByQuery(queryFindByOccupationCode, Employment.class);
     }
 
     public List<Employment> getEmployeeAllEmployments(String personId) {
         Query queryFindPersonAllEmployments = new Query();
-        queryFindPersonAllEmployments.addCriteria(Criteria.where("isik_id").is(new ObjectId(personId)));
+        queryFindPersonAllEmployments.addCriteria(Criteria.where("person_id").is(new ObjectId(personId)));
 
         return universalMongoTemplate.getAllByQuery(queryFindPersonAllEmployments, Employment.class);
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getAlguse_aeg())) {
+        if (!validationChecks.isDateInRange2010to2100(employment.getStart_time())) {
             log.info("add employment, employment date(s) out of range 2010-2100");
             return null;
         }
 
         //---check if employee is already actively employed in that occupation ---
-        Query query = new Query(Criteria.where("amet_kood").is(employment.getAmet_kood()));
-        query.addCriteria(Criteria.where("isik_id").is(new ObjectId(employment.getIsik_id())));
-        query.addCriteria(Criteria.where("lopu_aeg").is(null));
+        Query query = new Query(Criteria.where("ocupation_code").is(employment.getOccupation_code()));
+        query.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
+        query.addCriteria(Criteria.where("end_time").is(null));
 
         Employment possibleActiveEmployment = universalMongoTemplate.getOneByQuery(query, Employment.class);
         if (possibleActiveEmployment != null) {
@@ -57,31 +57,31 @@ public class MongoDbRefEmploymentRepository {
         }
         //------
         Employment.EmploymentDbEntry dbEntry = new Employment.EmploymentDbEntry(
-                employment.getIsik_id(),
-                employment.getAmet_kood(),
-                employment.getAlguse_aeg()
+                employment.getPerson_id(),
+                employment.getOccupation_code(),
+                employment.getStart_time()
         );
         return universalMongoTemplate.addEntity(dbEntry);
     }
 
     public boolean endEmployeeActiveEmployment(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getLopu_aeg())) {
+        if (!validationChecks.isDateInRange2010to2100(employment.getEnd_time())) {
             log.info("end active employment, end date not in range");
             return false;
         }
 
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("isik_id").is(new ObjectId(employment.getIsik_id())));
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("amet_kood").is(employment.getAmet_kood()));
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("lopu_aeg").is(null));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("occupation_code").is(employment.getOccupation_code()));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("end_time").is(null));
 
         Employment modifiableEmployment = universalMongoTemplate.getOneByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
-        if (!validationChecks.isFirstDateBeforeSecondDate(modifiableEmployment.getAlguse_aeg(), employment.getLopu_aeg())) {
+        if (!validationChecks.isFirstDateBeforeSecondDate(modifiableEmployment.getStart_time(), employment.getEnd_time())) {
             log.info("end active employment, end date is before start date");
             return false;
         }
 
-        Update updatableInfo = new Update().set("lopu_aeg", employment.getLopu_aeg());
+        Update updatableInfo = new Update().set("end_time", employment.getEnd_time());
         return universalMongoTemplate.updateEntity(
                 queryFindPersonActiveEmploymentInOccupation,
                 updatableInfo,
@@ -90,24 +90,24 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public boolean endEmployeeAllEmployments(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getLopu_aeg())) {
+        if (!validationChecks.isDateInRange2010to2100(employment.getEnd_time())) {
             log.info("end all employments, end date not in range 2010-2100");
             return false;
         }
 
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("isik_id").is(new ObjectId(employment.getIsik_id())));
-        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("lopu_aeg").is(null));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
+        queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("end_time").is(null));
 
         List<Employment> modifiableEmployments = universalMongoTemplate.getAllByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
         for (Employment e: modifiableEmployments) {
-            if (!validationChecks.isFirstDateBeforeSecondDate(e.getAlguse_aeg(), employment.getLopu_aeg())) {
+            if (!validationChecks.isFirstDateBeforeSecondDate(e.getStart_time(), employment.getEnd_time())) {
                 log.info("end all employments, end date is before start date");
                 return false;
             }
         }
 
-        Update updatableInfo = new Update().set("lopu_aeg", employment.getLopu_aeg());
+        Update updatableInfo = new Update().set("end_time", employment.getEnd_time());
         return universalMongoTemplate.updateAllEntities(
                 queryFindPersonActiveEmploymentInOccupation,
                 updatableInfo,

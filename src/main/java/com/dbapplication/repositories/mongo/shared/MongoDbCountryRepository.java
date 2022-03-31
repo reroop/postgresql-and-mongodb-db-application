@@ -24,7 +24,7 @@ public class MongoDbCountryRepository {
     }
 
     public Country getCountryByCountryCode(String countryCode) {
-        Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(countryCode));
+        Query queryFindByCountryCode = new Query(Criteria.where("country_code").is(countryCode));
         return universalMongoTemplate.getOneByQuery(queryFindByCountryCode, Country.class);
     }
 
@@ -33,13 +33,13 @@ public class MongoDbCountryRepository {
     }
 
     public Country deleteCountryByCountryCode(String countryCode) {
-        Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(countryCode));
+        Query queryFindByCountryCode = new Query(Criteria.where("country_code").is(countryCode));
         return universalMongoTemplate.deleteEntity(queryFindByCountryCode, Country.class);
     }
 
     public boolean updateCountry(Country country) {
-        Query queryFindByCountryCode = new Query(Criteria.where("riik_kood").is(country.getRiik_kood()));
-        Update updateCountryName = new Update().set("nimetus", country.getNimetus());
+        Query queryFindByCountryCode = new Query(Criteria.where("country_code").is(country.getCountry_code()));
+        Update updateCountryName = new Update().set("name", country.getName());
         return universalMongoTemplate.updateEntity(queryFindByCountryCode, updateCountryName, Country.class);
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document(collection = "riik")
+@Document(collection = "country")
 public class Country {
 
     @Getter
@@ -21,15 +21,24 @@ public class Country {
 
     @Getter
     @Setter
-    private String riik_kood;
+    private String country_code;
 
     @Getter
     @Setter
-    private String nimetus;
+    private String name;
 
     public Country(String code, String name) {
-        this.riik_kood = code;
-        this.nimetus = name;
+        this.country_code = code;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Country{" +
+                "_id='" + _id + '\'' +
+                ", country_code='" + country_code + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @NoArgsConstructor
@@ -38,14 +47,5 @@ public class Country {
     @Setter
     public static class CountryDto {
         private Country country;
-    }
-
-    @Override
-    public String toString() {
-        return "Country{" +
-                "id='" + _id + '\'' +
-                ", countryCode='" + riik_kood + '\'' +
-                ", countryName='" + nimetus + '\'' +
-                '}';
     }
 }

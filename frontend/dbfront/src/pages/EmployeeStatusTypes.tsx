@@ -24,8 +24,8 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
         let newEmployeeStatusTypeDescription: string|null = null;
 
         const handleEditTypeButtonClick = (statusType: EmployeeStatusType) => {
-            if (statusType.kirjeldus === '') {
-                statusType.kirjeldus = undefined;
+            if (statusType.description === '') {
+                statusType.description = undefined;
             }
             employeeStatusTypeStore.updateEmployeeStatusType(statusType);
         };
@@ -40,11 +40,11 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
             }
 
             const newStatusType: EmployeeStatusType = {
-                tootaja_seisundi_liik_kood: newEmployeeStatusTypeCode,
-                nimetus: newEmployeeStatusTypeName
+                employee_status_type_code: newEmployeeStatusTypeCode,
+                name: newEmployeeStatusTypeName
             };
             if (newEmployeeStatusTypeDescription != null) {
-                newStatusType.kirjeldus = newEmployeeStatusTypeDescription;
+                newStatusType.description = newEmployeeStatusTypeDescription;
             }
             employeeStatusTypeStore.addEmployeeStatusType(newStatusType);
             newEmployeeStatusTypeCode = null;
@@ -101,30 +101,30 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
                         </thead>
                         <tbody>
                         {employeeStatusTypes.map((statusType) => (
-                            <tr key={statusType.tootaja_seisundi_liik_kood}>
+                            <tr key={statusType.employee_status_type_code}>
                                 <td>
-                                    {statusType.tootaja_seisundi_liik_kood}
+                                    {statusType.employee_status_type_code}
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Employee status type name"}
-                                            value={statusType.nimetus}
-                                            onChange={(e) => statusType.nimetus = e.target.value}/>
+                                            value={statusType.name}
+                                            onChange={(e) => statusType.name = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Employee status type description"}
-                                            value={statusType.kirjeldus}
-                                            onChange={(e) => statusType.kirjeldus = e.target.value}/>
+                                            value={statusType.description}
+                                            onChange={(e) => statusType.description = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"
                                             onClick={() => handleEditTypeButtonClick(statusType)}>Update</Button></td>
                                 <td><Button variant="danger"
-                                            onClick={() => handleDeleteTypeButtonClick(statusType.tootaja_seisundi_liik_kood)}>Delete</Button>
+                                            onClick={() => handleDeleteTypeButtonClick(statusType.employee_status_type_code)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}

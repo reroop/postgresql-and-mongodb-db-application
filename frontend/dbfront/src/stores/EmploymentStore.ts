@@ -4,10 +4,10 @@ import OccupationStore, {Occupation} from "./OccupationStore";
 
 export interface Employment {
     _id?: string,
-    isik_id: string,
-    amet_kood?: number;
-    alguse_aeg?: string,
-    lopu_aeg?: string
+    person_id: string,
+    occupation_code?: number;
+    start_time?: string,
+    end_time?: string
 }
 
 export interface OccupationToEmployments {
@@ -38,11 +38,11 @@ class EmploymentStore {
         const result: OccupationToEmployments[] = [];
 
         for (const occupation of this.occupationStore.occupations) {
-            const employmentsInOccupation: Employment[] = await this.getAllEmploymentsByOccupationCode(occupation.amet_kood);
+            const employmentsInOccupation: Employment[] = await this.getAllEmploymentsByOccupationCode(occupation.occupation_code);
 
             let entry: OccupationToEmployments = {
-                occupationCode: occupation.amet_kood,
-                occupationName: occupation.nimetus,
+                occupationCode: occupation.occupation_code,
+                occupationName: occupation.name,
                 numberOfEmployments: employmentsInOccupation.length
             }
             result.push(entry);
@@ -57,7 +57,7 @@ class EmploymentStore {
             let entry: EmploymentWithOccupation = {
                 employment: employment
             }
-            entry.occupation = await this.occupationStore.getOccupationByOccupationCode(employment.amet_kood!!)
+            entry.occupation = await this.occupationStore.getOccupationByOccupationCode(employment.occupation_code!!)
             this.personEmploymentsWithOccupations.push(entry);
         })
     }

@@ -14,24 +14,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document(collection = "ametis_tootamine")
+@Document(collection = "employment")
 public class Employment {
 
     @Id
     private String _id;
-    private String isik_id;
-    private Integer amet_kood;
-    private LocalDateTime alguse_aeg;
-    private LocalDateTime lopu_aeg;
+    private String person_id;
+    private Integer occupation_code;
+    private LocalDateTime start_time;
+    private LocalDateTime end_time;
 
     @Override
     public String toString() {
-        return "EmployeeInOccupation{" +
+        return "Employment{" +
                 "_id='" + _id + '\'' +
-                ", isik_id='" + isik_id + '\'' +
-                ", amet_kood=" + amet_kood +
-                ", alguse_aeg=" + alguse_aeg +
-                ", lopu_aeg=" + lopu_aeg +
+                ", person_id='" + person_id + '\'' +
+                ", occupation_code=" + occupation_code +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
                 '}';
     }
 
@@ -48,20 +48,20 @@ public class Employment {
     @AllArgsConstructor
     @Getter
     @Setter
-    @Document(collection = "ametis_tootamine")
+    @Document(collection = "employment")
     public static class EmploymentDbEntry {
 
         @Id
         private String _id;
-        private ObjectId isik_id;
-        private Integer amet_kood;
-        private LocalDateTime alguse_aeg;
-        private LocalDateTime lopu_aeg;
+        private ObjectId person_id;
+        private Integer occupation_code;
+        private LocalDateTime start_time;
+        private LocalDateTime end_time;
 
         public EmploymentDbEntry(String personId, Integer occupationCode, LocalDateTime startTime) {
-            this.isik_id = new ObjectId(personId);
-            this.amet_kood = occupationCode;
-            this.alguse_aeg = startTime;
+            this.person_id = new ObjectId(personId);
+            this.occupation_code = occupationCode;
+            this.start_time = startTime;
         }
     }
 }

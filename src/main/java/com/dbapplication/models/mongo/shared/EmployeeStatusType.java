@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "tootaja_seisundi_liik")
+@Document(collection = "employee_status_type")
 public class EmployeeStatusType {
 
     @Getter
@@ -17,22 +17,32 @@ public class EmployeeStatusType {
     private String _id;
 
     @Getter
-    private Integer tootaja_seisundi_liik_kood;
+    private Integer employee_status_type_code;
     @Getter
-    private String nimetus;
+    private String name;
     @Getter
-    private String kirjeldus;
+    private String description;
 
     public EmployeeStatusType(Integer code, String name, String description) {
-        this.tootaja_seisundi_liik_kood = code;
-        this.nimetus = name;
-        this.kirjeldus = description;
+        this.employee_status_type_code = code;
+        this.name = name;
+        this.description = description;
     }
 
 
     public EmployeeStatusType(Integer code, String name) {
-        this.tootaja_seisundi_liik_kood = code;
-        this.nimetus = name;
+        this.employee_status_type_code = code;
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "EmployeeStatusType{" +
+                "_id='" + _id + '\'' +
+                ", employee_status_type_code=" + employee_status_type_code +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 
     @NoArgsConstructor
@@ -43,13 +53,4 @@ public class EmployeeStatusType {
         private EmployeeStatusType employeeStatusType;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeStatusType{" +
-                "id='" + _id + '\'' +
-                ", tootaja_seisundi_liik_kood=" + tootaja_seisundi_liik_kood +
-                ", nimetus='" + nimetus + '\'' +
-                ", kirjeldus='" + kirjeldus + '\'' +
-                '}';
-    }
 }

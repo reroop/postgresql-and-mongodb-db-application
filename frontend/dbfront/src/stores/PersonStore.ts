@@ -3,14 +3,14 @@ import API from '../util/ApiUtil';
 
 export interface Person {
     _id?: string,
-    isikukood: string,
-    riik_kood: string,
-    e_meil: string,
-    synni_kp: string,
-    reg_aeg?: string,
-    eesnimi?: string,
-    perenimi?: string,
-    elukoht?: string
+    nat_id_code: string,
+    country_code: string,
+    e_mail: string,
+    birth_date: string,
+    reg_time?: string,
+    given_name?: string,
+    surname?: string,
+    address?: string
 }
 
 const personsEndpoint: string = '/persons';

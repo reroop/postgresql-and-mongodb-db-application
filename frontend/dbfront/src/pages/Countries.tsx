@@ -35,8 +35,8 @@ class Countries extends React.Component<CountriesProps> {
 
         const handleAddCountryClick = () => {
             const newCountry: Country = {
-                riik_kood: newCountryCode,
-                nimetus: newCountryName
+                country_code: newCountryCode,
+                name: newCountryName
             };
             countryStore.addCountry(newCountry);
             newCountryCode = '';
@@ -83,27 +83,27 @@ class Countries extends React.Component<CountriesProps> {
                         </thead>
                         <tbody>
                         {countries?.map((country) => (
-                            <tr key={country.riik_kood}>
+                            <tr key={country.country_code}>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Country code"}
-                                            value={country.riik_kood}
-                                            onChange={(e) => country.riik_kood = e.target.value}/>
+                                            value={country.country_code}
+                                            onChange={(e) => country.country_code = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Country name"}
-                                            value={country.nimetus}
-                                            onChange={(e) => country.nimetus = e.target.value}/>
+                                            value={country.name}
+                                            onChange={(e) => country.name = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"
                                             onClick={() => handleEditCountryButtonClick(country)}>Update</Button></td>
                                 <td><Button variant="danger"
-                                            onClick={() => handleDeleteCountryButtonClick(country.riik_kood)}>Delete</Button>
+                                            onClick={() => handleDeleteCountryButtonClick(country.country_code)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}

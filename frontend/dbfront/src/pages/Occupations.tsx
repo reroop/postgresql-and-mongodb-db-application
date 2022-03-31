@@ -47,8 +47,8 @@ class Occupations extends React.Component<OccupationsProps, State> {
         const occupations: Occupation[] = occupationStore.occupations;
 
         const handleEditOccupationButtonClick = (occupation: Occupation) => {
-            if (occupation.kirjeldus === '') {
-                occupation.kirjeldus = undefined;
+            if (occupation.description === '') {
+                occupation.description = undefined;
             }
             occupationStore.updateOccupation(occupation).then(occupationStore.getOccupations);
         };
@@ -62,11 +62,11 @@ class Occupations extends React.Component<OccupationsProps, State> {
                 return;
             }
             const newOccupation: Occupation = {
-                amet_kood: this.state.newOccupationCode!!,
-                nimetus: this.state.newOccupationName
+                occupation_code: this.state.newOccupationCode!!,
+                name: this.state.newOccupationName
             };
             if (this.state.newOccupationDescription !== null) {
-                newOccupation.kirjeldus = this.state.newOccupationDescription;
+                newOccupation.description = this.state.newOccupationDescription;
             }
             occupationStore.addOccupation(newOccupation).then(r => this.setState({
                 newOccupationCode: undefined,
@@ -150,16 +150,16 @@ class Occupations extends React.Component<OccupationsProps, State> {
                         </thead>
                         <tbody>
                         {occupations.map((occupation) => (
-                            <tr key={occupation.amet_kood}>
+                            <tr key={occupation.occupation_code}>
                                 <td>
-                                    {occupation.amet_kood}
+                                    {occupation.occupation_code}
                                 </td>
                                 <td>
                                     <InputGroup className={"mb-3"}>
                                         <FormControl
                                             placeholder={"Occupation name"}
-                                            value={occupation.nimetus}
-                                            onChange={(e) => occupation.nimetus = e.target.value}/>
+                                            value={occupation.name}
+                                            onChange={(e) => occupation.name = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td>
@@ -167,15 +167,15 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                         <FormControl
                                             as="textarea" rows={3}
                                             placeholder={"Occupation description (optional)"}
-                                            value={occupation.kirjeldus}
-                                            onChange={(e) => occupation.kirjeldus = e.target.value}/>
+                                            value={occupation.description}
+                                            onChange={(e) => occupation.description = e.target.value}/>
                                     </InputGroup>
                                 </td>
                                 <td><Button variant="info"
                                             onClick={() => handleEditOccupationButtonClick(occupation)}>Update</Button>
                                 </td>
                                 <td><Button variant="danger"
-                                            onClick={() => handleDeleteOccupationButtonClick(occupation.amet_kood)}>Delete</Button>
+                                            onClick={() => handleDeleteOccupationButtonClick(occupation.occupation_code)}>Delete</Button>
                                 </td>
                             </tr>
                         ))}

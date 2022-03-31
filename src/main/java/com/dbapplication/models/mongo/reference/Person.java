@@ -13,29 +13,44 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document(collection = "isik")
+@Document(collection = "person")
 public class Person {
 
     @Id
     private String _id;
-    private String isikukood;
-    private String riik_kood;
-    private String e_meil;
-    private LocalDateTime synni_kp;
-    private LocalDateTime reg_aeg;
-    private String eesnimi;
-    private String perenimi;
-    private String elukoht;
+    private String nat_id_code;
+    private String country_code;
+    private String e_mail;
+    private LocalDateTime birth_date;
+    private LocalDateTime reg_time;
+    private String given_name;
+    private String surname;
+    private String address;
 
-    public Person(String isikukood, String riik_kood, String e_meil, LocalDateTime synni_kp, LocalDateTime reg_aeg, String eesnimi, String perenimi, String elukoht) {
-        this.isikukood = isikukood;
-        this.riik_kood = riik_kood;
-        this.e_meil = e_meil;
-        this.synni_kp = synni_kp;
-        this.reg_aeg = reg_aeg;
-        this.eesnimi = eesnimi;
-        this.perenimi = perenimi;
-        this.elukoht = elukoht;
+    public Person(String nat_id_code, String country_code, String e_mail, LocalDateTime birth_date, LocalDateTime reg_time, String given_name, String surname, String address) {
+        this.nat_id_code = nat_id_code;
+        this.country_code = country_code;
+        this.e_mail = e_mail;
+        this.birth_date = birth_date;
+        this.reg_time = reg_time;
+        this.given_name = given_name;
+        this.surname = surname;
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "_id='" + _id + '\'' +
+                ", nat_id_code='" + nat_id_code + '\'' +
+                ", country_code='" + country_code + '\'' +
+                ", e_mail='" + e_mail + '\'' +
+                ", birth_date=" + birth_date +
+                ", reg_time=" + reg_time +
+                ", given_name='" + given_name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 
     @NoArgsConstructor
@@ -44,20 +59,5 @@ public class Person {
     @Setter
     public static class PersonDto {
         private Person person;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "_id='" + _id + '\'' +
-                ", isikukood='" + isikukood + '\'' +
-                ", riik_kood='" + riik_kood + '\'' +
-                ", e_meil='" + e_meil + '\'' +
-                ", synni_kp=" + synni_kp +
-                ", reg_aeg=" + reg_aeg +
-                ", eesnimi='" + eesnimi + '\'' +
-                ", perenimi='" + perenimi + '\'' +
-                ", elukoht='" + elukoht + '\'' +
-                '}';
     }
 }

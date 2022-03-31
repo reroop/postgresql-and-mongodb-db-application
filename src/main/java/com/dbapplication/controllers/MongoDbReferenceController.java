@@ -3,7 +3,6 @@ package com.dbapplication.controllers;
 import com.dbapplication.models.mongo.reference.Employee;
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.models.mongo.reference.Person;
-import com.dbapplication.models.mongo.reference.UserAccount;
 import com.dbapplication.models.mongo.shared.Country;
 import com.dbapplication.models.mongo.shared.EmployeeStatusType;
 import com.dbapplication.models.mongo.shared.Occupation;
@@ -23,7 +22,7 @@ import java.util.List;
 
 @Slf4j
 @Profile("mongoref")
-@RequestMapping("mongoref")
+//@RequestMapping("mongoref")
 @RestController
 public class MongoDbReferenceController {
 
@@ -38,9 +37,6 @@ public class MongoDbReferenceController {
 
     @Autowired
     private MongoDbRefPersonsService mongoDbRefPersonsService;
-
-    @Autowired
-    private MongoDbRefUserAccountsService mongoDbRefUserAccountsService;
 
     @Autowired
     private MongoDbRefEmployeesService mongoDbRefEmployeesService;
@@ -169,51 +165,11 @@ public class MongoDbReferenceController {
         return mongoDbRefPersonsService.addPerson(personDto.getPerson());
     }
 
-    /*
-    @DeleteMapping("persons/{objectId}")
-    public Person deletePersonBy_id(@PathVariable(value = "objectId") String objectId) {
-        return mongoDbRefPersonsService.deletePersonBy_id(objectId);
-    }
-
-     */
-
     @PutMapping("persons")
     public boolean updatePerson(@RequestBody Person.PersonDto personDto) {
         return mongoDbRefPersonsService.updatePerson(personDto.getPerson());
     }
 
-    //---------------
-
-    //-----user accounts--------
-    /*
-    @GetMapping("userAccounts")
-    public List<UserAccount> getAllUserAccounts() {
-        return mongoDbRefUserAccountsService.getAllUserAccounts();
-    }
-
-    @GetMapping("userAccounts/{personId}")
-    public UserAccount getUserAccountByPersonId(@PathVariable(value="personId") String personId) {
-        return mongoDbRefUserAccountsService.getUserAccountByPersonId(personId);
-    }
-
-    @PostMapping("userAccounts")
-    public UserAccount.UserAccountDbEntry addUserAccount(@RequestBody UserAccount userAccount) {
-        return mongoDbRefUserAccountsService.addUserAccount(userAccount);
-    }
-
-    @DeleteMapping("userAccounts/{personId}")
-    public UserAccount deleteUserAccountByPersonId(@PathVariable(value = "personId") String personId) {
-        return mongoDbRefUserAccountsService.deleteUserAccountByPersonId(personId);
-    }
-
-    @PutMapping("userAccounts")
-    public boolean updateUserAccount(@RequestBody UserAccount userAccount) {
-        return mongoDbRefUserAccountsService.updateUserAccount(userAccount);
-    }
-
-     */
-
-    //---------------------------
 
     //-----employees-------
     @GetMapping("employees")
@@ -235,7 +191,7 @@ public class MongoDbReferenceController {
     public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
         List<Employment> employments = this.getEmployeeAllEmployments(personId);
         for (Employment employment: employments) {
-            if (employment.getLopu_aeg() == null) {
+            if (employment.getEnd_time() == null) {
                 return this.getEmployeeByPersonId(personId);
             }
         }

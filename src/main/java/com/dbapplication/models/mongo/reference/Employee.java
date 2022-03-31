@@ -12,21 +12,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document(collection = "tootaja")
+@Document(collection = "employee")
 public class Employee {
 
     @Id
     private String _id;
-    private String isik_id;
-    private Integer tootaja_seisundi_liik_kood;
+    private String person_id;
+    private Integer employee_status_type_code;
     private String mentor_id;
 
     @Override
     public String toString() {
         return "Employee{" +
                 "_id='" + _id + '\'' +
-                ", isik_id='" + isik_id + '\'' +
-                ", tootaja_seisundi_liik_kood=" + tootaja_seisundi_liik_kood +
+                ", person_id='" + person_id + '\'' +
+                ", employee_status_type_code=" + employee_status_type_code +
                 ", mentor_id='" + mentor_id + '\'' +
                 '}';
     }
@@ -43,19 +43,19 @@ public class Employee {
     @AllArgsConstructor
     @Getter
     @Setter
-    @Document(collection = "tootaja")
+    @Document(collection = "employee")
     public static class EmployeeDbEntry {
 
         @Id
         private String _id;
 
-        private ObjectId isik_id;
-        private Integer tootaja_seisundi_liik_kood;
+        private ObjectId person_id;
+        private Integer employee_status_type_code;
         private ObjectId mentor_id;
 
-        public EmployeeDbEntry(String isik_id, Integer tootaja_seisundi_liik_kood) {
-            this.isik_id = new ObjectId(isik_id);
-            this.tootaja_seisundi_liik_kood = tootaja_seisundi_liik_kood;
+        public EmployeeDbEntry(String person_id, Integer employee_status_type_code) {
+            this.person_id = new ObjectId(person_id);
+            this.employee_status_type_code = employee_status_type_code;
         }
     }
 }

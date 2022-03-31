@@ -3,9 +3,9 @@ import API from '../util/ApiUtil';
 
 export interface EmployeeStatusType {
     _id?: string,
-    tootaja_seisundi_liik_kood: number,
-    nimetus: string,
-    kirjeldus?: string
+    employee_status_type_code: number,
+    name: string,
+    description?: string
 }
 
 const employeeStatusTypesEndpoint: string = '/employeeStatusTypes';

@@ -3,9 +3,9 @@ import API from '../util/ApiUtil';
 
 export interface Occupation {
     _id?: string,
-    amet_kood: number,
-    nimetus: string,
-    kirjeldus?: string
+    occupation_code: number,
+    name: string,
+    description?: string
 }
 
 const occupationsEndpoint: string = '/occupations';

@@ -44,9 +44,9 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
 
     private handleAddEmploymentForPersonButtonClicked() {
         const newEmployment: Employment = {
-            alguse_aeg: this.state.newEmploymentStartDate!!,
-            amet_kood: this.state.newEmploymentOccupation?.amet_kood!!,
-            isik_id: this.props.person_id
+            start_time: this.state.newEmploymentStartDate!!,
+            occupation_code: this.state.newEmploymentOccupation?.occupation_code!!,
+            person_id: this.props.person_id
         }
 
         this.props.employmentStore?.addNewEmployment(newEmployment).then(() => {
@@ -57,9 +57,9 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
 
     private handleEndEmployment(occupationCode: number) {
         const endEmployment: Employment = {
-            lopu_aeg: this.state.endEmploymentEndDate,
-            amet_kood: occupationCode,
-            isik_id: this.props.person_id
+            end_time: this.state.endEmploymentEndDate,
+            occupation_code: occupationCode,
+            person_id: this.props.person_id
         };
         console.log(endEmployment);
         this.props.employmentStore?.endEmployment(endEmployment).then(() => {
@@ -87,12 +87,12 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                 <Form.Label>Occupation:</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        {this.state.newEmploymentOccupation?.nimetus}
+                                        {this.state.newEmploymentOccupation?.name}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {occupations.map((occupation) => (
                                             <Dropdown.Item onClick={() => {this.setState({newEmploymentOccupation: occupation})}}>
-                                                {occupation.amet_kood + ' - ' + occupation.nimetus}
+                                                {occupation.occupation_code + ' - ' + occupation.name}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
@@ -132,40 +132,40 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                 {entries.map((entry) => (
                                     <tr key={entry.employment._id}>
                                         <td>
-                                            {entry.occupation?.amet_kood}
+                                            {entry.occupation?.occupation_code}
                                         </td>
                                         <td>
-                                            {entry.occupation?.nimetus}
+                                            {entry.occupation?.name}
                                         </td>
                                         <td>
-                                            {entry.occupation?.kirjeldus}
+                                            {entry.occupation?.description}
                                         </td>
                                         <td>
                                             <FormControl
                                                 type={"date"}
-                                                value={new Date(entry.employment.alguse_aeg!!).toLocaleDateString("sv-SE")}/>
+                                                value={new Date(entry.employment.start_time!!).toLocaleDateString("sv-SE")}/>
                                         </td>
                                         <td>
-                                            {entry.employment.lopu_aeg!! ?
+                                            {entry.employment.end_time!! ?
                                                 <FormControl
                                                     type={"date"}
-                                                    value={new Date(entry.employment.lopu_aeg!!).toLocaleDateString("sv-SE")}/>
+                                                    value={new Date(entry.employment.end_time!!).toLocaleDateString("sv-SE")}/>
                                                 : <FormControl
                                                     type={"date"}
                                                     value={new Date(this.state.endEmploymentEndDate!!).toLocaleDateString("sv-SE")}
                                                     onChange={(e) => {
                                                         this.setState({
                                                             endEmploymentEndDate: e.target.value + 'T00:00:00',
-                                                            endEmploymentOccupationCode: entry.employment.amet_kood
+                                                            endEmploymentOccupationCode: entry.employment.occupation_code
                                                         });   //hack for localdatetime in backend
                                                     }
                                                     }/>
                                             }
                                         </td>
                                         <td>
-                                            {entry.employment.lopu_aeg == undefined &&
+                                            {entry.employment.end_time == undefined &&
                                                 <Button variant="warning"
-                                                        onClick={() => this.handleEndEmployment(entry.employment.amet_kood!!)}>
+                                                        onClick={() => this.handleEndEmployment(entry.employment.occupation_code!!)}>
                                                     End this employment
                                                 </Button>
                                             }

@@ -23,7 +23,7 @@ public class MongoDbOccupationRepository {
     }
 
     public Occupation getOccupationByOccupationCode(Integer occupationCode) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("amet_kood").is(occupationCode));
+        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupationCode));
         return universalMongoTemplate.getOneByQuery(queryFindByOccupationCode, Occupation.class);
     }
 
@@ -32,20 +32,20 @@ public class MongoDbOccupationRepository {
     }
 
     public Occupation deleteOccupationByOccupationCode(Integer occupationCode) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("amet_kood").is(occupationCode));
+        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupationCode));
         return universalMongoTemplate.deleteEntity(queryFindByOccupationCode, Occupation.class);
     }
 
     public boolean updateOccupation(Occupation occupation) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("amet_kood").is(occupation.getAmet_kood()));
+        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupation.getOccupation_code()));
         Update updatableInfo = new Update();
-        if (occupation.getNimetus() != null) {
-            updatableInfo.set("nimetus", occupation.getNimetus());
+        if (occupation.getName() != null) {
+            updatableInfo.set("name", occupation.getName());
         }
-        if (occupation.getKirjeldus() != null) {
-            updatableInfo.set("kirjeldus", occupation.getKirjeldus());
+        if (occupation.getDescription() != null) {
+            updatableInfo.set("description", occupation.getDescription());
         } else {
-            updatableInfo.unset("kirjeldus");
+            updatableInfo.unset("description");
         }
         return universalMongoTemplate.updateEntity(queryFindByOccupationCode, updatableInfo, Occupation.class);
     }

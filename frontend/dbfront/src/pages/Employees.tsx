@@ -85,8 +85,8 @@ class Employees extends React.Component<EmployeesProps, State> {
     private handleAddNewEmployee() {
         if (this.state.currentEmployeePerson_id !== null) {
             const newEmployee: Employee = {
-                isik_id: this.state.currentEmployeePerson_id,
-                tootaja_seisundi_liik_kood: this.state.currentEmployeeStatusTypeCode
+                person_id: this.state.currentEmployeePerson_id,
+                employee_status_type_code: this.state.currentEmployeeStatusTypeCode
             }
             if (this.state.currentEmployeeMentorId !== null) {
                 newEmployee.mentor_id = this.state.currentEmployeeMentorId;
@@ -98,25 +98,25 @@ class Employees extends React.Component<EmployeesProps, State> {
             });
         } else {
             const newPerson: Person = {
-                riik_kood: this.state.newPersonCountryCode,
-                isikukood: this.state.newPersonNationalIdCode,
-                e_meil: this.state.newPersonEmail,
-                synni_kp: this.state.newPersonBirthdate,
+                country_code: this.state.newPersonCountryCode,
+                nat_id_code: this.state.newPersonNationalIdCode,
+                e_mail: this.state.newPersonEmail,
+                birth_date: this.state.newPersonBirthdate,
             };
             if (this.state.newPersonGivenName !== '') {
-                newPerson.eesnimi = this.state.newPersonGivenName;
+                newPerson.given_name = this.state.newPersonGivenName;
             }
             if (this.state.newPersonSurname !== '') {
-                newPerson.perenimi = this.state.newPersonSurname;
+                newPerson.surname = this.state.newPersonSurname;
             }
             if (this.state.newPersonAddress !== '') {
-                newPerson.elukoht = this.state.newPersonAddress;
+                newPerson.address = this.state.newPersonAddress;
             }
             const savedPersonPromise: Promise<Person> | undefined = this.props.personStore?.addPerson(newPerson);
             savedPersonPromise?.then(savedPerson => {
                 const newEmployee: Employee = {
-                    isik_id: savedPerson._id!!,
-                    tootaja_seisundi_liik_kood: this.state.currentEmployeeStatusTypeCode
+                    person_id: savedPerson._id!!,
+                    employee_status_type_code: this.state.currentEmployeeStatusTypeCode
                 }
                 if (this.state.currentEmployeeMentorId !== null) {
                     newEmployee.mentor_id = this.state.currentEmployeeMentorId;
@@ -197,9 +197,9 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                         <Dropdown.Menu>
                                                                             {countries.map((country) => (
                                                                                 <Dropdown.Item onClick={() => {
-                                                                                    this.setState({newPersonCountryCode: country.riik_kood})
+                                                                                    this.setState({newPersonCountryCode: country.country_code})
                                                                                 }}>
-                                                                                    {country.riik_kood + ' - ' + country.nimetus}
+                                                                                    {country.country_code + ' - ' + country.name}
                                                                                 </Dropdown.Item>
                                                                             ))}
                                                                         </Dropdown.Menu>
@@ -272,10 +272,10 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                     <Dropdown.Menu>
                                                         {persons.map((person) => (
                                                             <Dropdown.Item onClick={() => {
-                                                                this.setState({currentEmployeePersonName: person.eesnimi + ' ' + person.perenimi})
+                                                                this.setState({currentEmployeePersonName: person.given_name + ' ' + person.surname})
                                                                 this.setState({currentEmployeePerson_id: person._id!!})
                                                             }}>
-                                                                {person.eesnimi + ' ' + person.perenimi}
+                                                                {person.given_name + ' ' + person.surname}
                                                             </Dropdown.Item>
                                                         ))}
                                                     </Dropdown.Menu>
@@ -299,9 +299,9 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                     <Dropdown.Menu>
                                                         {employeeStatusTypes.map((statusType) => (
                                                             <Dropdown.Item onClick={() => {
-                                                                this.setState({currentEmployeeStatusTypeCode: statusType.tootaja_seisundi_liik_kood})
+                                                                this.setState({currentEmployeeStatusTypeCode: statusType.employee_status_type_code})
                                                             }}>
-                                                                {statusType.tootaja_seisundi_liik_kood + ' - ' + statusType.nimetus}
+                                                                {statusType.employee_status_type_code + ' - ' + statusType.name}
                                                             </Dropdown.Item>
                                                         ))}
                                                     </Dropdown.Menu>

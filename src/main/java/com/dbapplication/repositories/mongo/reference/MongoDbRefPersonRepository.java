@@ -32,13 +32,13 @@ public class MongoDbRefPersonRepository {
 
     public Person getPersonByCountryCodeAndPersonalIdCode(String countryCode, String personalIdCode) {
         Query findByCountryAndPersonalCode = new Query();
-        findByCountryAndPersonalCode.addCriteria(Criteria.where("riik_kood").is(countryCode));
-        findByCountryAndPersonalCode.addCriteria(Criteria.where("isikukood").is(personalIdCode));
+        findByCountryAndPersonalCode.addCriteria(Criteria.where("country_code").is(countryCode));
+        findByCountryAndPersonalCode.addCriteria(Criteria.where("nat_id_code").is(personalIdCode));
         return universalMongoTemplate.getOneByQuery(findByCountryAndPersonalCode, Person.class);
     }
 
     public Person addPerson(Person person) {
-        person.setReg_aeg(LocalDateTime.now());
+        person.setReg_time(LocalDateTime.now());
         if (!validationChecks.isMongoPersonInfoValid(person)) {
             return null;
         }
@@ -58,35 +58,35 @@ public class MongoDbRefPersonRepository {
 
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(person.get_id()));
         Update updatableInfo = new Update();
-        if (person.getIsikukood() != null) {
-            updatableInfo.set("isikukood", person.getIsikukood());
+        if (person.getNat_id_code() != null) {
+            updatableInfo.set("nat_id_code", person.getNat_id_code());
         }
-        if (person.getRiik_kood() != null) {
-            updatableInfo.set("riik_kood", person.getRiik_kood());
+        if (person.getCountry_code() != null) {
+            updatableInfo.set("country_code", person.getCountry_code());
         }
-        if (person.getE_meil() != null) {
-            updatableInfo.set("e_meil", person.getE_meil());
+        if (person.getE_mail() != null) {
+            updatableInfo.set("e_mail", person.getE_mail());
         }
-        if (person.getSynni_kp() != null) {
-            updatableInfo.set("synni_kp", person.getSynni_kp());
+        if (person.getBirth_date() != null) {
+            updatableInfo.set("birth_date", person.getBirth_date());
         }
         //set firstname to null if not specified
-        if (person.getEesnimi() != null && person.getEesnimi().length() != 0) {
-            updatableInfo.set("eesnimi", person.getEesnimi());
+        if (person.getGiven_name() != null && person.getGiven_name().length() != 0) {
+            updatableInfo.set("given_name", person.getGiven_name());
         } else {
-            updatableInfo.unset("eesnimi");
+            updatableInfo.unset("given_name");
         }
         //set lastname to null if not specified
-        if (person.getPerenimi() != null && person.getPerenimi().length() != 0) {
-            updatableInfo.set("perenimi", person.getPerenimi());
+        if (person.getSurname() != null && person.getSurname().length() != 0) {
+            updatableInfo.set("surname", person.getSurname());
         } else {
-            updatableInfo.unset("perenimi");
+            updatableInfo.unset("surname");
         }
         //set address to null if not specified
-        if (person.getElukoht() != null && person.getElukoht().length() != 0) {
-            updatableInfo.set("elukoht", person.getElukoht());
+        if (person.getAddress() != null && person.getAddress().length() != 0) {
+            updatableInfo.set("address", person.getAddress());
         } else {
-            updatableInfo.unset("elukoht");
+            updatableInfo.unset("address");
         }
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, Person.class);
     }

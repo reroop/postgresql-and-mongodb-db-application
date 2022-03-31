@@ -71,8 +71,8 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
             return;
         }
         const endEmployments: Employment = {
-            lopu_aeg: this.state.endEmploymentsDate,
-            isik_id: this.state.person_id!!
+            end_time: this.state.endEmploymentsDate,
+            person_id: this.state.person_id!!
         }
         this.props.employmentStore?.endAllEmployments(endEmployments).then(() => {
             this.props.employeeStore?.setEmployeeStatusToEnded(this.state.person_id!!).then(this.refreshPage)
@@ -93,7 +93,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
             mentor = this.props.employeeStore!!.personsAsEmployees.filter( (employee) => employee.person_id === this.state.employee!!.mentor_id).at(0);
         }
 
-        if (this.state.employee?.isik_id == null) {
+        if (this.state.employee?.person_id == null) {
             return (
                 <div><h3 className={'m-3'}>This employee is deleted or not found. Go back to employees list.</h3></div>
             )
@@ -115,15 +115,15 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                 <Form.Label>Country code:</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        {this.state.person?.riik_kood}
+                                        {this.state.person?.country_code}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {countries.map( country => (
                                             <Dropdown.Item
                                                 onClick={() => {
-                                                    this.setState(state => (state.person!!.riik_kood = country.riik_kood, state));
+                                                    this.setState(state => (state.person!!.country_code = country.country_code, state));
                                                 }}>
-                                                {country.riik_kood + ' - ' + country.nimetus}
+                                                {country.country_code + ' - ' + country.name}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>
@@ -132,52 +132,52 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                             <Form.Group className="mb-3" controlId="addNatIdCode">
                                 <Form.Label>Nat. Id. code:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.isikukood}
+                                    value={this.state.person?.nat_id_code}
                                     placeholder="Enter nat. id. code"
-                                    onChange={(e) => this.setState(state => (state.person!!.isikukood = e.target.value, state))}
+                                    onChange={(e) => this.setState(state => (state.person!!.nat_id_code = e.target.value, state))}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addEmail">
                                 <Form.Label>Email:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.e_meil}
+                                    value={this.state.person?.e_mail}
                                     placeholder="Enter email"
-                                    onChange={(e) => this.setState(state => (state.person!!.e_meil = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.e_mail = e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addBirthdate">
                                 <Form.Label>Birthdate:</Form.Label>
                                 <Form.Control
                                     type={"date"}
-                                    value={new Date(this.state.person?.synni_kp!!).toLocaleDateString("sv-SE")}
-                                    onChange={(e) => this.setState(state => (state.person!!.synni_kp = e.target.value+'T00:00:00', state))}
+                                    value={new Date(this.state.person?.birth_date!!).toLocaleDateString("sv-SE")}
+                                    onChange={(e) => this.setState(state => (state.person!!.birth_date = e.target.value+'T00:00:00', state))}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="regDate">
                                 <Form.Label>Reg. date:</Form.Label>
                                 <FormControl
                                     type={"date"}
-                                    value={new Date(this.state.person?.reg_aeg!!).toLocaleDateString("sv-SE")}/>
+                                    value={new Date(this.state.person?.reg_time!!).toLocaleDateString("sv-SE")}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addFirstName">
-                                <Form.Label>First name:</Form.Label>
+                                <Form.Label>Given name:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.eesnimi}
+                                    value={this.state.person?.given_name}
                                     placeholder="Enter first name (optional, at least first or last name must be set)"
-                                    onChange={(e) => this.setState(state => (state.person!!.eesnimi = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.given_name = e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addLastName">
-                                <Form.Label>Last name:</Form.Label>
+                                <Form.Label>Surname:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.perenimi}
+                                    value={this.state.person?.surname}
                                     placeholder="Enter last name (optional, at least first or last name must be set)"
-                                    onChange={(e) => this.setState(state => (state.person!!.perenimi = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.surname = e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addAddress">
                                 <Form.Label>Address:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.elukoht}
+                                    value={this.state.person?.address}
                                     placeholder="Enter address (optional)"
-                                    onChange={(e) => this.setState(state => (state.person!!.elukoht = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.address = e.target.value, state))}/>
                             </Form.Group>
                         </Form>
                     </Col>
@@ -190,14 +190,14 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                             <Col>
                                 <Dropdown>
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
-                                        {this.state.employee?.tootaja_seisundi_liik_kood}
+                                        {this.state.employee?.employee_status_type_code}
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {employeeStatusTypes.map(status => (
                                             <Dropdown.Item onClick={() => {
-                                                this.setState(state => (state.employee!!.tootaja_seisundi_liik_kood = status.tootaja_seisundi_liik_kood, state));
+                                                this.setState(state => (state.employee!!.employee_status_type_code = status.employee_status_type_code, state));
                                             }}>
-                                                {status.tootaja_seisundi_liik_kood + ' - ' + status.nimetus}
+                                                {status.employee_status_type_code + ' - ' + status.name}
                                             </Dropdown.Item>
                                         ))}
                                     </Dropdown.Menu>

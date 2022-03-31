@@ -10,20 +10,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "tootaja")
 public class Employee {
 
-    @Getter
     @Id
     private String _id;
-
-    @Getter
     private String isik_id;
-
-    @Getter
     private Integer tootaja_seisundi_liik_kood;
-
-    @Getter
     private String mentor_id;
 
     @Override

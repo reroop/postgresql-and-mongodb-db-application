@@ -11,16 +11,13 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document("tootaja")
 public class EmbeddedEmployee {
 
-    @Getter
     private Integer tootaja_seisundi_liik_kood;
-
-    @Getter
     private String mentor_id;
-
-    @Getter
     private List<EmbeddedEmployment> ametis_tootamine;
 
     @Override

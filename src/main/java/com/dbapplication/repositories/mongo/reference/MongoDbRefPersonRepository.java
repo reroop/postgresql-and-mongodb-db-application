@@ -38,21 +38,8 @@ public class MongoDbRefPersonRepository {
     }
 
     public Person addPerson(Person person) {
-        if (!validationChecks.isDateInRange1900to2100(person.getSynni_kp())) {
-            log.info("add person, birthdate not in range 1900-2100");
-            return null;
-        }
-        if (person.getEesnimi() == null && person.getPerenimi() == null) {
-            log.info("add person, given name or surname must be set");
-            return null;
-        }
         person.setReg_aeg(LocalDateTime.now());
-        if (!validationChecks.isFirstDateBeforeSecondDate(person.getSynni_kp(), person.getReg_aeg())) {
-            log.info("add person, birth date not before reg time");
-            return null;
-        }
-        if (!validationChecks.isDateInRange2010to2100(person.getReg_aeg())) {
-            log.info("add person, reg time not in rage 2010-2100");
+        if (!validationChecks.isMongoPersonInfoValid(person)) {
             return null;
         }
 
@@ -65,6 +52,10 @@ public class MongoDbRefPersonRepository {
     }
 
     public boolean updatePerson(Person person) {
+        if (!validationChecks.isMongoPersonInfoValid(person)) {
+            return false;
+        }
+
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(person.get_id()));
         Update updatableInfo = new Update();
         if (person.getIsikukood() != null) {

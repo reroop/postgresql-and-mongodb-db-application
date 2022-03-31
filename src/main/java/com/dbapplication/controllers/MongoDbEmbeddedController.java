@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Slf4j
-@Profile("mongoemb")
-@RequestMapping("mongoemb")
-@RestController
+//@Slf4j
+//@Profile("mongoemb")
+//@RequestMapping("mongoemb")
+//@RestController
 public class MongoDbEmbeddedController {
-
+    /*
     @Autowired
     private MongoDbCountriesService mongoDbCountriesService;
 
@@ -199,4 +199,6 @@ public class MongoDbEmbeddedController {
 
 
     //---------------------------------------
+
+     */
 }

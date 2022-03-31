@@ -66,7 +66,7 @@ public class MongoDbRefEmploymentRepository {
 
     public boolean endEmployeeActiveEmployment(Employment employment) {
         if (!validationChecks.isDateInRange2010to2100(employment.getLopu_aeg())) {
-            log.info("end employment, end date not in range");
+            log.info("end active employment, end date not in range");
             return false;
         }
 
@@ -77,7 +77,7 @@ public class MongoDbRefEmploymentRepository {
 
         Employment modifiableEmployment = universalMongoTemplate.getOneByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
         if (!validationChecks.isFirstDateBeforeSecondDate(modifiableEmployment.getAlguse_aeg(), employment.getLopu_aeg())) {
-            log.info("end active employment, start date is after requested end date");
+            log.info("end active employment, end date is before start date");
             return false;
         }
 
@@ -91,7 +91,7 @@ public class MongoDbRefEmploymentRepository {
 
     public boolean endEmployeeAllEmployments(Employment employment) {
         if (!validationChecks.isDateInRange2010to2100(employment.getLopu_aeg())) {
-            log.info("end all employments, end date not in range");
+            log.info("end all employments, end date not in range 2010-2100");
             return false;
         }
 
@@ -102,7 +102,7 @@ public class MongoDbRefEmploymentRepository {
         List<Employment> modifiableEmployments = universalMongoTemplate.getAllByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
         for (Employment e: modifiableEmployments) {
             if (!validationChecks.isFirstDateBeforeSecondDate(e.getAlguse_aeg(), employment.getLopu_aeg())) {
-                log.info("end all employments, start date is after requested end date");
+                log.info("end all employments, end date is before start date");
                 return false;
             }
         }

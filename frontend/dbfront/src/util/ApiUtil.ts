@@ -3,10 +3,11 @@ import {stringify} from 'qs';
 
 //import config from '../config'    //todo: set api url by config
 
-const baseUrl: string = "http://localhost:8080/mongoref"
+const baseUrlMongoDbRef: string = "http://localhost:8080/mongoref"
+const baseUrlMongoDbEmb: string = "http://localhost:8080/mongoemb"
 
 const API = axios.create({
-    baseURL: baseUrl,
+    baseURL: baseUrlMongoDbRef,
     timeout: 5000,
     paramsSerializer: (params) => stringify(params, {arrayFormat: 'repeat'})
 });

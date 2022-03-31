@@ -105,6 +105,8 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                     <Col><h3 className={'ml-2'}>Employee detail page:</h3></Col>
                 </Row>
 
+                <hr/>
+
                 <Row className={'mt-3'}>
                     <Col sm={6} className={'ml-2'}>
                         <h4>Update personal info:</h4>
@@ -234,6 +236,17 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
 
                         <hr/>
 
+                        <Row className={'mt-2'}>
+                            <Col>
+                                <Button variant="dark"  onClick={() => this.refreshPage()}>Undo changes and reload page</Button>
+                            </Col>
+                            <Col>
+                                <Button className={'ml-4'} variant="success" onClick={() => this.handleUpdateInfoButtonClicked()}>Save all changes and reload page</Button>
+                            </Col>
+                        </Row>
+
+                        <hr/>
+
                         <Row className={'mt-4'}>
                             <Col>
                                 <p className="font-weight-bold font-italic">FYI:</p>
@@ -241,7 +254,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                     "End employments" ends all employee's active employments by adding an end date to each (active) employment. You must choose the end date. Employee status is also set to "Contract ended"
                                 </p>
                                 <p className="font-italic">
-                                    "Delete employee" deletes the employee's info from database IF the employee has not been employed (active or inactive).
+                                    "Delete employee" deletes the employee's info from database IF the employee is not actively employed in any occupation.
                                 </p>
                                 <p className="font-weight-bold">
                                     These actions are not reversible!
@@ -282,15 +295,6 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
 
                     </Col>
 
-                </Row>
-
-                <Row className={'mt-2'}>
-                    <Col sm={7}>
-                    </Col>
-                    <Col sm={5}>
-                        <Button variant="dark"  onClick={() => this.refreshPage()}>Undo changes and reload page</Button>
-                        <Button className={'ml-4'} variant="success" onClick={() => this.handleUpdateInfoButtonClicked()}>Save all changes and reload page</Button>
-                    </Col>
                 </Row>
 
                 <hr/>

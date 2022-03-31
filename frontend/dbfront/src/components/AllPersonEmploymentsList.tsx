@@ -33,7 +33,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             newEmploymentOccupation: undefined,
             newEmploymentStartDate: undefined,
             endEmploymentOccupationCode: undefined,
-            endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")
+            endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")+'T00:00:00'
         }
     }
 
@@ -55,12 +55,13 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
         });
     }
 
-    private handleEndEmployment() {
+    private handleEndEmployment(occupationCode: number) {
         const endEmployment: Employment = {
             lopu_aeg: this.state.endEmploymentEndDate,
-            amet_kood: this.state.endEmploymentOccupationCode!!,
+            amet_kood: occupationCode,
             isik_id: this.props.person_id
-        }
+        };
+        console.log(endEmployment);
         this.props.employmentStore?.endEmployment(endEmployment).then(() => {
             this.props.employmentStore?.getAllEmploymentsForEmployee(this.props.person_id);
             this.setState({
@@ -164,7 +165,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                         <td>
                                             {entry.employment.lopu_aeg == undefined &&
                                                 <Button variant="warning"
-                                                        onClick={() => this.handleEndEmployment()}>
+                                                        onClick={() => this.handleEndEmployment(entry.employment.amet_kood!!)}>
                                                     End this employment
                                                 </Button>
                                             }

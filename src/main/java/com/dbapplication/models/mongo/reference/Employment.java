@@ -12,23 +12,16 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "ametis_tootamine")
 public class Employment {
 
-    @Getter
     @Id
     private String _id;
-
-    @Getter
     private String isik_id;
-
-    @Getter
     private Integer amet_kood;
-
-    @Getter
     private LocalDateTime alguse_aeg;
-
-    @Getter
     private LocalDateTime lopu_aeg;
 
     @Override
@@ -53,23 +46,16 @@ public class Employment {
 
     @NoArgsConstructor
     @AllArgsConstructor
+    @Getter
+    @Setter
     @Document(collection = "ametis_tootamine")
     public static class EmploymentDbEntry {
 
-        @Getter
         @Id
         private String _id;
-
-        @Getter
         private ObjectId isik_id;
-
-        @Getter
         private Integer amet_kood;
-
-        @Getter
         private LocalDateTime alguse_aeg;
-
-        @Getter
         private LocalDateTime lopu_aeg;
 
         public EmploymentDbEntry(String personId, Integer occupationCode, LocalDateTime startTime) {

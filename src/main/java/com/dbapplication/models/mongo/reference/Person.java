@@ -11,36 +11,20 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "isik")
 public class Person {
 
-    @Getter
     @Id
     private String _id;
-
-    @Getter
     private String isikukood;
-
-    @Getter
     private String riik_kood;
-
-    @Getter
     private String e_meil;
-
-    @Getter
     private LocalDateTime synni_kp;
-
-    @Getter
-    @Setter
     private LocalDateTime reg_aeg;
-
-    @Getter
     private String eesnimi;
-
-    @Getter
     private String perenimi;
-
-    @Getter
     private String elukoht;
 
     public Person(String isikukood, String riik_kood, String e_meil, LocalDateTime synni_kp, LocalDateTime reg_aeg, String eesnimi, String perenimi, String elukoht) {

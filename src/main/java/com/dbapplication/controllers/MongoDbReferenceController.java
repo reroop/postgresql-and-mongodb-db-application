@@ -67,6 +67,7 @@ public class MongoDbReferenceController {
         return mongoDbCountriesService.getCountryByCountryCode(countryCode);
     }
 
+    /*
     @PostMapping("countries")
     public Country addNewCountry(@RequestBody Country.CountryDto newCountryDto) {
         return mongoDbCountriesService.addCountry(newCountryDto.getCountry());
@@ -81,6 +82,8 @@ public class MongoDbReferenceController {
     public boolean updateCountryName(@RequestBody Country.CountryDto countryDto) {
         return mongoDbCountriesService.updateCountry(countryDto.getCountry());
     }
+
+     */
     //---------------
 
     //-------occupations--------
@@ -99,12 +102,12 @@ public class MongoDbReferenceController {
         return mongoDbOccupationsService.addOccupation(occupationDto.getOccupation());
     }
 
-    @DeleteMapping("occupations/{occupationCode}")
+    @DeleteMapping("occupations/{occupationCode}") //todo: disable?
     public Occupation deleteOccupation(@PathVariable(value = "occupationCode") Integer occupationCode) {
         return mongoDbOccupationsService.deleteOccupation(occupationCode);
     }
 
-    @PutMapping("occupations")
+    @PutMapping("occupations")  //todo: disable?
     public boolean updateOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
         System.out.println(occupationDto.getOccupation());
         return mongoDbOccupationsService.updateOccupation(occupationDto.getOccupation());
@@ -122,6 +125,7 @@ public class MongoDbReferenceController {
         return mongoDbEmployeeStatusTypeService.getEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
     }
 
+    /*
     @PostMapping("employeeStatusTypes")
     public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
         return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
@@ -136,6 +140,8 @@ public class MongoDbReferenceController {
     public boolean updateEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
         return mongoDbEmployeeStatusTypeService.updateEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
+
+     */
     //-------------
 
     //-----------persons---------
@@ -148,7 +154,7 @@ public class MongoDbReferenceController {
     public Person getPersonByPerson_id(@PathVariable(value = "objectId") String objectId) {
         return mongoDbRefPersonsService.getPersonBy_id(objectId);
     }
-
+    /*
     @GetMapping("persons/{countryCode}/{personalIdCode}")
     public Person getPersonByCountryCodeAndPersonalIdentificationCode(
             @PathVariable(value = "countryCode") String countryCode,
@@ -156,15 +162,20 @@ public class MongoDbReferenceController {
         return mongoDbRefPersonsService.getPersonByCountryCodeAndPersonalIdCode(countryCode, personalIdCode);
     }
 
+     */
+
     @PostMapping("persons")
     public Person addPerson(@RequestBody Person.PersonDto personDto) {
         return mongoDbRefPersonsService.addPerson(personDto.getPerson());
     }
 
+    /*
     @DeleteMapping("persons/{objectId}")
     public Person deletePersonBy_id(@PathVariable(value = "objectId") String objectId) {
         return mongoDbRefPersonsService.deletePersonBy_id(objectId);
     }
+
+     */
 
     @PutMapping("persons")
     public boolean updatePerson(@RequestBody Person.PersonDto personDto) {
@@ -174,6 +185,7 @@ public class MongoDbReferenceController {
     //---------------
 
     //-----user accounts--------
+    /*
     @GetMapping("userAccounts")
     public List<UserAccount> getAllUserAccounts() {
         return mongoDbRefUserAccountsService.getAllUserAccounts();
@@ -199,6 +211,8 @@ public class MongoDbReferenceController {
         return mongoDbRefUserAccountsService.updateUserAccount(userAccount);
     }
 
+     */
+
     //---------------------------
 
     //-----employees-------
@@ -221,7 +235,7 @@ public class MongoDbReferenceController {
     public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
         List<Employment> employments = this.getEmployeeAllEmployments(personId);
         for (Employment employment: employments) {
-            if (employment.getLopu_aeg() != null) {
+            if (employment.getLopu_aeg() == null) {
                 return this.getEmployeeByPersonId(personId);
             }
         }
@@ -235,10 +249,13 @@ public class MongoDbReferenceController {
     //--------------------
 
     //----employments-----
+    /*
     @GetMapping("employments")
     public List<Employment> getAllEmployments() {
         return mongoDbRefEmploymentsService.getAllEmployments();
     }
+
+     */
 
     @GetMapping("employments/occupationCode={occupationCode}")
     public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {

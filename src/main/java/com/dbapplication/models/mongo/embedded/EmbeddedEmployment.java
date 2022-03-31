@@ -10,17 +10,13 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document("ametis_tootamine")
 public class EmbeddedEmployment {
 
-    @Getter
     private Integer amet_kood;
-
-    @Getter
     private LocalDateTime alguse_aeg;
-
-    @Getter
-    @Setter
     private LocalDateTime lopu_aeg;
 
     @Override

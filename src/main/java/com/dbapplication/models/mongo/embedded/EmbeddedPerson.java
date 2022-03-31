@@ -11,44 +11,22 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "isik")
 public class EmbeddedPerson {
 
-    @Getter
     @Id
     private String _id;
-
-    @Getter
     private String isikukood;
-
-    @Getter
     private String riik_kood;
-
-    @Getter
     private String e_meil;
-
-    @Getter
     private LocalDateTime synni_kp;
-
-    @Getter
-    @Setter
     private LocalDateTime reg_aeg;
-
-    @Getter
     private String eesnimi;
-
-    @Getter
     private String perenimi;
-
-    @Getter
     private String elukoht;
-
-    @Getter
-    @Setter
     private EmbeddedUserAccount kasutajakonto;
-
-    @Getter
-    @Setter
     private EmbeddedEmployee tootaja;
 
     @Override

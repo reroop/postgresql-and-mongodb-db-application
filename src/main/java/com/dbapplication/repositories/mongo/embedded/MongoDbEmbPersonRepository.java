@@ -4,7 +4,9 @@ import com.dbapplication.models.mongo.embedded.EmbeddedEmployee;
 import com.dbapplication.models.mongo.embedded.EmbeddedEmployment;
 import com.dbapplication.models.mongo.embedded.EmbeddedPerson;
 import com.dbapplication.models.mongo.embedded.EmbeddedUserAccount;
+import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
+import com.dbapplication.utils.mongodb.ValidationChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ public class MongoDbEmbPersonRepository {
 
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
+    private final ValidationChecks validationChecks = new ValidationChecks();
+
 
     public List<EmbeddedPerson> getAllPersons() {
         return universalMongoTemplate.getAll(EmbeddedPerson.class);
@@ -39,6 +42,10 @@ public class MongoDbEmbPersonRepository {
     //all adds
     public EmbeddedPerson addPerson(EmbeddedPerson embeddedPerson) {
         embeddedPerson.setReg_aeg(LocalDateTime.now());
+        if (!validationChecks.isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+            return null;
+        }
+
         /**
          * Set UserAccount and Employee info to nulls even if they are set, because
          * we have other endpoints later to add UserAccount or Employee info to Person
@@ -56,20 +63,46 @@ public class MongoDbEmbPersonRepository {
 
     public boolean addEmployeeToPerson(String personObjectId, EmbeddedEmployee embeddedEmployee) {
         EmbeddedEmployee.EmbeddedEmployeeDbEntry dbEntry = new EmbeddedEmployee.EmbeddedEmployeeDbEntry(embeddedEmployee.getTootaja_seisundi_liik_kood());
-        if (embeddedEmployee.getMentor_id() != null) {
+        if (embeddedEmployee.getMentor_id() != null && !Objects.equals(embeddedEmployee.getMentor_id(), personObjectId)) {
             dbEntry.setMentor_id(new ObjectId(embeddedEmployee.getMentor_id()));
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
+
+        //cancel if person already is registered as employee
+        EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
+        if (person.getTootaja() != null) {
+            return false;
+        }
+
         Update updatableInfo = new Update().set("tootaja", dbEntry);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment embeddedEmployment) {
+    public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment newEmbeddedEmployment) {
+        if (!validationChecks.isDateInRange2010to2100(newEmbeddedEmployment.getAlguse_aeg())) {
+            log.info("add employment, employment date(s) out of range 2010-2100");
+            return false;
+        }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
         List<EmbeddedEmployment> employments = person.getTootaja().getAmetis_tootamine() != null ?  person.getTootaja().getAmetis_tootamine() : new ArrayList<>();
-        employments.add(embeddedEmployment);
 
+        //if no employments, then we can add employment without further validating and save
+        if (employments.size() == 0) {
+            employments.add(newEmbeddedEmployment);
+            Update updatableInfo = new Update().set("tootaja.ametis_tootamine", employments);
+            return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
+        }
+
+        //check if is already active in this occupation or we're trying to save same occupation with same start date
+        for (EmbeddedEmployment embeddedEmployment : employments) {
+            if (Objects.equals(embeddedEmployment.getAmet_kood(), newEmbeddedEmployment.getAmet_kood())) {
+                if (embeddedEmployment.getLopu_aeg() == null || embeddedEmployment.getAlguse_aeg().equals(newEmbeddedEmployment.getAlguse_aeg())) {
+                    return false;
+                }
+            }
+        }
+        employments.add(newEmbeddedEmployment);
         Update updatableInfo = new Update().set("tootaja.ametis_tootamine", employments);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
@@ -79,6 +112,10 @@ public class MongoDbEmbPersonRepository {
 
     //all updates
     public boolean updatePerson(EmbeddedPerson embeddedPerson) {
+        if (!validationChecks.isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+            return false;
+        }
+
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(embeddedPerson.get_id()));
         Update updatableInfo = new Update();
         if (embeddedPerson.getIsikukood() != null) {
@@ -133,7 +170,7 @@ public class MongoDbEmbPersonRepository {
         if (embeddedEmployee.getTootaja_seisundi_liik_kood() != null) {
             updatableInfo.set("tootaja.tootaja_seisundi_liik_kood", embeddedEmployee.getTootaja_seisundi_liik_kood());
         }
-        if (embeddedEmployee.getMentor_id() != null) {
+        if (embeddedEmployee.getMentor_id() != null && !Objects.equals(embeddedEmployee.getMentor_id(), personId)) {
             updatableInfo.set("tootaja.mentor_id", embeddedEmployee.getMentor_id());
         } else {
             updatableInfo.unset("tootaja.mentor_id");
@@ -141,8 +178,39 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean endActiveEmployment(String personId, Integer occupationCode) {
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
+    public boolean endActiveEmployment(Employment endEmploymentInfo) {
+        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getLopu_aeg())) {
+            log.info("end active employment, end date not in range");
+            return false;
+        }
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getIsik_id()));
+        EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
+        List<EmbeddedEmployment> employments = person.getTootaja().getAmetis_tootamine() != null ?  person.getTootaja().getAmetis_tootamine() : new ArrayList<>();
+        if (employments.size() == 0) {
+            return true;    //do nothing if there are no employments set; NOTE: don't make person.employments != null, because employments might be just empty
+        }
+
+        for (EmbeddedEmployment embeddedEmployment : employments) {
+            if (Objects.equals(endEmploymentInfo.getAmet_kood(), embeddedEmployment.getAmet_kood()) && embeddedEmployment.getLopu_aeg() == null) {
+                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getLopu_aeg())) {
+                    log.info("end active employment, end date is before start date");
+                    return false;
+                }
+                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getLopu_aeg());
+                break;
+            }
+        }
+
+        Update updatableInfo = new Update().set("tootaja.ametis_tootamine", employments);
+        return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
+    }
+
+    public boolean endAllEmployments(Employment endEmploymentInfo) {
+        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getLopu_aeg())) {
+            log.info("end all employments, end date not in range 2010-2100");
+            return false;
+        }
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getIsik_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
 
         List<EmbeddedEmployment> employments = person.getTootaja().getAmetis_tootamine() != null ?  person.getTootaja().getAmetis_tootamine() : new ArrayList<>();
@@ -150,9 +218,13 @@ public class MongoDbEmbPersonRepository {
             return true;    //do nothing if there are no employments set; NOTE: don't make person.employments != null, because employments might be just empty
         }
 
-        for (EmbeddedEmployment employment : employments) {
-            if (Objects.equals(occupationCode, employment.getAmet_kood()) && employment.getLopu_aeg() == null) {
-                employment.setLopu_aeg(LocalDateTime.now());
+        for (EmbeddedEmployment embeddedEmployment : employments) {
+            if (embeddedEmployment.getLopu_aeg() == null) {
+                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getAlguse_aeg(), endEmploymentInfo.getLopu_aeg())) {
+                    log.info("end all employments, end date is before start date");
+                    return false;
+                }
+                embeddedEmployment.setLopu_aeg(endEmploymentInfo.getLopu_aeg());
             }
         }
 
@@ -167,8 +239,20 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
+    public boolean deleteEmployee(String personId) {
+        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
+        Update updatableInfo = new Update().unset("tootaja");
+
+        return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
+    }
+
     public EmbeddedPerson deletePerson(String personId) {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
         return universalMongoTemplate.deleteEntity(queryFindByObjectId, EmbeddedPerson.class);
+    }
+
+    public List<EmbeddedPerson> getAllEmployees() {
+        Query queryFindEmployees = new Query(Criteria.where("tootaja").exists(true));
+        return universalMongoTemplate.getAllByQuery(queryFindEmployees, EmbeddedPerson.class);
     }
 }

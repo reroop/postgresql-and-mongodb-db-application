@@ -26,20 +26,20 @@ public class MongoDbEmbPersonsService {
     private Person convertEmbeddedPersonToPerson(EmbeddedPerson embeddedPerson) {
         Person person = new Person();
         person.set_id(embeddedPerson.get_id());
-        person.setNat_id_code(embeddedPerson.getIsikukood());
-        person.setCountry_code(embeddedPerson.getRiik_kood());
-        person.setE_mail(embeddedPerson.getE_meil());
-        person.setBirth_date(embeddedPerson.getReg_aeg());
-        person.setReg_time(embeddedPerson.getReg_aeg());
+        person.setNat_id_code(embeddedPerson.getNat_id_code());
+        person.setCountry_code(embeddedPerson.getCountry_code());
+        person.setE_mail(embeddedPerson.getE_mail());
+        person.setBirth_date(embeddedPerson.getBirth_date());
+        person.setReg_time(embeddedPerson.getReg_time());
 
-        if (embeddedPerson.getEesnimi() != null) {
-            person.setGiven_name(embeddedPerson.getEesnimi());
+        if (embeddedPerson.getGiven_name() != null) {
+            person.setGiven_name(embeddedPerson.getGiven_name());
         }
-        if (embeddedPerson.getPerenimi() != null) {
-            person.setSurname(embeddedPerson.getPerenimi());
+        if (embeddedPerson.getSurname() != null) {
+            person.setSurname(embeddedPerson.getSurname());
         }
-        if (embeddedPerson.getElukoht() != null) {
-            person.setAddress(embeddedPerson.getElukoht());
+        if (embeddedPerson.getAddress() != null) {
+            person.setAddress(embeddedPerson.getAddress());
         }
         return person;
     }
@@ -47,20 +47,20 @@ public class MongoDbEmbPersonsService {
     private EmbeddedPerson convertPersonToEmbeddedPerson(Person person) {
         EmbeddedPerson embeddedPerson = new EmbeddedPerson();
         embeddedPerson.set_id(person.get_id());
-        embeddedPerson.setIsikukood(person.getNat_id_code());
-        embeddedPerson.setRiik_kood(person.getCountry_code());
-        embeddedPerson.setE_meil(person.getE_mail());
-        embeddedPerson.setSynni_kp(person.getBirth_date());
-        embeddedPerson.setReg_aeg(person.getReg_time());
+        embeddedPerson.setNat_id_code(person.getNat_id_code());
+        embeddedPerson.setCountry_code(person.getCountry_code());
+        embeddedPerson.setE_mail(person.getE_mail());
+        embeddedPerson.setBirth_date(person.getBirth_date());
+        embeddedPerson.setReg_time(person.getReg_time());
 
         if (person.getGiven_name() != null) {
-            embeddedPerson.setEesnimi(person.getGiven_name());
+            embeddedPerson.setGiven_name(person.getGiven_name());
         }
         if (person.getSurname() != null) {
-            embeddedPerson.setPerenimi(person.getSurname());
+            embeddedPerson.setSurname(person.getSurname());
         }
         if (person.getAddress() != null) {
-            embeddedPerson.setElukoht(person.getAddress());
+            embeddedPerson.setAddress(person.getAddress());
         }
 
         return embeddedPerson;
@@ -109,10 +109,6 @@ public class MongoDbEmbPersonsService {
         return mongoDbEmbPersonRepository.updatePerson(convertPersonToEmbeddedPerson(person));
     }
 
-    public boolean updateUserAccount(String personId, EmbeddedUserAccount embeddedUserAccount) {
-        return mongoDbEmbPersonRepository.updateUserAccount(personId, embeddedUserAccount);
-    }
-
     public boolean updateEmployee(Employee employee) {
         return mongoDbEmbPersonRepository.updateEmployee(employee.getPerson_id(), convertEmployeeToEmbeddedEmployee(employee));
     }
@@ -138,16 +134,16 @@ public class MongoDbEmbPersonsService {
     private Employee convertEmbeddedPersonToEmployee(EmbeddedPerson embeddedPerson) {
         Employee employee = new Employee();
         employee.setPerson_id(embeddedPerson.get_id());
-        employee.setEmployee_status_type_code(embeddedPerson.getTootaja().getTootaja_seisundi_liik_kood());
-        if (embeddedPerson.getTootaja().getMentor_id() != null) {
-            employee.setMentor_id(embeddedPerson.getTootaja().getMentor_id());
+        employee.setEmployee_status_type_code(embeddedPerson.getEmployee().getEmployee_status_type_code());
+        if (embeddedPerson.getEmployee().getMentor_id() != null) {
+            employee.setMentor_id(embeddedPerson.getEmployee().getMentor_id());
         }
         return employee;
     }
 
     private EmbeddedEmployee convertEmployeeToEmbeddedEmployee(Employee employee) {
         EmbeddedEmployee embeddedEmployee = new EmbeddedEmployee();
-        embeddedEmployee.setTootaja_seisundi_liik_kood(employee.getEmployee_status_type_code());
+        embeddedEmployee.setEmployee_status_type_code(employee.getEmployee_status_type_code());
         if (employee.getMentor_id() != null) {
             embeddedEmployee.setMentor_id(employee.getMentor_id());
         }
@@ -175,19 +171,19 @@ public class MongoDbEmbPersonsService {
 
     private EmbeddedEmployment convertEmploymentToEmbeddedEmployment(Employment employment) {
         EmbeddedEmployment embeddedEmployment = new EmbeddedEmployment();
-        embeddedEmployment.setAmet_kood(employment.getOccupation_code());
+        embeddedEmployment.setOccupation_code(employment.getOccupation_code());
         if (employment.getStart_time() != null) {
-            embeddedEmployment.setAlguse_aeg(employment.getStart_time());
+            embeddedEmployment.setStart_time(employment.getStart_time());
         }
         if (employment.getEnd_time() != null) {
-            embeddedEmployment.setLopu_aeg(employment.getEnd_time());
+            embeddedEmployment.setEnd_time(employment.getEnd_time());
         }
         return embeddedEmployment;
     }
 
     private List<Employment> convertEmbeddedEmploymentsToEmployments(EmbeddedPerson embeddedPerson) {
         String person_id = embeddedPerson.get_id();
-        List<EmbeddedEmployment> embeddedEmployments = embeddedPerson.getTootaja().getAmetis_tootamine();
+        List<EmbeddedEmployment> embeddedEmployments = embeddedPerson.getEmployee().getEmployment();
         List<Employment> convertedEmployments = new ArrayList<>();
         if (embeddedEmployments == null || embeddedEmployments.size() == 0) {
             return convertedEmployments;
@@ -195,10 +191,10 @@ public class MongoDbEmbPersonsService {
         for (EmbeddedEmployment embeddedEmployment : embeddedEmployments) {
             Employment employment = new Employment();
             employment.setPerson_id(person_id);
-            employment.setOccupation_code(embeddedEmployment.getAmet_kood());
-            employment.setStart_time(embeddedEmployment.getAlguse_aeg());
-            if (embeddedEmployment.getLopu_aeg() != null) {
-                employment.setEnd_time(embeddedEmployment.getLopu_aeg());
+            employment.setOccupation_code(embeddedEmployment.getOccupation_code());
+            employment.setStart_time(embeddedEmployment.getStart_time());
+            if (embeddedEmployment.getEnd_time() != null) {
+                employment.setEnd_time(embeddedEmployment.getEnd_time());
             }
             convertedEmployments.add(employment);
         }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Profile("postgretrad")
-@RequestMapping("postgretrad")
+//@RequestMapping("postgretrad")
 @RestController
 public class PostgreSqlTraditionalController {
 

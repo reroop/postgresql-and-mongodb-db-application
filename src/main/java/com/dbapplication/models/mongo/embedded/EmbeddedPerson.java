@@ -13,36 +13,34 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document(collection = "isik")
+@Document(collection = "person")
 public class EmbeddedPerson {
 
     @Id
     private String _id;
-    private String isikukood;
-    private String riik_kood;
-    private String e_meil;
-    private LocalDateTime synni_kp;
-    private LocalDateTime reg_aeg;
-    private String eesnimi;
-    private String perenimi;
-    private String elukoht;
-    private EmbeddedUserAccount kasutajakonto;
-    private EmbeddedEmployee tootaja;
+    private String nat_id_code;
+    private String country_code;
+    private String e_mail;
+    private LocalDateTime birth_date;
+    private LocalDateTime reg_time;
+    private String given_name;
+    private String surname;
+    private String address;
+    private EmbeddedEmployee employee;
 
     @Override
     public String toString() {
         return "EmbeddedPerson{" +
                 "_id='" + _id + '\'' +
-                ", isikukood='" + isikukood + '\'' +
-                ", riik_kood='" + riik_kood + '\'' +
-                ", e_meil='" + e_meil + '\'' +
-                ", synni_kp=" + synni_kp +
-                ", reg_aeg=" + reg_aeg +
-                ", eesnimi='" + eesnimi + '\'' +
-                ", perenimi='" + perenimi + '\'' +
-                ", elukoht='" + elukoht + '\'' +
-                ", kasutajakonto=" + kasutajakonto +
-                ", tootaja=" + tootaja +
+                ", nat_id_code='" + nat_id_code + '\'' +
+                ", country_code='" + country_code + '\'' +
+                ", e_mail='" + e_mail + '\'' +
+                ", birth_date=" + birth_date +
+                ", reg_time=" + reg_time +
+                ", given_name='" + given_name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", address='" + address + '\'' +
+                ", employee=" + employee +
                 '}';
     }
 }

@@ -12,19 +12,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document("ametis_tootamine")
+@Document("employment")
 public class EmbeddedEmployment {
 
-    private Integer amet_kood;
-    private LocalDateTime alguse_aeg;
-    private LocalDateTime lopu_aeg;
+    private Integer occupation_code;
+    private LocalDateTime start_time;
+    private LocalDateTime end_time;
 
     @Override
     public String toString() {
         return "EmbeddedEmployment{" +
-                "amet_kood=" + amet_kood +
-                ", alguse_aeg=" + alguse_aeg +
-                ", lopu_aeg=" + lopu_aeg +
+                "occupation_code=" + occupation_code +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
                 '}';
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 @Slf4j
 @Profile("mongoemb")
-@RequestMapping("mongoemb")
+//@RequestMapping("mongoemb")
 @RestController
 public class MongoDbEmbeddedControllerV2 {
 

@@ -13,38 +13,39 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Document("tootaja")
+@Document("employee")
 public class EmbeddedEmployee {
 
-    private Integer tootaja_seisundi_liik_kood;
+    private Integer employee_status_type_code;
     private String mentor_id;
-    private List<EmbeddedEmployment> ametis_tootamine;
+    private List<EmbeddedEmployment> employment;
 
     @Override
     public String toString() {
         return "EmbeddedEmployee{" +
-                "tootaja_seisundi_liik_kood=" + tootaja_seisundi_liik_kood +
+                "employee_status_type_code=" + employee_status_type_code +
                 ", mentor_id='" + mentor_id + '\'' +
-                ", ametis_tootamine=" + ametis_tootamine +
+                ", employment=" + employment +
                 '}';
     }
 
     @NoArgsConstructor
     @AllArgsConstructor
-    @Document("tootaja")
+    @Getter
+    @Setter
+    @Document("employee")
     public static class EmbeddedEmployeeDbEntry {
 
-        private Integer tootaja_seisundi_liik_kood;
-        @Setter
+        private Integer employee_status_type_code;
         private ObjectId mentor_id;
 
-        public EmbeddedEmployeeDbEntry(Integer tootaja_seisundi_liik_kood, String mentor_id) {
-            this.tootaja_seisundi_liik_kood = tootaja_seisundi_liik_kood;
+        public EmbeddedEmployeeDbEntry(Integer employee_status_type_code, String mentor_id) {
+            this.employee_status_type_code = employee_status_type_code;
             this.mentor_id = new ObjectId(mentor_id);
         }
 
-        public EmbeddedEmployeeDbEntry(Integer tootaja_seisundi_liik_kood) {
-            this.tootaja_seisundi_liik_kood = tootaja_seisundi_liik_kood;
+        public EmbeddedEmployeeDbEntry(Integer employee_status_type_code) {
+            this.employee_status_type_code = employee_status_type_code;
         }
     }
 }

@@ -19,4 +19,12 @@ public class Country {
     private String country_code;
 
     private String name;
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class CountryDto {
+        private Country country;
+    }
 }

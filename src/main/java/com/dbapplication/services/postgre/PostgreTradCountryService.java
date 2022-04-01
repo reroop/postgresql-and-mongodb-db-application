@@ -22,4 +22,11 @@ public class PostgreTradCountryService {
     public Country getCountryByCountryCode(String countryCode) {
         return countryRepository.findById(countryCode).orElse(null);
     }
+
+    public Country addCountry(Country country) {
+        if (countryRepository.findById(country.getCountry_code()).isPresent()) {
+            return null;
+        }
+        return countryRepository.save(country);
+    }
 }

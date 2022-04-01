@@ -9,31 +9,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "employee_status_type")
 public class EmployeeStatusType {
 
-    @Getter
     @Id
     private String _id;
 
-    @Getter
     private Integer employee_status_type_code;
-    @Getter
     private String name;
-    @Getter
     private String description;
 
-    public EmployeeStatusType(Integer code, String name, String description) {
-        this.employee_status_type_code = code;
-        this.name = name;
-        this.description = description;
-    }
-
-
-    public EmployeeStatusType(Integer code, String name) {
-        this.employee_status_type_code = code;
-        this.name = name;
-    }
 
     @Override
     public String toString() {

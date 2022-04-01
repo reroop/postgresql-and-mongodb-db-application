@@ -55,8 +55,9 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
         });
     }
 
-    private handleEndEmployment(occupationCode: number) {
+    private handleEndEmployment(occupationCode: number, startTime: string) {
         const endEmployment: Employment = {
+            start_time: startTime,
             end_time: this.state.endEmploymentEndDate,
             occupation_code: occupationCode,
             person_id: this.props.person_id
@@ -165,7 +166,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                         <td>
                                             {entry.employment.end_time == undefined &&
                                                 <Button variant="warning"
-                                                        onClick={() => this.handleEndEmployment(entry.employment.occupation_code!!)}>
+                                                        onClick={() => this.handleEndEmployment(entry.employment.occupation_code!!, entry.employment.start_time!!)}>
                                                     End this employment
                                                 </Button>
                                             }

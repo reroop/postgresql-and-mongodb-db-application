@@ -22,7 +22,6 @@ import java.util.List;
 
 @Slf4j
 @Profile("mongoref")
-//@RequestMapping("mongoref")
 @RestController
 public class MongoDbReferenceController {
 
@@ -68,20 +67,6 @@ public class MongoDbReferenceController {
     public Country addNewCountry(@RequestBody Country.CountryDto newCountryDto) {
         return mongoDbCountriesService.addCountry(newCountryDto.getCountry());
     }
-
-    /*
-    @DeleteMapping("countries/{countryCode}")
-    public Country deleteCountry(@PathVariable(value = "countryCode") String countryCode) {
-        return mongoDbCountriesService.deleteCountry(countryCode);
-    }
-
-    @PutMapping("countries")
-    public boolean updateCountryName(@RequestBody Country.CountryDto countryDto) {
-        return mongoDbCountriesService.updateCountry(countryDto.getCountry());
-    }
-
-     */
-    //---------------
 
     //-------occupations--------
     @GetMapping("occupations")
@@ -171,15 +156,6 @@ public class MongoDbReferenceController {
         return mongoDbRefEmployeesService.updateEmployee(employeeDto.getEmployee());
     }
     //--------------------
-
-    //----employments-----
-    /*
-    @GetMapping("employments")
-    public List<Employment> getAllEmployments() {
-        return mongoDbRefEmploymentsService.getAllEmployments();
-    }
-
-     */
 
     @GetMapping("employments/occupationCode={occupationCode}")
     public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {

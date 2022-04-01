@@ -2,6 +2,7 @@ package com.dbapplication.services.postgre;
 
 import com.dbapplication.models.postgre.Employment;
 import com.dbapplication.repositories.postgre.PostgreTradEmploymentRepository;
+import com.dbapplication.utils.postgre.PostgreObjectConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,14 @@ public class PostgreTradEmploymentService {
 
     @Autowired
     private PostgreTradEmploymentRepository employmentRepository;
+    private final PostgreObjectConverter postgreObjectConverter = new PostgreObjectConverter();
 
     public List<Employment> getAllEmploymentsByOccupationCode(Integer occupationCode) {
         return employmentRepository.findAllByOccupationCode(occupationCode);
     }
 
-    public List<Employment> getEmployeeAllEmployments(Long personId) {
-        return employmentRepository.findAllByPersonId(personId);
+    public List<Employment.FrontEmployment> getEmployeeAllEmployments(Long personId) {
+        return postgreObjectConverter.convertListOfEmploymentsToListOfFrontEmployments(employmentRepository.findAllByPersonId(personId));
     }
 
     public Employment addEmployment(Employment employment) {
@@ -36,6 +38,7 @@ public class PostgreTradEmploymentService {
         return employmentRepository.save(employment);
     }
 
+
     public Employment endEmployeeActiveEmployment(Employment employment) {
         Employment.EmploymentCompositeKey key = new Employment.EmploymentCompositeKey(employment.getPersonId(), employment.getOccupationCode(), employment.getStartTime());
         Employment foundEmployment = employmentRepository.findById(key).orElse(null);
@@ -47,7 +50,7 @@ public class PostgreTradEmploymentService {
     }
 
     public List<Employment> endEmployeeAllEmployments(Employment endEmploymentInfo) {
-        List<Employment> employeeAllEmployments = getEmployeeAllEmployments(endEmploymentInfo.getPersonId());
+        List<Employment> employeeAllEmployments = employmentRepository.findAllByPersonId(endEmploymentInfo.getPersonId());
         for (Employment employment : employeeAllEmployments) {
             if (employment.getEndTime()==null) {
                 employment.setEndTime(endEmploymentInfo.getEndTime());
@@ -55,7 +58,6 @@ public class PostgreTradEmploymentService {
         }
         return employmentRepository.saveAll(employeeAllEmployments);
     }
-
 
 
 }

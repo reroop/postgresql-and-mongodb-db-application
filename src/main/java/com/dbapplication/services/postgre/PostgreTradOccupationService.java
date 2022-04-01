@@ -24,6 +24,9 @@ public class PostgreTradOccupationService {
     }
 
     public Occupation addOccupation(Occupation newOccupation) {
+        if (occupationRepository.findById(newOccupation.getOccupation_code()).isPresent()) {
+            return null;
+        }
         return occupationRepository.save(newOccupation);
     }
 }

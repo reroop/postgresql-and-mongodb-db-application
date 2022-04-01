@@ -14,23 +14,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "country")
 public class Country {
 
-    @Getter
     @Id
-    @Setter
     private String _id;
 
-    @Getter
-    @Setter
     private String country_code;
-
-    @Getter
-    @Setter
     private String name;
-
-    public Country(String code, String name) {
-        this.country_code = code;
-        this.name = name;
-    }
 
     @Override
     public String toString() {

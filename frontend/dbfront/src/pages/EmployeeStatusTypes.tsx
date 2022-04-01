@@ -35,7 +35,7 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
             this.setState({
                 newEmployeeStatusTypeCode: undefined,
                 newEmployeeStatusTypeName: '',
-                newEmployeeStatusTypeDescription: undefined
+                newEmployeeStatusTypeDescription: ''
             })
             return;
         }
@@ -45,12 +45,12 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
             name: this.state.newEmployeeStatusTypeName
         };
 
-        newStatusType.description = this.state.newEmployeeStatusTypeDescription;
+        this.state.newEmployeeStatusTypeDescription != '' ?  newStatusType.description = this.state.newEmployeeStatusTypeDescription : newStatusType.description = undefined;
         this.props.employeeStatusTypeStore!!.addEmployeeStatusType(newStatusType).then((e) => (
             this.setState({
                 newEmployeeStatusTypeCode: undefined,
                 newEmployeeStatusTypeName: '',
-                newEmployeeStatusTypeDescription: undefined
+                newEmployeeStatusTypeDescription: ''
             })
         ));
 

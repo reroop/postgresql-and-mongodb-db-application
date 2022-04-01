@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Profile("postgretrad")
-//@RequestMapping("postgretrad")
 @RestController
 public class PostgreSqlTraditionalController {
 
@@ -50,6 +49,11 @@ public class PostgreSqlTraditionalController {
         return postgreTradCountryService.getCountryByCountryCode(countryCode);
     }
 
+    @PostMapping("countries")
+    public Country addNewCountry(@RequestBody Country.CountryDto countryDto) {
+        return postgreTradCountryService.addCountry(countryDto.getCountry());
+    }
+
 
     //---occupations---
     @GetMapping("occupations")
@@ -77,6 +81,11 @@ public class PostgreSqlTraditionalController {
     @GetMapping("employeeStatusTypes/{employeeStatusTypeCode}")
     public EmployeeStatusType getEmployeeStatusTypeByEmployeeStatusTypeCode(@PathVariable(value = "employeeStatusTypeCode") Integer employeeStatusTypeCode) {
         return postgreTradEmployeeStatusTypeService.getEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
+    }
+
+    @PostMapping("employeeStatusTypes")
+    public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+        return postgreTradEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
 
     //----persons-----
@@ -135,22 +144,27 @@ public class PostgreSqlTraditionalController {
 
 
     @GetMapping("employments/personId={personId}")
-    public List<Employment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) {
+    public List<Employment.FrontEmployment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) {
         return postgreTradEmploymentService.getEmployeeAllEmployments(personId);
     }
 
     @PostMapping("employments")
     public Employment addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreTradEmploymentService.addEmployment(employmentDto.getEmployment());
+        //System.out.println(employmentDto);
+        //System.out.println("created postgreemployment");
+        //System.out.println(employmentDto.createPostgreEmployment());
+        return postgreTradEmploymentService.addEmployment(employmentDto.createPostgreEmployment());
     }
 
     @PutMapping("employments")
     public Employment endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreTradEmploymentService.endEmployeeActiveEmployment(employmentDto.getEmployment());
+        System.out.println(employmentDto);
+        return postgreTradEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreEmployment());
     }
 
     @PutMapping("employments/endEmployments")
     public List<Employment> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreTradEmploymentService.endEmployeeAllEmployments(employmentDto.getEmployment());
+        return postgreTradEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreEmployment());
     }
+
 }

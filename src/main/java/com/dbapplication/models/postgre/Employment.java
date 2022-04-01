@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @IdClass(Employment.EmploymentCompositeKey.class)
-@Table(name="employment")
+@Table(name = "employment")
 public class Employment {
 
     @Id
@@ -54,12 +54,55 @@ public class Employment {
 
     }
 
+    //--------------
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class FrontEmployment {
+        private String person_id;
+        private Integer occupation_code;
+        private LocalDateTime start_time;
+        private LocalDateTime end_time;
+
+        @Override
+        public String toString() {
+            return "FrontEmployment{" +
+                    "person_id='" + person_id + '\'' +
+                    ", occupation_code=" + occupation_code +
+                    ", start_time=" + start_time +
+                    ", end_time=" + end_time +
+                    '}';
+        }
+    }
+
+
+    //--------------
+
     @NoArgsConstructor
     @AllArgsConstructor
     @Getter
     @Setter
     public static class EmploymentDto {
-        private Employment employment;
+        private FrontEmployment employment;
+
+        public Employment createPostgreEmployment() {
+            Employment employment = new Employment(
+                    Long.valueOf(this.employment.getPerson_id()),
+                    this.employment.getOccupation_code(),
+                    this.employment.getStart_time(),
+                    this.employment.getEnd_time());
+
+            //System.out.println("createdpostgreemployment");
+            return employment;
+        }
+
+        @Override
+        public String toString() {
+            return "EmploymentDto{" +
+                    "employment=" + employment +
+                    '}';
+        }
     }
 }
 

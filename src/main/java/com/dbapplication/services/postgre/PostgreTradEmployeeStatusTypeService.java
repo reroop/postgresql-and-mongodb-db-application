@@ -22,4 +22,11 @@ public class PostgreTradEmployeeStatusTypeService {
     public EmployeeStatusType getEmployeeStatusTypeByEmployeeStatusTypeCode(Integer statusTypeCode) {
         return statusTypeRepository.findById(statusTypeCode).orElse(null);
     }
+
+    public EmployeeStatusType addEmployeeStatusType(EmployeeStatusType employeeStatusType) {
+        if (statusTypeRepository.findById(employeeStatusType.getEmployee_status_type_code()).isPresent()) {
+            return null;
+        }
+        return statusTypeRepository.save(employeeStatusType);
+    }
 }

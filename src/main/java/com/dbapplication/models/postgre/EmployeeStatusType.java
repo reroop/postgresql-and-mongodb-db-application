@@ -20,4 +20,12 @@ public class EmployeeStatusType {
 
     private String name;
     private String description;
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class EmployeeStatusTypeDto {
+        private EmployeeStatusType employeeStatusType;
+    }
 }

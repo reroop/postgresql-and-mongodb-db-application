@@ -9,30 +9,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Document(collection = "occupation")
 public class Occupation {
 
-    @Getter
     @Id
     private String _id;
 
-    @Getter
     private Integer occupation_code;
-    @Getter
     private String name;
-    @Getter
     private String description;
-
-    public Occupation(Integer code, String name) {
-        this.occupation_code = code;
-        this.name = name;
-    }
-
-    public Occupation(Integer code, String name, String description) {
-        this.occupation_code = code;
-        this.name = name;
-        this.description = description;
-    }
 
     @Override
     public String toString() {

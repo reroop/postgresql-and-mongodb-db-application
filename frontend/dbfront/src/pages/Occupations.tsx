@@ -42,39 +42,29 @@ class Occupations extends React.Component<OccupationsProps, State> {
         this.setState({showStatsModal: false})
     };
 
+    private handleAddOccupationClick() {
+        if (this.state.newOccupationCode === null) {
+            return;
+        }
+        const newOccupation: Occupation = {
+            occupation_code: this.state.newOccupationCode!!,
+            name: this.state.newOccupationName
+        };
+        if (this.state.newOccupationDescription !== null && this.state.newOccupationDescription != '') {
+            newOccupation.description = this.state.newOccupationDescription;
+        }
+        this.props.occupationStore!!.addOccupation(newOccupation).then(r => {
+            this.props.occupationStore!!.getOccupations().then(r => this.setState({
+                newOccupationCode: undefined,
+                newOccupationName: '',
+                newOccupationDescription: ''
+            }));
+        });
+    }
+
     public render() {
         const occupationStore = this.props.occupationStore!!;
         const occupations: Occupation[] = occupationStore.occupations;
-
-        const handleEditOccupationButtonClick = (occupation: Occupation) => {
-            if (occupation.description === '') {
-                occupation.description = undefined;
-            }
-            occupationStore.updateOccupation(occupation).then(occupationStore.getOccupations);
-        };
-
-        const handleDeleteOccupationButtonClick = (occupationCode: number) => {
-            occupationStore.deleteOccupation(occupationCode).then(occupationStore.getOccupations);
-        };
-
-        const handleAddOccupationClick = () => {
-            if (this.state.newOccupationCode === null) {
-                return;
-            }
-            const newOccupation: Occupation = {
-                occupation_code: this.state.newOccupationCode!!,
-                name: this.state.newOccupationName
-            };
-            if (this.state.newOccupationDescription !== null) {
-                newOccupation.description = this.state.newOccupationDescription;
-            }
-            occupationStore.addOccupation(newOccupation).then(r => this.setState({
-                newOccupationCode: undefined,
-                newOccupationName: '',
-                newOccupationDescription: undefined
-            }));
-
-        }
 
         return (
             <div>
@@ -110,7 +100,7 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                             placeholder="Enter occupation description (optional)"
                                             onChange={(e) => this.setState({newOccupationDescription: e.target.value})}/>
                                     </Form.Group>
-                                    <Button variant="success" onClick={() => handleAddOccupationClick()}>Add new
+                                    <Button variant="success" onClick={() => this.handleAddOccupationClick()}>Add new
                                         occupation</Button>
                                 </Form>
 
@@ -144,8 +134,6 @@ class Occupations extends React.Component<OccupationsProps, State> {
                             <th>Occupation code</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Edit occupation</th>
-                            <th>Delete occupation</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -155,27 +143,10 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                     {occupation.occupation_code}
                                 </td>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            placeholder={"Occupation name"}
-                                            value={occupation.name}
-                                            onChange={(e) => occupation.name = e.target.value}/>
-                                    </InputGroup>
+                                    {occupation.name}
                                 </td>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            as="textarea" rows={3}
-                                            placeholder={"Occupation description (optional)"}
-                                            value={occupation.description}
-                                            onChange={(e) => occupation.description = e.target.value}/>
-                                    </InputGroup>
-                                </td>
-                                <td><Button variant="info"
-                                            onClick={() => handleEditOccupationButtonClick(occupation)}>Update</Button>
-                                </td>
-                                <td><Button variant="danger"
-                                            onClick={() => handleDeleteOccupationButtonClick(occupation.occupation_code)}>Delete</Button>
+                                    {occupation.description}
                                 </td>
                             </tr>
                         ))}

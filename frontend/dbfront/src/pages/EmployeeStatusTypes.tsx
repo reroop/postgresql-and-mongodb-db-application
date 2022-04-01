@@ -1,62 +1,70 @@
 import React from "react";
 import {inject, observer} from "mobx-react";
 import EmployeeStatusTypeStore, {EmployeeStatusType} from "../stores/EmployeeStatusTypeStore";
-import {Button, Card, Form, FormControl, InputGroup, Table} from "react-bootstrap";
+import {Button, Card, Form, Table} from "react-bootstrap";
 
 interface EmployeeStatusTypesProps {
     employeeStatusTypeStore?: EmployeeStatusTypeStore;
 }
 
+interface State {
+    newEmployeeStatusTypeCode?: number,
+    newEmployeeStatusTypeName?: string,
+    newEmployeeStatusTypeDescription?: string
+}
+
 @inject('employeeStatusTypeStore')
 @observer
-class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
+class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, State> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            newEmployeeStatusTypeCode: undefined,
+            newEmployeeStatusTypeName: '',
+            newEmployeeStatusTypeDescription: undefined
+        }
+    }
 
     public componentDidMount() {
         this.props.employeeStatusTypeStore?.getEmployeeStatusTypes();
+    }
+
+    private handleAddTypeButtonClick() {
+        if (this.state.newEmployeeStatusTypeCode == undefined || this.state.newEmployeeStatusTypeName == undefined) {
+            this.setState({
+                newEmployeeStatusTypeCode: undefined,
+                newEmployeeStatusTypeName: '',
+                newEmployeeStatusTypeDescription: undefined
+            })
+            return;
+        }
+
+        const newStatusType: EmployeeStatusType = {
+            employee_status_type_code: this.state.newEmployeeStatusTypeCode,
+            name: this.state.newEmployeeStatusTypeName
+        };
+
+        newStatusType.description = this.state.newEmployeeStatusTypeDescription;
+        this.props.employeeStatusTypeStore!!.addEmployeeStatusType(newStatusType).then((e) => (
+            this.setState({
+                newEmployeeStatusTypeCode: undefined,
+                newEmployeeStatusTypeName: '',
+                newEmployeeStatusTypeDescription: undefined
+            })
+        ));
+
     }
 
     public render() {
         const employeeStatusTypeStore = this.props.employeeStatusTypeStore!!;
         const employeeStatusTypes: EmployeeStatusType[] = employeeStatusTypeStore.employeeStatusTypes;
 
-        let newEmployeeStatusTypeCode: number|null = null;
-        let newEmployeeStatusTypeName: string = '';
-        let newEmployeeStatusTypeDescription: string|null = null;
-
-        const handleEditTypeButtonClick = (statusType: EmployeeStatusType) => {
-            if (statusType.description === '') {
-                statusType.description = undefined;
-            }
-            employeeStatusTypeStore.updateEmployeeStatusType(statusType);
-        };
-
-        const handleDeleteTypeButtonClick = (typeCode: number) => {
-            employeeStatusTypeStore.deleteEmployeeStatusType(typeCode);
-        }
-
-        const handleAddTypeButtonClick = () => {
-            if (newEmployeeStatusTypeCode === null) {
-                return;
-            }
-
-            const newStatusType: EmployeeStatusType = {
-                employee_status_type_code: newEmployeeStatusTypeCode,
-                name: newEmployeeStatusTypeName
-            };
-            if (newEmployeeStatusTypeDescription != null) {
-                newStatusType.description = newEmployeeStatusTypeDescription;
-            }
-            employeeStatusTypeStore.addEmployeeStatusType(newStatusType);
-            newEmployeeStatusTypeCode = null;
-            newEmployeeStatusTypeName = '';
-            newEmployeeStatusTypeDescription = null;
-        }
-
         return (
             <div>
                 <h1 className="font-weight-heavy">Employee status types page</h1>
 
-                <Card>
+                <Card style={{width: '48rem'}} className={'m-4'}>
                     <Card.Title>Add new employee status type:</Card.Title>
                     <Card.Body>
                         <Form>
@@ -65,29 +73,32 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
                                 <Form.Control
                                     placeholder="Enter employee status type code (number)"
                                     type="number"
-                                    onChange={(e) => newEmployeeStatusTypeCode = Number(e.target.value)}
+                                    value={this.state.newEmployeeStatusTypeCode}
+                                    onChange={(e) => this.setState({newEmployeeStatusTypeCode: Number(e.target.value)})}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTypeName">
                                 <Form.Label>Employee status type name:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter employee status type name"
-                                    onChange={(e) => newEmployeeStatusTypeName = e.target.value}/>
+                                    value={this.state.newEmployeeStatusTypeName}
+                                    onChange={(e) => this.setState({newEmployeeStatusTypeName: e.target.value})}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTypeDescription">
                                 <Form.Label>Employee status type description:</Form.Label>
                                 <Form.Control
                                     as="textarea" rows={3}
+                                    value={this.state.newEmployeeStatusTypeDescription}
                                     placeholder="Enter employee status type description (optional)"
-                                    onChange={(e) => newEmployeeStatusTypeDescription = e.target.value}/>
+                                    onChange={(e) => this.setState({newEmployeeStatusTypeDescription: e.target.value})}/>
                             </Form.Group>
-                            <Button variant="success" onClick={() => handleAddTypeButtonClick()}>Add new employee status type</Button>
+                            <Button variant="success" onClick={() => this.handleAddTypeButtonClick()}>Add new employee status type</Button>
                         </Form>
 
                     </Card.Body>
                 </Card>
 
-                <div>
+                <div className={'m-4'}>
                     <h3 className="font-weight-heavy">All employee status types:</h3>
                     <Table striped bordered hover responsive={true} title={"Employee status types:"}>
                         <thead>
@@ -95,8 +106,6 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
                             <th>Employee status type code</th>
                             <th>Name</th>
                             <th>Description</th>
-                            <th>Edit employee status type</th>
-                            <th>Delete employee status type</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -106,25 +115,10 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps> {
                                     {statusType.employee_status_type_code}
                                 </td>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            placeholder={"Employee status type name"}
-                                            value={statusType.name}
-                                            onChange={(e) => statusType.name = e.target.value}/>
-                                    </InputGroup>
+                                    {statusType.name}
                                 </td>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            placeholder={"Employee status type description"}
-                                            value={statusType.description}
-                                            onChange={(e) => statusType.description = e.target.value}/>
-                                    </InputGroup>
-                                </td>
-                                <td><Button variant="info"
-                                            onClick={() => handleEditTypeButtonClick(statusType)}>Update</Button></td>
-                                <td><Button variant="danger"
-                                            onClick={() => handleDeleteTypeButtonClick(statusType.employee_status_type_code)}>Delete</Button>
+                                    {statusType.description}
                                 </td>
                             </tr>
                         ))}

@@ -7,47 +7,50 @@ interface CountriesProps {
     countryStore?: CountryStore;
 }
 
+interface State {
+    newCountryCode: string,
+    newCountryName: string
+}
+
 @inject('countryStore')
 @observer
-class Countries extends React.Component<CountriesProps> {
+class Countries extends React.Component<CountriesProps, State> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            newCountryCode: '',
+            newCountryName: ''
+        }
+    }
 
     public componentDidMount() {
         this.props.countryStore?.getCountries();
+    }
+
+    private handleAddCountryClick() {
+        if (this.state.newCountryCode == '' || this.state.newCountryName == '') {
+            this.setState({newCountryCode: '', newCountryName: ''});
+            return;
+        }
+        const newCountry: Country = {
+            country_code: this.state.newCountryCode,
+            name: this.state.newCountryName
+        };
+        this.props.countryStore!!.addCountry(newCountry).then((e) => (
+            this.setState({newCountryCode: '', newCountryName: ''})
+        ));
     }
 
     public render() {
         const countryStore = this.props.countryStore!!;
         const countries: Country[] = countryStore.countries;
 
-
-        let newCountryCode: string = '';
-        let newCountryName: string = '';
-
-        //const [newCountryName, setNewCountryName] = useState<string>('');
-
-        const handleEditCountryButtonClick = (country: Country) => {
-            countryStore.updateCountry(country);
-        };
-
-        const handleDeleteCountryButtonClick = (countryCode: string) => {
-            countryStore.deleteCountry(countryCode);
-        };
-
-        const handleAddCountryClick = () => {
-            const newCountry: Country = {
-                country_code: newCountryCode,
-                name: newCountryName
-            };
-            countryStore.addCountry(newCountry);
-            newCountryCode = '';
-            newCountryName = '';
-        }
-
         return (
             <div>
                 <h1 className="font-weight-heavy">Countries page</h1>
 
-                <Card>
+                <Card style={{width: '48rem'}} className={'m-4'}>
                     <Card.Title>Add new country:</Card.Title>
                     <Card.Body>
                         <Form>
@@ -55,55 +58,40 @@ class Countries extends React.Component<CountriesProps> {
                                 <Form.Label>Country code:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country code"
-                                    onChange={(e) => newCountryCode = e.target.value}
+                                    value={this.state.newCountryCode}
+                                    onChange={(e) => this.setState({newCountryCode: e.target.value})}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addCountryName">
                                 <Form.Label>Country name:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country name"
-                                    onChange={(e) => newCountryName = e.target.value}/>
+                                    value={this.state.newCountryName}
+                                    onChange={(e) =>  this.setState({newCountryName: e.target.value})}/>
                             </Form.Group>
-                            <Button variant="success" onClick={() => handleAddCountryClick()}>Add new country</Button>
+                            <Button variant="success" onClick={() => this.handleAddCountryClick()}>Add new country</Button>
                         </Form>
 
                     </Card.Body>
                 </Card>
 
-                <div>
+                <div className={'m-4'}>
                     <h3 className="font-weight-heavy">All countries:</h3>
                     <Table striped bordered hover responsive={true} title={"Countries"}>
                         <thead>
                         <tr>
                             <th>Country code</th>
                             <th>Name</th>
-                            <th>Edit country</th>
-                            <th>Delete country</th>
                         </tr>
                         </thead>
                         <tbody>
                         {countries?.map((country) => (
                             <tr key={country.country_code}>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            placeholder={"Country code"}
-                                            value={country.country_code}
-                                            onChange={(e) => country.country_code = e.target.value}/>
-                                    </InputGroup>
+                                    {country.country_code}
                                 </td>
                                 <td>
-                                    <InputGroup className={"mb-3"}>
-                                        <FormControl
-                                            placeholder={"Country name"}
-                                            value={country.name}
-                                            onChange={(e) => country.name = e.target.value}/>
-                                    </InputGroup>
-                                </td>
-                                <td><Button variant="info"
-                                            onClick={() => handleEditCountryButtonClick(country)}>Update</Button></td>
-                                <td><Button variant="danger"
-                                            onClick={() => handleDeleteCountryButtonClick(country.country_code)}>Delete</Button>
+                                    {country.name}
                                 </td>
                             </tr>
                         ))}

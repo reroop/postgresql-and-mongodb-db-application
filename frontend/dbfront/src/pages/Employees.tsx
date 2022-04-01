@@ -275,7 +275,7 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                 this.setState({currentEmployeePersonName: person.given_name + ' ' + person.surname})
                                                                 this.setState({currentEmployeePerson_id: person._id!!})
                                                             }}>
-                                                                {person.given_name + ' ' + person.surname}
+                                                                {person.given_name + ' ' + person.surname + ' (' + person.country_code + ' - ' + person.nat_id_code + ')'}
                                                             </Dropdown.Item>
                                                         ))}
                                                     </Dropdown.Menu>

@@ -25,6 +25,16 @@ const Navigation = () => (
                                 Occupations
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/countries">
+                                Countries
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/employeeStatusTypes">
+                                Employee status types
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
             </div>

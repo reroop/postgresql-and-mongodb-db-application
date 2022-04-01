@@ -36,9 +36,6 @@ class App extends React.Component<any, any> {
                         <Route exact path={"/employeeStatusTypes"}>
                             <EmployeeStatusTypes/>
                         </Route>
-                        <Route exact path={"/persons"}>
-                            <Persons/>
-                        </Route>
                         <Route exact path={"/employees"}>
                             <Employees/>
                         </Route>
@@ -46,7 +43,7 @@ class App extends React.Component<any, any> {
                             <EmployeeDetails/>
                         </Route>
                         <Route path={"/*"}>
-                            {'not implemented yet!'}
+                            {'Not found!'}
                         </Route>
                     </Switch>
                 </BrowserRouter>

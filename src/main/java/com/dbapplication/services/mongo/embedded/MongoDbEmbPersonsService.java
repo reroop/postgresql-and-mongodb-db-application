@@ -93,18 +93,6 @@ public class MongoDbEmbPersonsService {
         return convertEmbeddedPersonToPerson(repoResponse);
     }
 
-    public boolean addUserAccountToPerson(String personId, EmbeddedUserAccount embeddedUserAccount) {
-        return mongoDbEmbPersonRepository.addUserAccountToPerson(personId, embeddedUserAccount);
-    }
-
-    public boolean addEmployeeToPerson(String personId, EmbeddedEmployee embeddedEmployee) {
-        return mongoDbEmbPersonRepository.addEmployeeToPerson(personId, embeddedEmployee);
-    }
-
-    public boolean addEmploymentToEmployee(String personId, EmbeddedEmployment embeddedEmployment) {
-       return  mongoDbEmbPersonRepository.addEmploymentToEmployee(personId, embeddedEmployment);
-    }
-
     public boolean updatePerson(Person person) {
         return mongoDbEmbPersonRepository.updatePerson(convertPersonToEmbeddedPerson(person));
     }
@@ -112,24 +100,6 @@ public class MongoDbEmbPersonsService {
     public boolean updateEmployee(Employee employee) {
         return mongoDbEmbPersonRepository.updateEmployee(employee.getPerson_id(), convertEmployeeToEmbeddedEmployee(employee));
     }
-
-    /*
-    public boolean endActiveEmployment(String personId, Integer occupationCode) {
-        return mongoDbEmbPersonRepository.endActiveEmployment(personId, occupationCode);
-    }
-
-     */
-
-    public boolean deletePersonUserAccount(String personId) {
-        return mongoDbEmbPersonRepository.deleteUserAccount(personId);
-    }
-
-    public EmbeddedPerson deletePerson(String personId) {
-        return mongoDbEmbPersonRepository.deletePerson(personId);
-    }
-
-
-    //-----------new methods
 
     private Employee convertEmbeddedPersonToEmployee(EmbeddedPerson embeddedPerson) {
         Employee employee = new Employee();

@@ -26,12 +26,4 @@ public class MongoDbEmployeeStatusTypeService {
     public EmployeeStatusType addEmployeeStatusType(EmployeeStatusType employeeStatusType) {
         return mongoDbEmployeeStatusTypeRepository.addEmployeeStatusType(employeeStatusType);
     }
-
-    public EmployeeStatusType deleteEmployeeStatusType(Integer employeeStatusTypeCode) {
-        return mongoDbEmployeeStatusTypeRepository.deleteEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
-    }
-
-    public boolean updateEmployeeStatusType(EmployeeStatusType employeeStatusType) {
-        return mongoDbEmployeeStatusTypeRepository.updateEmployeeStatusType(employeeStatusType);
-    }
 }

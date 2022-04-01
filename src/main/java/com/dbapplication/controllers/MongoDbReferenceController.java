@@ -63,12 +63,13 @@ public class MongoDbReferenceController {
         return mongoDbCountriesService.getCountryByCountryCode(countryCode);
     }
 
-    /*
+
     @PostMapping("countries")
     public Country addNewCountry(@RequestBody Country.CountryDto newCountryDto) {
         return mongoDbCountriesService.addCountry(newCountryDto.getCountry());
     }
 
+    /*
     @DeleteMapping("countries/{countryCode}")
     public Country deleteCountry(@PathVariable(value = "countryCode") String countryCode) {
         return mongoDbCountriesService.deleteCountry(countryCode);
@@ -97,17 +98,6 @@ public class MongoDbReferenceController {
     public Occupation addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
         return mongoDbOccupationsService.addOccupation(occupationDto.getOccupation());
     }
-
-    @DeleteMapping("occupations/{occupationCode}") //todo: disable?
-    public Occupation deleteOccupation(@PathVariable(value = "occupationCode") Integer occupationCode) {
-        return mongoDbOccupationsService.deleteOccupation(occupationCode);
-    }
-
-    @PutMapping("occupations")  //todo: disable?
-    public boolean updateOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
-        System.out.println(occupationDto.getOccupation());
-        return mongoDbOccupationsService.updateOccupation(occupationDto.getOccupation());
-    }
     //-------------
 
     //-------employee status types--------
@@ -121,24 +111,11 @@ public class MongoDbReferenceController {
         return mongoDbEmployeeStatusTypeService.getEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
     }
 
-    /*
+
     @PostMapping("employeeStatusTypes")
     public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
         return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
-
-    @DeleteMapping("employeeStatusTypes/{employeeStatusTypeCode}")
-    public EmployeeStatusType deleteEmployeeStatusType(@PathVariable(value = "employeeStatusTypeCode") Integer employeeStatusTypeCode) {
-        return mongoDbEmployeeStatusTypeService.deleteEmployeeStatusType(employeeStatusTypeCode);
-    }
-
-    @PutMapping("employeeStatusTypes")
-    public boolean updateEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
-        return mongoDbEmployeeStatusTypeService.updateEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
-    }
-
-     */
-    //-------------
 
     //-----------persons---------
     @GetMapping("persons")
@@ -150,15 +127,6 @@ public class MongoDbReferenceController {
     public Person getPersonByPerson_id(@PathVariable(value = "objectId") String objectId) {
         return mongoDbRefPersonsService.getPersonBy_id(objectId);
     }
-    /*
-    @GetMapping("persons/{countryCode}/{personalIdCode}")
-    public Person getPersonByCountryCodeAndPersonalIdentificationCode(
-            @PathVariable(value = "countryCode") String countryCode,
-            @PathVariable(value = "personalIdCode") String personalIdCode) {
-        return mongoDbRefPersonsService.getPersonByCountryCodeAndPersonalIdCode(countryCode, personalIdCode);
-    }
-
-     */
 
     @PostMapping("persons")
     public Person addPerson(@RequestBody Person.PersonDto personDto) {

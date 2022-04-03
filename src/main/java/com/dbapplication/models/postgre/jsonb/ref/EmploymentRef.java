@@ -1,4 +1,4 @@
-package com.dbapplication.models.postgre.ref;
+package com.dbapplication.models.postgre.jsonb.ref;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;

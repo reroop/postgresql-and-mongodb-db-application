@@ -1,4 +1,4 @@
-package com.dbapplication.models.postgre.ref;
+package com.dbapplication.models.postgre.jsonb.common;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Entity
 @TypeDef(name="jsonb", typeClass = JsonBinaryType.class)
 @Table(name="country")
-public class CountryRef {
+public class CountryPostgreJsonCommon {
 
     @Id
     private String country_code;

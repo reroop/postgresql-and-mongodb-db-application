@@ -1,6 +1,6 @@
 package com.dbapplication.models.postgre.traditional;
 
-import com.dbapplication.models.postgre.ref.EmploymentRef;
+import com.dbapplication.models.postgre.jsonb.ref.EmploymentRef;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

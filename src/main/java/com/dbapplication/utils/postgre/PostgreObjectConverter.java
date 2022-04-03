@@ -1,9 +1,9 @@
 package com.dbapplication.utils.postgre;
 
-import com.dbapplication.models.postgre.ref.CountryRef;
-import com.dbapplication.models.postgre.ref.EmployeeStatusTypeRef;
-import com.dbapplication.models.postgre.ref.OccupationRef;
-import com.dbapplication.models.postgre.ref.PersonRef;
+import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.common.EmployeeStatusTypePostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.common.OccupationPostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import com.dbapplication.models.postgre.traditional.*;
 
 import java.util.ArrayList;
@@ -77,51 +77,51 @@ public class PostgreObjectConverter {
         return result;
     }
 
-    public static EmployeeStatusType convertEmployeeStatusTypeRefToEmployeeStatusType(EmployeeStatusTypeRef employeeStatusTypeRef) {
-        return new EmployeeStatusType(employeeStatusTypeRef.getEmployee_status_type_code(), employeeStatusTypeRef.getData().getName(), employeeStatusTypeRef.getData().getDescription());
+    public static EmployeeStatusType convertEmployeeStatusTypePostgreJsonCommonToEmployeeStatusType(EmployeeStatusTypePostgreJsonCommon employeeStatusTypePostgreJsonCommon) {
+        return new EmployeeStatusType(employeeStatusTypePostgreJsonCommon.getEmployee_status_type_code(), employeeStatusTypePostgreJsonCommon.getData().getName(), employeeStatusTypePostgreJsonCommon.getData().getDescription());
     }
 
-    public static List<EmployeeStatusType> convertEmployeeStatusTypeRefListToeEmployeeStatusTypeList(List<EmployeeStatusTypeRef> employeeStatusTypeRefList) {
+    public static List<EmployeeStatusType> convertEmployeeStatusTypePostgreJsonCommonListToEmployeeStatusTypeList(List<EmployeeStatusTypePostgreJsonCommon> employeeStatusTypePostgreJsonCommonList) {
         List<EmployeeStatusType> result = new ArrayList<>();
-        for (EmployeeStatusTypeRef statusTypeRef : employeeStatusTypeRefList) {
-            result.add(convertEmployeeStatusTypeRefToEmployeeStatusType(statusTypeRef));
+        for (EmployeeStatusTypePostgreJsonCommon statusTypeRef : employeeStatusTypePostgreJsonCommonList) {
+            result.add(convertEmployeeStatusTypePostgreJsonCommonToEmployeeStatusType(statusTypeRef));
         }
         return result;
     }
 
-    public static EmployeeStatusTypeRef convertEmployeeStatusTypeToEmployeeStatusTypeRef(EmployeeStatusType employeeStatusType) {
-       return new EmployeeStatusTypeRef(employeeStatusType.getEmployee_status_type_code(), new EmployeeStatusTypeRef.EmployeeStatusTypeData(employeeStatusType.getName(), employeeStatusType.getDescription()));
+    public static EmployeeStatusTypePostgreJsonCommon convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(EmployeeStatusType employeeStatusType) {
+       return new EmployeeStatusTypePostgreJsonCommon(employeeStatusType.getEmployee_status_type_code(), new EmployeeStatusTypePostgreJsonCommon.EmployeeStatusTypeData(employeeStatusType.getName(), employeeStatusType.getDescription()));
     }
 
-    public static Occupation convertOccupationRefToOccupation(OccupationRef occupationRef) {
-        return new Occupation(occupationRef.getOccupation_code(), occupationRef.getData().getName(), occupationRef.getData().getDescription());
+    public static Occupation convertOccupationPostgreJsonCommonToOccupation(OccupationPostgreJsonCommon occupationPostgreJsonCommon) {
+        return new Occupation(occupationPostgreJsonCommon.getOccupation_code(), occupationPostgreJsonCommon.getData().getName(), occupationPostgreJsonCommon.getData().getDescription());
     }
 
-    public static List<Occupation> convertOccupationRefListfToOccupationList(List<OccupationRef> occupationRefList) {
+    public static List<Occupation> convertOccupationPostgreJsonCommonListToOccupationList(List<OccupationPostgreJsonCommon> occupationPostgreJsonCommonList) {
         List<Occupation> result = new ArrayList<>();
-        for (OccupationRef occupationRef : occupationRefList) {
-            result.add(convertOccupationRefToOccupation(occupationRef));
+        for (OccupationPostgreJsonCommon occupationPostgreJsonCommon : occupationPostgreJsonCommonList) {
+            result.add(convertOccupationPostgreJsonCommonToOccupation(occupationPostgreJsonCommon));
         }
         return result;
     }
 
-    public static OccupationRef convertOccupationToOccupationRef(Occupation occupation) {
-        return new OccupationRef(occupation.getOccupation_code(), new OccupationRef.OccupationData(occupation.getName(), occupation.getDescription()));
+    public static OccupationPostgreJsonCommon convertOccupationToOccupationPostgreJsonCommon(Occupation occupation) {
+        return new OccupationPostgreJsonCommon(occupation.getOccupation_code(), new OccupationPostgreJsonCommon.OccupationData(occupation.getName(), occupation.getDescription()));
     }
 
-    public static Country convertCountryRefToCountry(CountryRef countryRef) {
-        return new Country(countryRef.getCountry_code(), countryRef.getData().getName());
+    public static Country convertCountryPostgreJsonCommonToCountry(CountryPostgreJsonCommon countryPostgreJsonCommon) {
+        return new Country(countryPostgreJsonCommon.getCountry_code(), countryPostgreJsonCommon.getData().getName());
     }
 
-    public static List<Country> convertCountryRefListToCountryList(List<CountryRef> countryRefList) {
+    public static List<Country> convertCountryPostgreJsonCommonListToCountryList(List<CountryPostgreJsonCommon> countryPostgreJsonCommonList) {
         List<Country> result = new ArrayList<>();
-        for (CountryRef countryRef : countryRefList) {
-            result.add(new Country(countryRef.getCountry_code(), countryRef.getData().getName()));
+        for (CountryPostgreJsonCommon countryPostgreJsonCommon : countryPostgreJsonCommonList) {
+            result.add(new Country(countryPostgreJsonCommon.getCountry_code(), countryPostgreJsonCommon.getData().getName()));
         }
         return result;
     }
 
-    public static CountryRef convertCountryToCountryRef(Country country) {
-        return new CountryRef(country.getCountry_code(), new CountryRef.CountryData(country.getName()));
+    public static CountryPostgreJsonCommon convertCountryToCountryPostgreJsonCommon(Country country) {
+        return new CountryPostgreJsonCommon(country.getCountry_code(), new CountryPostgreJsonCommon.CountryData(country.getName()));
     }
 }

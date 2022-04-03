@@ -20,14 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.dbapplication.utils.mongodb.ValidationChecks.*;
+
 @Slf4j
 @Component
 public class MongoDbEmbPersonRepository {
 
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
-    private final ValidationChecks validationChecks = new ValidationChecks();
-
 
     public List<EmbeddedPerson> getAllPersons() {
         return universalMongoTemplate.getAll(EmbeddedPerson.class);
@@ -38,11 +38,9 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
     }
 
-
-    //all adds
     public EmbeddedPerson addPerson(EmbeddedPerson embeddedPerson) {
         embeddedPerson.setReg_time(LocalDateTime.now());
-        if (!validationChecks.isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
             return null;
         }
 
@@ -52,12 +50,6 @@ public class MongoDbEmbPersonRepository {
          */
         embeddedPerson.setEmployee(null);
         return universalMongoTemplate.addEntity(embeddedPerson);
-    }
-
-    public boolean addUserAccountToPerson(String personObjectId, EmbeddedUserAccount embeddedUserAccount) {
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
-        Update updatableInfo = new Update().set("kasutajakonto", embeddedUserAccount);
-        return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
     public boolean addEmployeeToPerson(String personObjectId, EmbeddedEmployee embeddedEmployee) {
@@ -78,7 +70,7 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment newEmbeddedEmployment) {
-        if (!validationChecks.isDateInRange2010to2100(newEmbeddedEmployment.getStart_time())) {
+        if (!isDateInRange2010to2100(newEmbeddedEmployment.getStart_time())) {
             log.info("add employment, employment date(s) out of range 2010-2100");
             return false;
         }
@@ -111,7 +103,7 @@ public class MongoDbEmbPersonRepository {
 
     //all updates
     public boolean updatePerson(EmbeddedPerson embeddedPerson) {
-        if (!validationChecks.isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
             return false;
         }
 
@@ -166,7 +158,7 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endActiveEmployment(Employment endEmploymentInfo) {
-        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
+        if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
             log.info("end active employment, end date not in range");
             return false;
         }
@@ -179,7 +171,7 @@ public class MongoDbEmbPersonRepository {
 
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (Objects.equals(endEmploymentInfo.getOccupation_code(), embeddedEmployment.getOccupation_code()) && embeddedEmployment.getEnd_time() == null) {
-                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
+                if (!isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
                     log.info("end active employment, end date is before start date");
                     return false;
                 }
@@ -193,7 +185,7 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endAllEmployments(Employment endEmploymentInfo) {
-        if (!validationChecks.isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
+        if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
             log.info("end all employments, end date not in range 2010-2100");
             return false;
         }
@@ -207,7 +199,7 @@ public class MongoDbEmbPersonRepository {
 
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (embeddedEmployment.getEnd_time() == null) {
-                if (!validationChecks.isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
+                if (!isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
                     log.info("end all employments, end date is before start date");
                     return false;
                 }
@@ -219,23 +211,11 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean deleteUserAccount(String personId) {
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
-        Update updatableInfo = new Update().unset("kasutajakonto");
-
-        return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
-    }
-
     public boolean deleteEmployee(String personId) {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
         Update updatableInfo = new Update().unset("employee");
 
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
-    }
-
-    public EmbeddedPerson deletePerson(String personId) {
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
-        return universalMongoTemplate.deleteEntity(queryFindByObjectId, EmbeddedPerson.class);
     }
 
     public List<EmbeddedPerson> getAllEmployees() {

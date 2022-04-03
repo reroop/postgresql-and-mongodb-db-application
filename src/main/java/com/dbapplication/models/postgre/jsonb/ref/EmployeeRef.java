@@ -1,4 +1,4 @@
-package com.dbapplication.models.postgre.ref;
+package com.dbapplication.models.postgre.jsonb.ref;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

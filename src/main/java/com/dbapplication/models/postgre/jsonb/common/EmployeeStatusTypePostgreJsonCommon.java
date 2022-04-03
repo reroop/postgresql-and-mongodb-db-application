@@ -1,4 +1,4 @@
-package com.dbapplication.models.postgre.ref;
+package com.dbapplication.models.postgre.jsonb.common;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.AllArgsConstructor;
@@ -17,21 +17,20 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Entity
 @TypeDef(name="jsonb", typeClass = JsonBinaryType.class)
-@Table(name="occupation")
-public class OccupationRef {
+@Table(name="employee_status_type")
+public class EmployeeStatusTypePostgreJsonCommon {
 
     @Id
-    private Integer occupation_code;
+    private Integer employee_status_type_code;
 
     @Type(type="jsonb")
     @Column(columnDefinition = "jsonb")
-    private OccupationData data;
-
+    private EmployeeStatusTypeData data;
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class OccupationData {
+    public static class EmployeeStatusTypeData {
 
         private String name;
         private String description;

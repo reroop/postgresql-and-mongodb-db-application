@@ -1,5 +1,6 @@
-package com.dbapplication.models.postgre;
+package com.dbapplication.models.postgre.traditional;
 
+import com.dbapplication.models.postgre.ref.EmploymentRef;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -95,6 +96,15 @@ public class Employment {
 
             //System.out.println("createdpostgreemployment");
             return employment;
+        }
+
+        public EmploymentRef createPostgreRefEmployment() {
+            EmploymentRef employmentRef = new EmploymentRef(
+                    Long.valueOf(this.employment.getPerson_id()),
+                    this.employment.getOccupation_code(),
+                    new EmploymentRef.EmploymentData(employment.getStart_time(), employment.getEnd_time())
+            );
+            return employmentRef;
         }
 
         @Override

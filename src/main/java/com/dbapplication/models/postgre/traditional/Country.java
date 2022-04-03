@@ -1,4 +1,4 @@
-package com.dbapplication.models.postgre;
+package com.dbapplication.models.postgre.traditional;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

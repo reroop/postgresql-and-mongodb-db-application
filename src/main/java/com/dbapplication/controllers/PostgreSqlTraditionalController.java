@@ -1,8 +1,8 @@
 package com.dbapplication.controllers;
 
 
-import com.dbapplication.models.postgre.*;
-import com.dbapplication.services.postgre.*;
+import com.dbapplication.models.postgre.traditional.*;
+import com.dbapplication.services.postgre.traditional.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
@@ -150,9 +150,6 @@ public class PostgreSqlTraditionalController {
 
     @PostMapping("employments")
     public Employment addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        //System.out.println(employmentDto);
-        //System.out.println("created postgreemployment");
-        //System.out.println(employmentDto.createPostgreEmployment());
         return postgreTradEmploymentService.addEmployment(employmentDto.createPostgreEmployment());
     }
 

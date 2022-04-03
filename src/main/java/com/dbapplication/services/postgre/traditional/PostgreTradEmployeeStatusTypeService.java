@@ -1,7 +1,7 @@
-package com.dbapplication.services.postgre;
+package com.dbapplication.services.postgre.traditional;
 
-import com.dbapplication.models.postgre.EmployeeStatusType;
-import com.dbapplication.repositories.postgre.PostgreTradEmployeeStatusTypeRepository;
+import com.dbapplication.models.postgre.traditional.EmployeeStatusType;
+import com.dbapplication.repositories.postgre.traditional.PostgreTradEmployeeStatusTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
-package com.dbapplication.services.postgre;
+package com.dbapplication.services.postgre.traditional;
 
-import com.dbapplication.models.postgre.Country;
-import com.dbapplication.repositories.postgre.PostgreTradCountryRepository;
+import com.dbapplication.models.postgre.traditional.Country;
+import com.dbapplication.repositories.postgre.traditional.PostgreTradCountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

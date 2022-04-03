@@ -1,13 +1,14 @@
-package com.dbapplication.services.postgre;
+package com.dbapplication.services.postgre.traditional;
 
-import com.dbapplication.models.postgre.Employment;
-import com.dbapplication.repositories.postgre.PostgreTradEmploymentRepository;
-import com.dbapplication.utils.postgre.PostgreObjectConverter;
+import com.dbapplication.models.postgre.traditional.Employment;
+import com.dbapplication.repositories.postgre.traditional.PostgreTradEmploymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertListOfEmploymentsToListOfFrontEmployments;
 
 @Service
 @Profile("postgretrad")
@@ -15,21 +16,19 @@ public class PostgreTradEmploymentService {
 
     @Autowired
     private PostgreTradEmploymentRepository employmentRepository;
-    private final PostgreObjectConverter postgreObjectConverter = new PostgreObjectConverter();
 
     public List<Employment> getAllEmploymentsByOccupationCode(Integer occupationCode) {
         return employmentRepository.findAllByOccupationCode(occupationCode);
     }
 
     public List<Employment.FrontEmployment> getEmployeeAllEmployments(Long personId) {
-        return postgreObjectConverter.convertListOfEmploymentsToListOfFrontEmployments(employmentRepository.findAllByPersonId(personId));
+        return convertListOfEmploymentsToListOfFrontEmployments(employmentRepository.findAllByPersonId(personId));
     }
 
     public Employment addEmployment(Employment employment) {
         //check if is already in active employment for that occupation
-        List<Employment> savedPersonEmploymentsInOccupation = employmentRepository.findAllByPersonIdAndOccupationCode(employment.getPersonId(), employment.getOccupationCode());
-        System.out.println(savedPersonEmploymentsInOccupation);
-        for (Employment savedEmployment: savedPersonEmploymentsInOccupation) {
+        List<Employment> employeeEmploymentsInOccupation = employmentRepository.findAllByPersonIdAndOccupationCode(employment.getPersonId(), employment.getOccupationCode());
+        for (Employment savedEmployment: employeeEmploymentsInOccupation) {
             if (savedEmployment.getEndTime() == null || savedEmployment.getStartTime().equals(employment.getStartTime())) {
                 return null;
             }

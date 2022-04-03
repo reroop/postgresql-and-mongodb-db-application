@@ -8,6 +8,7 @@ Useful links/credit:
 - to use MongoDbReference, start spring with profile: `gradlew bootRun --args='--spring.profiles.active=mongoref'`
 - to use MongoDbEmbedded, start spring with profile: `gradlew bootRun --args='--spring.profiles.active=mongoemb'`
 - to use PostgreSql Trad., start spring with profile: `gradlew bootRun --args='--spring.profiles.active=postgretrad'`
+- to use PostgreSql Reference, start spring with profile: `gradlew bootRun --args='--spring.profiles.active=postgreref'`
 
 
 ****

@@ -89,7 +89,6 @@ public class MongoDbEmbPersonsService {
 
     public Person addPerson(Person person) {
         EmbeddedPerson repoResponse = mongoDbEmbPersonRepository.addPerson(convertPersonToEmbeddedPerson(person));
-        System.out.println(repoResponse);
         return convertEmbeddedPersonToPerson(repoResponse);
     }
 

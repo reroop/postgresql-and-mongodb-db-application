@@ -3,6 +3,7 @@ package com.dbapplication.utils.postgre;
 import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.EmployeeStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.OccupationPostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.emb.PersonEmb;
 import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import com.dbapplication.models.postgre.traditional.*;
 
@@ -123,5 +124,45 @@ public class PostgreObjectConverter {
 
     public static CountryPostgreJsonCommon convertCountryToCountryPostgreJsonCommon(Country country) {
         return new CountryPostgreJsonCommon(country.getCountry_code(), new CountryPostgreJsonCommon.CountryData(country.getName()));
+    }
+
+    public static PersonEmb convertPersonToPersonEmb(Person person){
+        PersonEmb personEmb = new PersonEmb(
+                person.get_id(),
+                person.getCountry_code(), new PersonEmb.PersonData(
+                    person.getNat_id_code(),
+                    person.getE_mail(),
+                    person.getBirth_date(),
+                    person.getReg_time(),
+                    person.getGiven_name(),
+                    person.getSurname(),
+                    person.getAddress()
+                ),
+                null
+        );
+        return personEmb;
+    }
+
+    public static Person convertPersonEmbToPerson(PersonEmb personEmb) {
+        Person person = new Person(
+                personEmb.get_id(),
+                personEmb.getData().getNat_id_code(),
+                personEmb.getCountry_code(),
+                personEmb.getData().getE_mail(),
+                personEmb.getData().getBirth_date(),
+                personEmb.getData().getReg_time(),
+                personEmb.getData().getGiven_name(),
+                personEmb.getData().getSurname(),
+                personEmb.getData().getAddress()
+        );
+        return person;
+    }
+
+    public static List<Person> convertPersonEmbListToPersonList(List<PersonEmb> personEmbList) {
+        List<Person> result = new ArrayList<>();
+        for(PersonEmb personEmb : personEmbList) {
+            result.add(convertPersonEmbToPerson(personEmb));
+        }
+        return result;
     }
 }

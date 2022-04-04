@@ -2,6 +2,7 @@ package com.dbapplication.utils.mongodb;
 
 import com.dbapplication.models.mongo.embedded.EmbeddedPerson;
 import com.dbapplication.models.mongo.reference.Person;
+import com.dbapplication.models.postgre.jsonb.emb.PersonEmb;
 import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,6 +42,26 @@ public class ValidationChecks {
             return false;
         }
         if (!isDateInRange2010to2100(personRef.getData().getReg_time())) {
+            log.info("person, reg time not in rage 2010-2100");
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isPostgreJsonEmbPersonValid(PersonEmb personEmb) {
+        LocalDateTime birthDateInLocalDateTime =  LocalDateTime.ofInstant(personEmb.getData().getBirth_date().toInstant(), ZoneId.systemDefault());
+
+        System.out.println(birthDateInLocalDateTime);
+
+        if (!isDateInRange1900to2100(birthDateInLocalDateTime)) {
+            log.info("person, birthdate not in range 1900-2100");
+            return false;
+        }
+        if (!isFirstDateBeforeSecondDate(birthDateInLocalDateTime, personEmb.getData().getReg_time())) {
+            log.info("person, birth date not before reg time");
+            return false;
+        }
+        if (!isDateInRange2010to2100(personEmb.getData().getReg_time())) {
             log.info("person, reg time not in rage 2010-2100");
             return false;
         }

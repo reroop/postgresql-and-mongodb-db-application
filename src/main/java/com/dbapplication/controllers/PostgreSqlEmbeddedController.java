@@ -3,12 +3,14 @@ package com.dbapplication.controllers;
 import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.EmployeeStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.OccupationPostgreJsonCommon;
-import com.dbapplication.models.postgre.jsonb.ref.*;
+import com.dbapplication.models.postgre.jsonb.emb.EmployeeEmb;
+import com.dbapplication.models.postgre.jsonb.emb.EmploymentEmb;
+import com.dbapplication.models.postgre.jsonb.emb.PersonEmb;
 import com.dbapplication.models.postgre.traditional.*;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonCountryService;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonEmployeeStatusTypeService;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonOccupationService;
-import com.dbapplication.services.postgre.jsonb.ref.*;
+import com.dbapplication.services.postgre.jsonb.emb.PostgreEmbPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,9 @@ import java.util.List;
 
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.*;
 
-@Profile("postgreref")
+@Profile("postgreemb")
 @RestController
-public class PostgreSqlReferenceController {
+public class PostgreSqlEmbeddedController {
 
     @Autowired
     private PostgreJsonCommonCountryService postgreJsonCommonCountryService;
@@ -31,21 +33,15 @@ public class PostgreSqlReferenceController {
     private PostgreJsonCommonEmployeeStatusTypeService postgreJsonCommonEmployeeStatusTypeService;
 
     @Autowired
-    private PostgreRefPersonService postgreRefPersonService;
+    private PostgreEmbPersonService postgreEmbPersonService;
 
-    @Autowired
-    private PostgreRefEmployeeService postgreRefEmployeeService;
-
-    @Autowired
-    private PostgreRefEmploymentService postgreRefEmploymentService;
 
     //---health checker----
     @GetMapping
     public String index() {
-        return "Postgre reference controller is running!";
+        return "Postgre embedded controller is running!";
     }
     //---------------------
-
 
     //--countries---
     @GetMapping("countries")
@@ -101,77 +97,85 @@ public class PostgreSqlReferenceController {
     //----persons-----
     @GetMapping("persons")
     public List<Person> getAllPersons() {
-        return postgreRefPersonService.getAllPersons();
+        return postgreEmbPersonService.getAllPersons();
     }
 
     @GetMapping("persons/{_id}")
     public Person getPersonByPerson_id(@PathVariable(value = "_id") Long _id) {
-        return postgreRefPersonService.getPersonBy_id(_id);
+        return postgreEmbPersonService.getPersonBy_id(_id);
     }
 
     @PostMapping("persons")
-    public PersonRef addPerson(@RequestBody Person.PersonDto personDto) {
-        return postgreRefPersonService.addPerson(convertPersonToPersonRef(personDto.getPerson()));
+    public PersonEmb addPerson(@RequestBody Person.PersonDto personDto) {
+        return postgreEmbPersonService.addPerson(convertPersonToPersonEmb(personDto.getPerson()));
     }
 
     @PutMapping("persons")
-    public PersonRef updatePerson(@RequestBody Person.PersonDto personDto) {
-        return postgreRefPersonService.updatePerson(convertPersonToPersonRef(personDto.getPerson()));
+    public PersonEmb updatePerson(@RequestBody Person.PersonDto personDto) {
+        return postgreEmbPersonService.updatePerson(convertPersonToPersonEmb(personDto.getPerson()));
     }
 
     //----employees---
     @GetMapping("employees")
     public List<Employee> getAllEmployees() {
-        return postgreRefEmployeeService.getAllEmployees();
+        return postgreEmbPersonService.getAllEmployees();
     }
 
     @GetMapping("employees/{personId}")
     public Employee getEmployeeByPersonId(@PathVariable(value = "personId") Long personId) {
-        return postgreRefEmployeeService.getEmployeeByPersonId(personId);
+        return postgreEmbPersonService.getEmployeeByPersonId(personId);
     }
 
     @PostMapping("employees")
-    public EmployeeRef addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeEmb addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
         Employee employee = employeeDto.getEmployee();
-        return postgreRefEmployeeService.addEmployee(employee);
+        return postgreEmbPersonService.addEmployee(employee);
     }
 
     @DeleteMapping("employees/{personId}")
     public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) {
-        postgreRefEmployeeService.deleteEmployeeByPersonId(personId);
+        postgreEmbPersonService.deleteEmployeeByPersonId(personId);
     }
 
     @PutMapping("employees")
-    public EmployeeRef updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeEmb updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
         Employee employee = employeeDto.getEmployee();
-        return postgreRefEmployeeService.updateEmployee(employee);
+        return postgreEmbPersonService.updateEmployee(employee);
     }
 
     //----employments-----
 
     @GetMapping("employments/occupationCode={occupationCode}")
     public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
-        return postgreRefEmploymentService.getAllEmploymentsByOccupationCode(occupationCode);
+        return postgreEmbPersonService.getAllEmploymentsByOccupationCode(occupationCode);
     }
 
     @GetMapping("employments/personId={personId}")
     public List<Employment.FrontEmployment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) {
-        return postgreRefEmploymentService.getEmployeeAllEmployments(personId);
+        return postgreEmbPersonService.getEmployeeAllEmployments(personId);
     }
 
     @PostMapping("employments")
-    public EmploymentRef addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreRefEmploymentService.addEmployment(employmentDto.createPostgreRefEmployment());
+    public EmploymentEmb addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+        return postgreEmbPersonService.addEmployment(
+                Long.valueOf(employmentDto.getEmployment().getPerson_id()),
+                employmentDto.createPostgreEmbEmployment()
+        );
     }
 
     @PutMapping("employments")
-    public EmploymentRef endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreRefEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreRefEmployment());
+    public EmploymentEmb endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+        return postgreEmbPersonService.endEmployeeActiveEmployment(
+                Long.valueOf(employmentDto.getEmployment().getPerson_id()),
+                employmentDto.createPostgreEmbEmployment()
+        );
     }
 
     @PutMapping("employments/endEmployments")
-    public List<EmploymentRef> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
-        return postgreRefEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreRefEmployment());
+    public List<EmploymentEmb> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+        return postgreEmbPersonService.endEmployeeAllEmployments(
+                Long.valueOf(employmentDto.getEmployment().getPerson_id()),
+                employmentDto.createPostgreEmbEmployment()
+        );
     }
-
 }

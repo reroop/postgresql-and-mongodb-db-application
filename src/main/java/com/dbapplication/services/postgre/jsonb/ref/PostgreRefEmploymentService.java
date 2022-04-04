@@ -76,8 +76,8 @@ public class PostgreRefEmploymentService {
     }
 
     public EmploymentRef endEmployeeActiveEmployment(EmploymentRef employmentRef) {
-        if (!isDateInRange2010to2100(employmentRef.getData().getStart_time())) {
-            log.info("employmentref starttime not in range 2010-2100");
+        if (!isDateInRange2010to2100(employmentRef.getData().getEnd_time())) {
+            log.info("employmentref endtime not in range 2010-2100");
             return null;
         }
 

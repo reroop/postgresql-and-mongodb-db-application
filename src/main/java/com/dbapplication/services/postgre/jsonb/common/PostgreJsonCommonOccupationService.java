@@ -13,7 +13,7 @@ import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertOccu
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertOccupationPostgreJsonCommonToOccupation;
 
 @Service
-@Profile("postgreref")
+@Profile({"postgreref", "postgreemb"})
 public class PostgreJsonCommonOccupationService {
 
     @Autowired

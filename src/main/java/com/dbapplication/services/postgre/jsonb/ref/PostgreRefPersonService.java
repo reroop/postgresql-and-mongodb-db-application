@@ -30,16 +30,10 @@ public class PostgreRefPersonService {
     }
 
     public PersonRef addPerson(PersonRef personRef) {
-        if (!isPostgreJsonRefPersonValid(personRef)) {
-            return null;
-        }
-        return personRepository.save(personRef);
+        return !isPostgreJsonRefPersonValid(personRef) ? null : personRepository.save(personRef);
     }
 
     public PersonRef updatePerson(PersonRef personRef) {
-        if (!isPostgreJsonRefPersonValid(personRef)) {
-            return null;
-        }
-        return personRepository.save(personRef);
+        return !isPostgreJsonRefPersonValid(personRef) ? null : personRepository.save(personRef);
     }
 }

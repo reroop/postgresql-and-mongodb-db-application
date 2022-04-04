@@ -1,5 +1,6 @@
 package com.dbapplication.models.postgre.traditional;
 
+import com.dbapplication.models.postgre.jsonb.emb.EmploymentEmb;
 import com.dbapplication.models.postgre.jsonb.ref.EmploymentRef;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -105,6 +106,15 @@ public class Employment {
                     new EmploymentRef.EmploymentData(employment.getStart_time(), employment.getEnd_time())
             );
             return employmentRef;
+        }
+
+        public EmploymentEmb createPostgreEmbEmployment() {
+            EmploymentEmb employmentEmb = new EmploymentEmb(
+                    this.employment.getOccupation_code(),
+                    this.employment.getStart_time(),
+                    this.employment.getEnd_time()
+            );
+            return employmentEmb;
         }
 
         @Override

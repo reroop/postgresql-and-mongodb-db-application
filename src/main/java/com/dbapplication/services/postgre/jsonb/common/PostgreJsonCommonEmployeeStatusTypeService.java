@@ -13,7 +13,7 @@ import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertEmpl
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertEmployeeStatusTypePostgreJsonCommonToEmployeeStatusType;
 
 @Service
-@Profile("postgreref")
+@Profile({"postgreref", "postgreemb"})
 public class PostgreJsonCommonEmployeeStatusTypeService {
 
     @Autowired

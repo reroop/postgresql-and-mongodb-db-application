@@ -13,7 +13,7 @@ import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertCoun
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertCountryPostgreJsonCommonToCountry;
 
 @Service
-@Profile("postgreref")
+@Profile({"postgreref", "postgreemb"})
 public class PostgreJsonCommonCountryService {
 
     @Autowired

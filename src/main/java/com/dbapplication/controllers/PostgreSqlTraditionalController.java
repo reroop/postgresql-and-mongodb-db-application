@@ -122,6 +122,12 @@ public class PostgreSqlTraditionalController {
 
     @PostMapping("employees")
     public Employee addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+        List<Employment.FrontEmployment> employeeEmployments = postgreTradEmploymentService.getEmployeeAllEmployments(employeeDto.getEmployee().getPerson_id());
+        for (Employment.FrontEmployment employment : employeeEmployments) {
+            if (employment.getEnd_time() == null) {
+                return null;
+            }
+        }
         return postgreTradEmployeeService.addEmployee(employeeDto.getEmployee());
     }
 
@@ -155,7 +161,6 @@ public class PostgreSqlTraditionalController {
 
     @PutMapping("employments")
     public Employment endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
-        System.out.println(employmentDto);
         return postgreTradEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreEmployment());
     }
 

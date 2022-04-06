@@ -89,6 +89,7 @@ public class MongoDbEmbPersonRepository {
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (Objects.equals(embeddedEmployment.getOccupation_code(), newEmbeddedEmployment.getOccupation_code())) {
                 if (embeddedEmployment.getEnd_time() == null || embeddedEmployment.getStart_time().equals(newEmbeddedEmployment.getStart_time())) {
+                    log.info("already actively employed in this occupation");
                     return false;
                 }
             }
@@ -150,7 +151,7 @@ public class MongoDbEmbPersonRepository {
             updatableInfo.set("employee.employee_status_type_code", embeddedEmployee.getEmployee_status_type_code());
         }
         if (embeddedEmployee.getMentor_id() != null && !Objects.equals(embeddedEmployee.getMentor_id(), personId)) {
-            updatableInfo.set("employee.mentor_id", embeddedEmployee.getMentor_id());
+            updatableInfo.set("employee.mentor_id", new ObjectId(embeddedEmployee.getMentor_id()));
         } else {
             updatableInfo.unset("employee.mentor_id");
         }
@@ -214,12 +215,21 @@ public class MongoDbEmbPersonRepository {
     public boolean deleteEmployee(String personId) {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
         Update updatableInfo = new Update().unset("employee");
-
+        this.removeDeletedEmployeeAsMentorFromOtherEmployees(personId);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
     public List<EmbeddedPerson> getAllEmployees() {
         Query queryFindEmployees = new Query(Criteria.where("employee").exists(true));
         return universalMongoTemplate.getAllByQuery(queryFindEmployees, EmbeddedPerson.class);
+    }
+
+    private boolean removeDeletedEmployeeAsMentorFromOtherEmployees(String deletedEmployeeId) {
+        Query queryFindEmployeesWithDeletedMentorId = new Query();
+        queryFindEmployeesWithDeletedMentorId.addCriteria(Criteria.where("employee").exists(true));
+        queryFindEmployeesWithDeletedMentorId.addCriteria(Criteria.where("employee.mentor_id").is(new ObjectId(deletedEmployeeId)));
+
+        Update updatableInfo = new Update().unset("employee.mentor_id");
+        return universalMongoTemplate.updateAllEntities(queryFindEmployeesWithDeletedMentorId, updatableInfo, EmbeddedPerson.class);
     }
 }

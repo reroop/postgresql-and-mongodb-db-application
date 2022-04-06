@@ -42,7 +42,17 @@ public class PostgreEmbPersonService {
     }
 
     public PersonEmb updatePerson(PersonEmb personEmb) {
-        return !isPostgreJsonEmbPersonValid(personEmb) ? null : personRepository.save(personEmb);
+        log.info(personEmb.toString());
+        if (!isPostgreJsonEmbPersonValid(personEmb)) {
+            return null;
+        }
+        PersonEmb person = personRepository.findById(personEmb.get_id()).orElse(null);
+        if (person == null) {
+            return null;
+        }
+        person.setCountry_code(personEmb.getCountry_code());
+        person.setData(personEmb.getData());
+        return personRepository.save(person);
     }
 
     //----employee
@@ -58,7 +68,7 @@ public class PostgreEmbPersonService {
 
     public Employee getEmployeeByPersonId(Long personId) {
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
-        return personEmb == null
+        return personEmb.getEmployee() == null
                 ? null
                 : new Employee(personEmb.get_id(), personEmb.getEmployee().getMentor_id(), personEmb.getEmployee().getEmployee_status_type_code());
     }
@@ -66,7 +76,7 @@ public class PostgreEmbPersonService {
     public EmployeeEmb addEmployee(Employee employee) {
         EmployeeEmb employeeEmb = new EmployeeEmb(employee.getEmployee_status_type_code(), employee.getMentor_id(), null);
         PersonEmb personEmb = personRepository.findById(employee.getPerson_id()).orElse(null);
-        if (personEmb==null) {
+        if (personEmb==null || personEmb.getEmployee() != null) {
             return null;
         }
         personEmb.setEmployee(employeeEmb);
@@ -76,22 +86,42 @@ public class PostgreEmbPersonService {
 
     public void deleteEmployeeByPersonId(Long personId) {
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
-        if (personEmb==null) {
+        if (personEmb == null || personEmb.getEmployee() == null) {
             return;
+        }
+        for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
+            if (employmentEmb.getEnd_time() == null) {
+                return;
+            }
         }
         personEmb.setEmployee(null);
         personRepository.save(personEmb);
+        this.removeDeletedEmployeeAsMentorFromOtherEmployees(personId);
     }
 
     public EmployeeEmb updateEmployee(Employee employee) {
         PersonEmb personEmb = personRepository.findById(employee.getPerson_id()).orElse(null);
-        if (personEmb == null) {
+        if (personEmb == null || personEmb.getEmployee() == null) {
             return null;
         }
         personEmb.getEmployee().setEmployee_status_type_code(employee.getEmployee_status_type_code());
         personEmb.getEmployee().setMentor_id(employee.getMentor_id());
+        log.info(personEmb.toString());
         PersonEmb savedPersonEmb = personRepository.save(personEmb);
         return savedPersonEmb.getEmployee();
+    }
+
+    private void removeDeletedEmployeeAsMentorFromOtherEmployees(Long deletedEmployeeId) {
+        List<PersonEmb> repoRes = personRepository.findAllByEmployeeNotNull();
+        List<PersonEmb> employeesWithChangedMentorId = new ArrayList<>();
+
+        for (PersonEmb person : repoRes) {
+            if (person.getEmployee().getMentor_id() != null && person.getEmployee().getMentor_id().equals(deletedEmployeeId)) {
+                person.getEmployee().setMentor_id(null);
+                employeesWithChangedMentorId.add(person);
+            }
+        }
+        personRepository.saveAll(employeesWithChangedMentorId);
     }
 
     //---employment---

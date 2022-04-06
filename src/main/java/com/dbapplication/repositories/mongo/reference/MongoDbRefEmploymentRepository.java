@@ -13,13 +13,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static com.dbapplication.utils.mongodb.ValidationChecks.isDateInRange2010to2100;
+import static com.dbapplication.utils.mongodb.ValidationChecks.isFirstDateBeforeSecondDate;
+
 @Slf4j
 @Component
 public class MongoDbRefEmploymentRepository {
 
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
-    private final ValidationChecks validationChecks = new ValidationChecks();
 
     public List<Employment> getAllEmployments() {
         return universalMongoTemplate.getAll(Employment.class);
@@ -40,15 +42,15 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getStart_time())) {
+        if (!isDateInRange2010to2100(employment.getStart_time())) {
             log.info("add employment, employment date(s) out of range 2010-2100");
             return null;
         }
 
         //---check if employee is already actively employed in that occupation ---
-        Query query = new Query(Criteria.where("ocupation_code").is(employment.getOccupation_code()));
+        Query query = new Query(Criteria.where("occupation_code").is(employment.getOccupation_code()));
         query.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
-        query.addCriteria(Criteria.where("end_time").is(null));
+        query.addCriteria(Criteria.where("end_time").exists(false));
 
         Employment possibleActiveEmployment = universalMongoTemplate.getOneByQuery(query, Employment.class);
         if (possibleActiveEmployment != null) {
@@ -65,7 +67,7 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public boolean endEmployeeActiveEmployment(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getEnd_time())) {
+        if (!isDateInRange2010to2100(employment.getEnd_time())) {
             log.info("end active employment, end date not in range");
             return false;
         }
@@ -76,7 +78,7 @@ public class MongoDbRefEmploymentRepository {
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("end_time").is(null));
 
         Employment modifiableEmployment = universalMongoTemplate.getOneByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
-        if (!validationChecks.isFirstDateBeforeSecondDate(modifiableEmployment.getStart_time(), employment.getEnd_time())) {
+        if (!isFirstDateBeforeSecondDate(modifiableEmployment.getStart_time(), employment.getEnd_time())) {
             log.info("end active employment, end date is before start date");
             return false;
         }
@@ -90,7 +92,7 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public boolean endEmployeeAllEmployments(Employment employment) {
-        if (!validationChecks.isDateInRange2010to2100(employment.getEnd_time())) {
+        if (!isDateInRange2010to2100(employment.getEnd_time())) {
             log.info("end all employments, end date not in range 2010-2100");
             return false;
         }
@@ -101,7 +103,7 @@ public class MongoDbRefEmploymentRepository {
 
         List<Employment> modifiableEmployments = universalMongoTemplate.getAllByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
         for (Employment e: modifiableEmployments) {
-            if (!validationChecks.isFirstDateBeforeSecondDate(e.getStart_time(), employment.getEnd_time())) {
+            if (!isFirstDateBeforeSecondDate(e.getStart_time(), employment.getEnd_time())) {
                 log.info("end all employments, end date is before start date");
                 return false;
             }
@@ -113,5 +115,10 @@ public class MongoDbRefEmploymentRepository {
                 updatableInfo,
                 Employment.class
         );
+    }
+
+    public List<Employment> deleteAllEmployeeEmployments(String personId) {
+        Query queryFindEmploymentByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(personId)));
+        return universalMongoTemplate.deleteAllEntities(queryFindEmploymentByPersonId, Employment.class);
     }
 }

@@ -47,6 +47,10 @@ public class UniversalMongoTemplate {
         return mongoTemplate.findAndRemove(queryToFindEntity, entityClass);
     }
 
+    public <T> List<T> deleteAllEntities(Query queryToFindEntity, Class<T> entityClass) {
+        return mongoTemplate.findAllAndRemove(queryToFindEntity, entityClass);
+    }
+
     public <T> boolean updateEntity(Query query, Update updatableInfo, Class<T> entityClass) { //returns boolean whether update was successful
         try {
             return mongoTemplate.updateFirst(query, updatableInfo, entityClass).wasAcknowledged();

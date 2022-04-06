@@ -24,6 +24,9 @@ public class PostgreTradEmployeeService {
     }
 
     public Employee addEmployee(Employee employee) {
+        if (employeeRepository.findById(employee.getPerson_id()).isPresent()) {
+            return null;
+        }
         return employeeRepository.save(employee);
     }
 

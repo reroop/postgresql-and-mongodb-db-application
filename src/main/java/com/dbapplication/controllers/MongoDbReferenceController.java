@@ -148,6 +148,7 @@ public class MongoDbReferenceController {
                 return this.getEmployeeByPersonId(personId);
             }
         }
+        mongoDbRefEmploymentsService.deleteAllEmployeeEmployments(personId);
         return mongoDbRefEmployeesService.deleteEmployeeByPersonId(personId);
     }
 

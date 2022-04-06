@@ -38,4 +38,8 @@ public class MongoDbRefEmploymentsService {
     public boolean endEmployeeAllEmployments(Employment employment) {
         return mongoDbRefEmploymentRepository.endEmployeeAllEmployments(employment);
     }
+
+    public List<Employment> deleteAllEmployeeEmployments(String personId) {
+        return mongoDbRefEmploymentRepository.deleteAllEmployeeEmployments(personId);
+    }
 }

@@ -254,7 +254,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                     "End employments" ends all employee's active employments by adding an end date to each (active) employment. You must choose the end date. Employee status is also set to "Contract ended"
                                 </p>
                                 <p className="font-italic">
-                                    "Delete employee" deletes the employee's info from database IF the employee is not actively employed in any occupation.
+                                    "Delete employee" deletes the employee's info (including employments) from database IF the employee is not actively employed in any occupation.
                                 </p>
                                 <p className="font-weight-bold">
                                     These actions are not reversible!

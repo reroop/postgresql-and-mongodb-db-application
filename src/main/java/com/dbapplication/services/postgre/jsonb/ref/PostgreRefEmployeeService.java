@@ -34,6 +34,9 @@ public class PostgreRefEmployeeService {
     }
 
     public EmployeeRef addEmployee(Employee employee) {
+        if (employeeRepository.findById(employee.getPerson_id()).isPresent()) {
+            return null;
+        }
         EmployeeRef employeeRef = new EmployeeRef(employee.getPerson_id(), employee.getMentor_id(), employee.getEmployee_status_type_code());
         return employeeRepository.save(employeeRef);
     }

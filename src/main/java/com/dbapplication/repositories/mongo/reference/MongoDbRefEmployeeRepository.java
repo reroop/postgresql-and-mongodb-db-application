@@ -38,11 +38,15 @@ public class MongoDbRefEmployeeRepository {
         if (employee.getMentor_id() != null && !Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
             dbEntry.setMentor_id(new ObjectId(employee.getMentor_id()));
         }
+        if (getEmployeeByPersonId(employee.getPerson_id()) != null) {
+            return null;
+        }
         return universalMongoTemplate.addEntity(dbEntry);
     }
 
     public Employee deleteEmployeeByPersonId(String personId) {
         Query queryFindByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(personId)));
+        this.removeDeletedEmployeeAsMentorFromOtherEmployees(personId);
         return universalMongoTemplate.deleteEntity(queryFindByPersonId, Employee.class);
     }
 
@@ -60,5 +64,11 @@ public class MongoDbRefEmployeeRepository {
             updatableInfo.unset("mentor_id");
         }
         return universalMongoTemplate.updateEntity(queryFindByPersonId, updatableInfo, Employee.class);
+    }
+
+    private boolean removeDeletedEmployeeAsMentorFromOtherEmployees(String deletedEmployeeId) {
+        Query queryFindEmployeesWithDeletedMentorId = new Query().addCriteria(Criteria.where("mentor_id").is(new ObjectId(deletedEmployeeId)));
+        Update updatableInfo = new Update().unset("mentor_id");
+        return universalMongoTemplate.updateAllEntities(queryFindEmployeesWithDeletedMentorId, updatableInfo, Employee.class);
     }
 }

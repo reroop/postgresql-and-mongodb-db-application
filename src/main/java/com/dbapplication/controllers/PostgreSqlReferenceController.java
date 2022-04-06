@@ -138,6 +138,12 @@ public class PostgreSqlReferenceController {
 
     @DeleteMapping("employees/{personId}")
     public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) {
+        List<Employment.FrontEmployment> employeeEmployments = postgreRefEmploymentService.getEmployeeAllEmployments(personId);
+        for (Employment.FrontEmployment employment : employeeEmployments) {
+            if (employment.getEnd_time() == null) {
+                return;
+            }
+        }
         postgreRefEmployeeService.deleteEmployeeByPersonId(personId);
     }
 

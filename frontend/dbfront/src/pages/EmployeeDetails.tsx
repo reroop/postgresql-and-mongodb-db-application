@@ -40,7 +40,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
         const {id} = this.props.match.params;
         this.state = {
             person_id: id.toString(),
-            endEmploymentsDate: new Date().toLocaleDateString("sv-SE")
+            endEmploymentsDate: new Date().toLocaleDateString("sv-SE")+'T00:00:00'
         }
     }
 

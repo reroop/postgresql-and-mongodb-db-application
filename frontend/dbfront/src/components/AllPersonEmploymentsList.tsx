@@ -33,7 +33,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             newEmploymentOccupation: undefined,
             newEmploymentStartDate: undefined,
             endEmploymentOccupationCode: undefined,
-            endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")+'T00:00:00'
+            endEmploymentEndDate: new Date().toLocaleDateString("sv-SE") + 'T00:00:00'
         }
     }
 
@@ -50,7 +50,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
         }
 
         this.props.employmentStore?.addNewEmployment(newEmployment).then(() => {
-            this.setState({newEmploymentStartDate: undefined, newEmploymentOccupation: undefined});
+            this.setState({newEmploymentOccupation: undefined});
             this.props.employmentStore?.getAllEmploymentsForEmployee(this.props.person_id);
         });
     }
@@ -62,13 +62,9 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             occupation_code: occupationCode,
             person_id: this.props.person_id
         };
-        console.log(endEmployment);
         this.props.employmentStore?.endEmployment(endEmployment).then(() => {
             this.props.employmentStore?.getAllEmploymentsForEmployee(this.props.person_id);
-            this.setState({
-                endEmploymentOccupationCode: undefined,
-                endEmploymentEndDate: new Date().toLocaleDateString("sv-SE")
-            });
+            this.setState({endEmploymentOccupationCode: undefined});
         });
     }
 
@@ -80,7 +76,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
             <div>
                 <h3>All employments:</h3>
 
-                <Card style={{ width: '36rem' }}>
+                <Card style={{width: '36rem'}}>
                     <Card.Title>Add new employment:</Card.Title>
                     <Card.Body>
                         <Form>
@@ -92,7 +88,9 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         {occupations.map((occupation) => (
-                                            <Dropdown.Item onClick={() => {this.setState({newEmploymentOccupation: occupation})}}>
+                                            <Dropdown.Item onClick={() => {
+                                                this.setState({newEmploymentOccupation: occupation})
+                                            }}>
                                                 {occupation.occupation_code + ' - ' + occupation.name}
                                             </Dropdown.Item>
                                         ))}
@@ -104,7 +102,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                 <Form.Control
                                     type={"date"}
                                     onChange={(e) => {
-                                        this.setState({newEmploymentStartDate: e.target.value+'T00:00:00'}) //hack for localdatetime in backend
+                                        this.setState({newEmploymentStartDate: e.target.value + 'T00:00:00'}) //hack for localdatetime in backend
                                     }}
                                 />
                             </Form.Group>

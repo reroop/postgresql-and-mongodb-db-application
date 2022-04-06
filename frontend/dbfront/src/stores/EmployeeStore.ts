@@ -41,7 +41,7 @@ class EmployeeStore {
         this.personsAsEmployees = [];
         this.employees.forEach(async (employee) => {
             let person: Person = await this.personStore.getPersonBy_id(employee.person_id);
-            let personCountry: Country = await this.countryStore.getCountryByCountryCode(person.country_code);
+            await this.countryStore.getCountryByCountryCode(person.country_code);
             let employeeStatus: EmployeeStatusType = await this.employeeStatusStore.getEmployeeStatusTypeByStatusCode(employee.employee_status_type_code);
 
             let personAsEmployee: PersonAsEmployee = {

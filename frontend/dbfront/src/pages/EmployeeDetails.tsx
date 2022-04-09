@@ -74,6 +74,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
             end_time: this.state.endEmploymentsDate,
             person_id: this.state.person_id!!
         }
+        //todo FIX BUG: put setting employee status to ended in back together with ending all employments
         this.props.employmentStore?.endAllEmployments(endEmployments).then(() => {
             this.props.employeeStore?.setEmployeeStatusToEnded(this.state.person_id!!).then(this.refreshPage)
         });
@@ -161,16 +162,16 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                             <Form.Group className="mb-3" controlId="addFirstName">
                                 <Form.Label>Given name:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.given_name}
+                                    value={this.state.person?.given_name!!}
                                     placeholder="Enter first name (optional, at least first or last name must be set)"
-                                    onChange={(e) => this.setState(state => (state.person!!.given_name = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.given_name = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addLastName">
                                 <Form.Label>Surname:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.surname}
+                                    value={this.state.person?.surname!!}
                                     placeholder="Enter last name (optional, at least first or last name must be set)"
-                                    onChange={(e) => this.setState(state => (state.person!!.surname = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.surname = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addAddress">
                                 <Form.Label>Address:</Form.Label>

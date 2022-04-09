@@ -26,12 +26,4 @@ public class MongoDbOccupationsService {
     public Occupation addOccupation(Occupation occupation) {
         return mongoDbOccupationRepository.addOccupation(occupation);
     }
-
-    public Occupation deleteOccupation(Integer occupationCode) {
-        return mongoDbOccupationRepository.deleteOccupationByOccupationCode(occupationCode);
-    }
-
-    public boolean updateOccupation(Occupation occupation) {
-        return mongoDbOccupationRepository.updateOccupation(occupation);
-    }
 }

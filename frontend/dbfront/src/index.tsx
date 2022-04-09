@@ -3,7 +3,7 @@ import {render} from 'react-dom'
 import './index.css';
 import {Navigation} from "./components";
 import {Provider} from "mobx-react";
-import {Countries, Home, Occupations, EmployeeStatusTypes, Persons, Employees, EmployeeDetails} from "./pages";
+import {Countries, Home, Occupations, EmployeeStatusTypes, Employees, EmployeeDetails} from "./pages";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {RootStore} from "./stores/RootStore";
 

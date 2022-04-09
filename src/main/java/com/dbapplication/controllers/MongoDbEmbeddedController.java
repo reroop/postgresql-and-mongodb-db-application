@@ -104,12 +104,12 @@ public class MongoDbEmbeddedController {
     }
 
     @PostMapping("persons")
-    public Person addPerson(@RequestBody Person.PersonDto personDto) {
+    public Person addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbEmbPersonsService.addPerson(personDto.getPerson());
     }
 
     @PutMapping("persons")
-    public boolean updatePerson(@RequestBody Person.PersonDto personDto) {
+    public boolean updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbEmbPersonsService.updatePerson(personDto.getPerson());
     }
 
@@ -125,7 +125,7 @@ public class MongoDbEmbeddedController {
     }
 
     @PostMapping("employees")
-    public boolean addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public boolean addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbEmbPersonsService.addEmployee(employeeDto.getEmployee());
     }
 
@@ -135,7 +135,7 @@ public class MongoDbEmbeddedController {
     }
 
     @PutMapping("employees")
-    public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbEmbPersonsService.updateEmployee(employeeDto.getEmployee());
     }
 
@@ -151,17 +151,17 @@ public class MongoDbEmbeddedController {
     }
 
     @PostMapping("employments")
-    public boolean addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public boolean addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.addEmployment(employmentDto.getEmployment());
     }
 
     @PutMapping("employments")
-    public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.endEmployeeActiveEmployment(employmentDto.getEmployment());
     }
 
     @PutMapping("employments/endEmployments")
-    public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+    public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.endEmployeeAllEmployments(employmentDto.getEmployment());
     }
 }

@@ -62,52 +62,52 @@ public class ValidationChecks {
             return false;
         }
         if (!isDateInRange2010to2100(personEmb.getData().getReg_time())) {
-            log.info("person, reg time not in rage 2010-2100");
+            log.info("person, reg time not in range 2010-2100");
             return false;
         }
         return true;
     }
 
 
-    public static boolean isMongoPersonInfoValid(Person person) {
+    public static boolean isMongoPersonInfoValid(Person person) throws Throwable {
         if (!isDateInRange1900to2100(person.getBirth_date())) {
             log.info("person, birthdate not in range 1900-2100");
-            return false;
+            throw new Exception(new Throwable("person birthdate not in range 1900-2100!"));
         }
         if (person.getGiven_name() == null && person.getSurname() == null ||
                 Objects.equals(person.getGiven_name(), "") && Objects.equals(person.getSurname(), "")) {
             log.info("person, given name or surname must be set");
-            return false;
+            throw new Exception(new Throwable("given name or surname must be set!"));
         }
         if (!isFirstDateBeforeSecondDate(person.getBirth_date(), person.getReg_time())) {
             log.info("person, birth date not before reg time");
-            return false;
+            throw new Exception(new Throwable("person birth date is after reg time!"));
         }
         if (!isDateInRange2010to2100(person.getReg_time())) {
-            log.info("person, reg time not in rage 2010-2100");
-            return false;
+            log.info("person, reg time not in range 2010-2100");
+            throw new Exception(new Throwable("person reg time not in range 2010-2100!"));
         }
         return true;
     }
 
 
-    public static boolean isMongoEmbeddedPersonInfoValid(EmbeddedPerson embeddedPerson) {
+    public static boolean isMongoEmbeddedPersonInfoValid(EmbeddedPerson embeddedPerson) throws Throwable {
         if (!isDateInRange1900to2100(embeddedPerson.getBirth_date())) {
             log.info("person, birthdate not in range 1900-2100");
-            return false;
+            throw new Exception(new Throwable("person birthdate not in range 1900-2100!"));
         }
         if (embeddedPerson.getGiven_name() == null && embeddedPerson.getSurname() == null ||
                 Objects.equals(embeddedPerson.getGiven_name(), "") && Objects.equals(embeddedPerson.getSurname(), "")) {
             log.info("person, given name or surname must be set");
-            return false;
+            throw new Exception(new Throwable("given name or surname must be set!"));
         }
         if (!isFirstDateBeforeSecondDate(embeddedPerson.getBirth_date(), embeddedPerson.getReg_time())) {
             log.info("person, birth date not before reg time");
-            return false;
+            throw new Exception(new Throwable("person birth date is after reg time!"));
         }
         if (!isDateInRange2010to2100(embeddedPerson.getReg_time())) {
             log.info("person, reg time not in range 2010-2100");
-            return false;
+            throw new Exception(new Throwable("person reg time not in range 2010-2100!"));
         }
         return true;
     }

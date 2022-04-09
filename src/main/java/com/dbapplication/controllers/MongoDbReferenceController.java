@@ -9,7 +9,6 @@ import com.dbapplication.models.mongo.shared.Occupation;
 import com.dbapplication.services.mongo.reference.MongoDbRefEmployeesService;
 import com.dbapplication.services.mongo.reference.MongoDbRefEmploymentsService;
 import com.dbapplication.services.mongo.reference.MongoDbRefPersonsService;
-import com.dbapplication.services.mongo.reference.MongoDbRefUserAccountsService;
 import com.dbapplication.services.mongo.shared.MongoDbCountriesService;
 import com.dbapplication.services.mongo.shared.MongoDbEmployeeStatusTypeService;
 import com.dbapplication.services.mongo.shared.MongoDbOccupationsService;
@@ -114,12 +113,12 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("persons")
-    public Person addPerson(@RequestBody Person.PersonDto personDto) {
+    public Person addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbRefPersonsService.addPerson(personDto.getPerson());
     }
 
     @PutMapping("persons")
-    public boolean updatePerson(@RequestBody Person.PersonDto personDto) {
+    public boolean updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbRefPersonsService.updatePerson(personDto.getPerson());
     }
 
@@ -136,16 +135,16 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("employees")
-    public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbRefEmployeesService.addEmployee(employeeDto.getEmployee());
     }
 
     @DeleteMapping("employees/{personId}")
-    public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
+    public Employee deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) throws Throwable {
         List<Employment> employments = this.getEmployeeAllEmployments(personId);
         for (Employment employment: employments) {
             if (employment.getEnd_time() == null) {
-                return this.getEmployeeByPersonId(personId);
+                throw new Exception(new Throwable("employee has active employments, end those before deleting employee!"));
             }
         }
         mongoDbRefEmploymentsService.deleteAllEmployeeEmployments(personId);
@@ -153,7 +152,7 @@ public class MongoDbReferenceController {
     }
 
     @PutMapping("employees")
-    public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbRefEmployeesService.updateEmployee(employeeDto.getEmployee());
     }
     //--------------------
@@ -169,17 +168,17 @@ public class MongoDbReferenceController {
     }
 
     @PostMapping("employments")
-    public Employment.EmploymentDbEntry addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public Employment.EmploymentDbEntry addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbRefEmploymentsService.addEmployment(employmentDto.getEmployment());
     }
 
     @PutMapping("employments")
-    public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbRefEmploymentsService.endEmployeeActiveEmployment(employmentDto.getEmployment());
     }
 
     @PutMapping("employments/endEmployments")
-    public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+    public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbRefEmploymentsService.endEmployeeAllEmployments(employmentDto.getEmployment());
     }
 

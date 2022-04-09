@@ -41,10 +41,10 @@ public class MongoDbRefEmploymentRepository {
         return universalMongoTemplate.getAllByQuery(queryFindPersonAllEmployments, Employment.class);
     }
 
-    public Employment.EmploymentDbEntry addEmployment(Employment employment) {
+    public Employment.EmploymentDbEntry addEmployment(Employment employment) throws Throwable {
         if (!isDateInRange2010to2100(employment.getStart_time())) {
-            log.info("add employment, employment date(s) out of range 2010-2100");
-            return null;
+            log.info("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time());
+            throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time()));
         }
 
         //---check if employee is already actively employed in that occupation ---
@@ -55,7 +55,7 @@ public class MongoDbRefEmploymentRepository {
         Employment possibleActiveEmployment = universalMongoTemplate.getOneByQuery(query, Employment.class);
         if (possibleActiveEmployment != null) {
             log.info("add employment, employee already actively employed in that occupation");
-            return null;
+            throw new Exception(new Throwable("employee is already actively employed in that occupation!"));
         }
         //------
         Employment.EmploymentDbEntry dbEntry = new Employment.EmploymentDbEntry(
@@ -66,10 +66,10 @@ public class MongoDbRefEmploymentRepository {
         return universalMongoTemplate.addEntity(dbEntry);
     }
 
-    public boolean endEmployeeActiveEmployment(Employment employment) {
+    public boolean endEmployeeActiveEmployment(Employment employment) throws Throwable {
         if (!isDateInRange2010to2100(employment.getEnd_time())) {
-            log.info("end active employment, end date not in range");
-            return false;
+            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!"));
         }
 
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
@@ -79,8 +79,8 @@ public class MongoDbRefEmploymentRepository {
 
         Employment modifiableEmployment = universalMongoTemplate.getOneByQuery(queryFindPersonActiveEmploymentInOccupation, Employment.class);
         if (!isFirstDateBeforeSecondDate(modifiableEmployment.getStart_time(), employment.getEnd_time())) {
-            log.info("end active employment, end date is before start date");
-            return false;
+            log.info("end active employment, end date " + employment.getEnd_time() + " is before start date " + modifiableEmployment.getStart_time());
+            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " is before start date " + modifiableEmployment.getStart_time()));
         }
 
         Update updatableInfo = new Update().set("end_time", employment.getEnd_time());
@@ -91,10 +91,10 @@ public class MongoDbRefEmploymentRepository {
         );
     }
 
-    public boolean endEmployeeAllEmployments(Employment employment) {
+    public boolean endEmployeeAllEmployments(Employment employment) throws Throwable {
         if (!isDateInRange2010to2100(employment.getEnd_time())) {
-            log.info("end all employments, end date not in range 2010-2100");
-            return false;
+            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!"));
         }
 
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
@@ -105,7 +105,7 @@ public class MongoDbRefEmploymentRepository {
         for (Employment e: modifiableEmployments) {
             if (!isFirstDateBeforeSecondDate(e.getStart_time(), employment.getEnd_time())) {
                 log.info("end all employments, end date is before start date");
-                return false;
+                throw new Exception(new Throwable("end date " + employment.getEnd_time() + " is before start date " + e.getStart_time() + " for employment with occupation code " + e.getOccupation_code()));
             }
         }
 

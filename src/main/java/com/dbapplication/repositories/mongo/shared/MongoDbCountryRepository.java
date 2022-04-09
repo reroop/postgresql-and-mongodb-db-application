@@ -31,15 +31,4 @@ public class MongoDbCountryRepository {
     public Country addCountry(Country country) {
         return universalMongoTemplate.addEntity(country);
     }
-
-    public Country deleteCountryByCountryCode(String countryCode) {
-        Query queryFindByCountryCode = new Query(Criteria.where("country_code").is(countryCode));
-        return universalMongoTemplate.deleteEntity(queryFindByCountryCode, Country.class);
-    }
-
-    public boolean updateCountry(Country country) {
-        Query queryFindByCountryCode = new Query(Criteria.where("country_code").is(country.getCountry_code()));
-        Update updateCountryName = new Update().set("name", country.getName());
-        return universalMongoTemplate.updateEntity(queryFindByCountryCode, updateCountryName, Country.class);
-    }
 }

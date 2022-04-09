@@ -38,7 +38,7 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
     }
 
-    public EmbeddedPerson addPerson(EmbeddedPerson embeddedPerson) {
+    public EmbeddedPerson addPerson(EmbeddedPerson embeddedPerson) throws Throwable {
         embeddedPerson.setReg_time(LocalDateTime.now());
         if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
             return null;
@@ -52,9 +52,12 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.addEntity(embeddedPerson);
     }
 
-    public boolean addEmployeeToPerson(String personObjectId, EmbeddedEmployee embeddedEmployee) {
+    public boolean addEmployeeToPerson(String personObjectId, EmbeddedEmployee embeddedEmployee) throws Throwable {
         EmbeddedEmployee.EmbeddedEmployeeDbEntry dbEntry = new EmbeddedEmployee.EmbeddedEmployeeDbEntry(embeddedEmployee.getEmployee_status_type_code());
-        if (embeddedEmployee.getMentor_id() != null && !Objects.equals(embeddedEmployee.getMentor_id(), personObjectId)) {
+        if (embeddedEmployee.getMentor_id() != null) {
+            if (Objects.equals(embeddedEmployee.getMentor_id(), personObjectId)) {
+                throw new Exception(new Throwable("person can't be his/herself mentor!"));
+            }
             dbEntry.setMentor_id(new ObjectId(embeddedEmployee.getMentor_id()));
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
@@ -62,17 +65,19 @@ public class MongoDbEmbPersonRepository {
         //cancel if person already is registered as employee
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
         if (person.getEmployee() != null) {
-            return false;
+            throw new Exception(new Throwable("this person is already registered as an employee!"));
+            //return false;
         }
 
         Update updatableInfo = new Update().set("employee", dbEntry);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment newEmbeddedEmployment) {
+    public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment newEmbeddedEmployment) throws Throwable {
         if (!isDateInRange2010to2100(newEmbeddedEmployment.getStart_time())) {
-            log.info("add employment, employment date(s) out of range 2010-2100");
-            return false;
+            log.info("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time());
+            throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time()));
+            //return false;
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
@@ -89,8 +94,9 @@ public class MongoDbEmbPersonRepository {
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (Objects.equals(embeddedEmployment.getOccupation_code(), newEmbeddedEmployment.getOccupation_code())) {
                 if (embeddedEmployment.getEnd_time() == null || embeddedEmployment.getStart_time().equals(newEmbeddedEmployment.getStart_time())) {
-                    log.info("already actively employed in this occupation");
-                    return false;
+                    log.info("add employment, employee already actively employed in that occupation");
+                    throw new Exception(new Throwable("employee is already actively employed in that occupation!"));
+                    //return false;
                 }
             }
         }
@@ -103,7 +109,7 @@ public class MongoDbEmbPersonRepository {
 
 
     //all updates
-    public boolean updatePerson(EmbeddedPerson embeddedPerson) {
+    public boolean updatePerson(EmbeddedPerson embeddedPerson) throws Throwable {
         if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
             return false;
         }
@@ -144,13 +150,16 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean updateEmployee(String personId, EmbeddedEmployee embeddedEmployee) {
+    public boolean updateEmployee(String personId, EmbeddedEmployee embeddedEmployee) throws Throwable {
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personId));
         Update updatableInfo = new Update();
         if (embeddedEmployee.getEmployee_status_type_code() != null) {
             updatableInfo.set("employee.employee_status_type_code", embeddedEmployee.getEmployee_status_type_code());
         }
-        if (embeddedEmployee.getMentor_id() != null && !Objects.equals(embeddedEmployee.getMentor_id(), personId)) {
+        if (embeddedEmployee.getMentor_id() != null) {
+            if (Objects.equals(embeddedEmployee.getMentor_id(), personId)) {
+                throw new Exception(new Throwable("person can't be his/herself mentor!"));
+            }
             updatableInfo.set("employee.mentor_id", new ObjectId(embeddedEmployee.getMentor_id()));
         } else {
             updatableInfo.unset("employee.mentor_id");
@@ -158,10 +167,12 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean endActiveEmployment(Employment endEmploymentInfo) {
+    public boolean endActiveEmployment(Employment endEmploymentInfo) throws Throwable {
         if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
-            log.info("end active employment, end date not in range");
-            return false;
+            log.info("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " is not in range 2010-2100!"));
+
+            //return false;
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
@@ -173,8 +184,9 @@ public class MongoDbEmbPersonRepository {
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (Objects.equals(endEmploymentInfo.getOccupation_code(), embeddedEmployment.getOccupation_code()) && embeddedEmployment.getEnd_time() == null) {
                 if (!isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
-                    log.info("end active employment, end date is before start date");
-                    return false;
+                    log.info("end active employment, end date " + endEmploymentInfo.getEnd_time() + " is before start date " + embeddedEmployment.getStart_time());
+                    throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " is before start date " + embeddedEmployment.getStart_time()));
+                    //return false;
                 }
                 embeddedEmployment.setEnd_time(endEmploymentInfo.getEnd_time());
                 break;
@@ -185,10 +197,11 @@ public class MongoDbEmbPersonRepository {
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 
-    public boolean endAllEmployments(Employment endEmploymentInfo) {
+    public boolean endAllEmployments(Employment endEmploymentInfo) throws Throwable {
         if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
-            log.info("end all employments, end date not in range 2010-2100");
-            return false;
+            log.info("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!"));
+            //return false;
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
@@ -202,7 +215,8 @@ public class MongoDbEmbPersonRepository {
             if (embeddedEmployment.getEnd_time() == null) {
                 if (!isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
                     log.info("end all employments, end date is before start date");
-                    return false;
+                    throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " is before start date " + embeddedEmployment.getStart_time() + " for employment with occupation code " + embeddedEmployment.getOccupation_code()));
+                    //return false;
                 }
                 embeddedEmployment.setEnd_time(endEmploymentInfo.getEnd_time());
             }

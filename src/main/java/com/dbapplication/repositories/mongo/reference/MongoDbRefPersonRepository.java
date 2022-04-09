@@ -13,13 +13,14 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.dbapplication.utils.mongodb.ValidationChecks.isMongoPersonInfoValid;
+
 @Slf4j
 @Component
 public class MongoDbRefPersonRepository {
 
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
-    private final ValidationChecks validationChecks = new ValidationChecks();
 
     public List<Person> getAllPersons() {
         return universalMongoTemplate.getAll(Person.class);
@@ -30,29 +31,17 @@ public class MongoDbRefPersonRepository {
         return universalMongoTemplate.getOneByQuery(queryFindByObjectId, Person.class);
     }
 
-    public Person getPersonByCountryCodeAndPersonalIdCode(String countryCode, String personalIdCode) {
-        Query findByCountryAndPersonalCode = new Query();
-        findByCountryAndPersonalCode.addCriteria(Criteria.where("country_code").is(countryCode));
-        findByCountryAndPersonalCode.addCriteria(Criteria.where("nat_id_code").is(personalIdCode));
-        return universalMongoTemplate.getOneByQuery(findByCountryAndPersonalCode, Person.class);
-    }
-
-    public Person addPerson(Person person) {
+    public Person addPerson(Person person) throws Throwable {
         person.setReg_time(LocalDateTime.now());
-        if (!validationChecks.isMongoPersonInfoValid(person)) {
+        if (!isMongoPersonInfoValid(person)) {
             return null;
         }
 
         return universalMongoTemplate.addEntity(person);
     }
 
-    public Person deletePersonBy_id(String objectId) {
-        Query queryFindByObjectId = new Query(Criteria.where("_id").is(objectId));
-        return universalMongoTemplate.deleteEntity(queryFindByObjectId, Person.class);
-    }
-
-    public boolean updatePerson(Person person) {
-        if (!validationChecks.isMongoPersonInfoValid(person)) {
+    public boolean updatePerson(Person person) throws Throwable {
+        if (!isMongoPersonInfoValid(person)) {
             return false;
         }
 

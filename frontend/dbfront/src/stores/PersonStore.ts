@@ -8,8 +8,8 @@ export interface Person {
     e_mail: string,
     birth_date: string,
     reg_time?: string,
-    given_name?: string,
-    surname?: string,
+    given_name?: string|null,
+    surname?: string|null,
     address?: string
 }
 
@@ -49,6 +49,8 @@ class PersonStore {
             return response.data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
             return null;
         }
     }
@@ -59,17 +61,10 @@ class PersonStore {
             await API.put(personsEndpoint, {person}).then(this.getPersons);
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
-
-    @action deletePerson = async (person_id: string) => {
-        try {
-            await API.delete(personsEndpoint + '/' + person_id).then(this.getPersons);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
 }
 
 export default PersonStore;

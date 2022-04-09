@@ -41,27 +41,10 @@ class CountryStore {
             await API.post(countriesEndpoint, {country}).then(this.getCountries)
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
-
-    @action
-    public updateCountry = async (country: Country) => {
-        try {
-            await API.put(countriesEndpoint, {country}).then(this.getCountries);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    @action
-    public deleteCountry = async (countryCode: string) => {
-        try {
-            await API.delete(countriesEndpoint+countryCode).then(this.getCountries);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
 }
 
 export default CountryStore;

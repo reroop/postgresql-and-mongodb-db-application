@@ -66,14 +66,6 @@ public class MongoDbEmbPersonsService {
         return embeddedPerson;
     }
 
-    private List<Person> convertEmbeddedPersonListToPersonList(List<EmbeddedPerson> embeddedPersonList) {
-        List<Person> results = new ArrayList<>();
-        for (EmbeddedPerson embeddedPerson: embeddedPersonList) {
-            results.add(convertEmbeddedPersonToPerson(embeddedPerson));
-        }
-        return results;
-    }
-
     public List<Person> getAllPersons() {
         List<EmbeddedPerson> repoResults = mongoDbEmbPersonRepository.getAllPersons();
         List<Person> convertedResults = new ArrayList<>();
@@ -87,16 +79,16 @@ public class MongoDbEmbPersonsService {
         return convertEmbeddedPersonToPerson(mongoDbEmbPersonRepository.getPersonBy_id(objectId));
     }
 
-    public Person addPerson(Person person) {
+    public Person addPerson(Person person) throws Throwable {
         EmbeddedPerson repoResponse = mongoDbEmbPersonRepository.addPerson(convertPersonToEmbeddedPerson(person));
         return convertEmbeddedPersonToPerson(repoResponse);
     }
 
-    public boolean updatePerson(Person person) {
+    public boolean updatePerson(Person person) throws Throwable {
         return mongoDbEmbPersonRepository.updatePerson(convertPersonToEmbeddedPerson(person));
     }
 
-    public boolean updateEmployee(Employee employee) {
+    public boolean updateEmployee(Employee employee) throws Throwable {
         return mongoDbEmbPersonRepository.updateEmployee(employee.getPerson_id(), convertEmployeeToEmbeddedEmployee(employee));
     }
 
@@ -133,7 +125,7 @@ public class MongoDbEmbPersonsService {
         return convertEmbeddedPersonToEmployee(embeddedPerson);
     }
 
-    public boolean addEmployee(Employee employee) {
+    public boolean addEmployee(Employee employee) throws Throwable {
         EmbeddedEmployee convertedEmployee = convertEmployeeToEmbeddedEmployee(employee);
         return mongoDbEmbPersonRepository.addEmployeeToPerson(employee.getPerson_id(), convertedEmployee);
     }
@@ -171,7 +163,7 @@ public class MongoDbEmbPersonsService {
         return convertedEmployments;
     }
 
-    public boolean addEmployment(Employment employment) {
+    public boolean addEmployment(Employment employment) throws Throwable {
         return mongoDbEmbPersonRepository.addEmploymentToEmployee(employment.getPerson_id(), convertEmploymentToEmbeddedEmployment(employment));
     }
 
@@ -196,11 +188,11 @@ public class MongoDbEmbPersonsService {
         return result;
     }
 
-    public boolean endEmployeeActiveEmployment(Employment employment) {
+    public boolean endEmployeeActiveEmployment(Employment employment) throws Throwable {
         return mongoDbEmbPersonRepository.endActiveEmployment(employment);
     }
 
-    public boolean endEmployeeAllEmployments(Employment employment) {
+    public boolean endEmployeeAllEmployments(Employment employment) throws Throwable {
         return mongoDbEmbPersonRepository.endAllEmployments(employment);
     }
 

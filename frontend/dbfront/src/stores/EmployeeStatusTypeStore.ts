@@ -43,27 +43,10 @@ class EmployeeStatusTypeStore {
            await API.post(employeeStatusTypesEndpoint,{employeeStatusType}).then(this.getEmployeeStatusTypes);
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
-
-    @action
-    public updateEmployeeStatusType = async (employeeStatusType: EmployeeStatusType) => {
-        try {
-            await API.put(employeeStatusTypesEndpoint,{employeeStatusType}).then(this.getEmployeeStatusTypes);
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    @action
-    public deleteEmployeeStatusType = async (employeeStatusTypeCode: number) => {
-        try {
-            await API.delete((employeeStatusTypesEndpoint+'/'+employeeStatusTypeCode)).then(this.getEmployeeStatusTypes)
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
 }
 
 export default EmployeeStatusTypeStore;

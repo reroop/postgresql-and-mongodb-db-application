@@ -1,7 +1,7 @@
 import React from "react";
 import {inject, observer} from 'mobx-react';
 import CountryStore, {Country} from "../stores/CountryStore";
-import {Button, Card, Form, FormControl, InputGroup, Table} from "react-bootstrap";
+import {Button, Card, Form, Table} from "react-bootstrap";
 
 interface CountriesProps {
     countryStore?: CountryStore;
@@ -29,17 +29,21 @@ class Countries extends React.Component<CountriesProps, State> {
     }
 
     private handleAddCountryClick() {
+        /*
         if (this.state.newCountryCode == '' || this.state.newCountryName == '') {
             this.setState({newCountryCode: '', newCountryName: ''});
             return;
         }
+
+         */
         const newCountry: Country = {
             country_code: this.state.newCountryCode,
             name: this.state.newCountryName
         };
-        this.props.countryStore!!.addCountry(newCountry).then((e) => (
-            this.setState({newCountryCode: '', newCountryName: ''})
-        ));
+        this.props.countryStore!!.addCountry(newCountry).then((e) => {
+            this.setState({newCountryCode: '', newCountryName: ''});
+            }
+        );
     }
 
     public render() {

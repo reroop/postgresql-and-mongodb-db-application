@@ -15,8 +15,8 @@ export interface PersonAsEmployee {
     person_id: string,
     personCountryCode: string,
     personIdCode: string,
-    personGivenName?: string,
-    personSurname?: string,
+    personGivenName?: string|null,
+    personSurname?: string|null,
     employeeStatus: string,
     personRegDate?: string
     mentor_id?: string
@@ -99,6 +99,8 @@ class EmployeeStore {
             return (await API.post(employeesEndpoint, {employee})).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 
@@ -108,6 +110,8 @@ class EmployeeStore {
             return  (await API.put(employeesEndpoint, {employee})).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 
@@ -117,6 +121,8 @@ class EmployeeStore {
             return (await API.delete(employeesEndpoint + '/' + person_id)).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 }

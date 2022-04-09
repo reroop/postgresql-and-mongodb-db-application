@@ -43,24 +43,8 @@ class OccupationStore {
             return (await API.post(occupationsEndpoint, {occupation})).data;
         } catch (e) {
             console.error(e);
-        }
-    }
-
-    @action
-    public updateOccupation = async (occupation: Occupation) => {
-        try {
-            return (await API.put(occupationsEndpoint, {occupation})).data;
-        } catch (e) {
-            console.error(e);
-        }
-    }
-
-    @action
-    public deleteOccupation = async (occupationCode: number) => {
-        try {
-            return (await API.delete(occupationsEndpoint+'/'+occupationCode)).data;
-        } catch (e) {
-            console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 }

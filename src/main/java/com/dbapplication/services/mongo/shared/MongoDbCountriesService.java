@@ -28,12 +28,4 @@ public class MongoDbCountriesService {
     public Country addCountry(Country country) {
         return mongoDbCountryRepository.addCountry(country);
     }
-
-    public Country deleteCountry(String countryCode) {
-        return mongoDbCountryRepository.deleteCountryByCountryCode(countryCode);
-    }
-
-    public boolean updateCountry(Country country) {
-        return mongoDbCountryRepository.updateCountry(country);
-    }
 }

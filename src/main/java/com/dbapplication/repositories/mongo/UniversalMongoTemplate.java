@@ -33,13 +33,13 @@ public class UniversalMongoTemplate {
             return mongoTemplate.save(entity);
         } catch (Exception e) {
             log.info(e.getMessage());
-            if (e.getMessage().contains("E11000 duplicate key error collection")) { //todo: make this string as constant somewhere
+            if (e.getMessage().contains("E11000 duplicate key error collection")) {
                 log.info("db already has document with these values");  //todo: query db for entry with queried values and return as error?
             }
-            if (e.getMessage().contains("Document failed validation")) { //todo: make this string as constant somewhere
+            if (e.getMessage().contains("Document failed validation")) {
                 log.info("entry failed against db validation");  //todo: return validation??
             }
-            return null;
+            throw e;
         }
     }
 
@@ -56,10 +56,10 @@ public class UniversalMongoTemplate {
             return mongoTemplate.updateFirst(query, updatableInfo, entityClass).wasAcknowledged();
         } catch (Exception e) {
             log.info(e.getMessage());
-            if (e.getMessage().contains("Document failed validation")) { //todo: make this string as constant somewhere
+            if (e.getMessage().contains("Document failed validation")) {
                 log.info("entry failed against db validation");  //todo: return validation??
             }
-            return false;
+            throw e;
         }
     }
 
@@ -68,10 +68,10 @@ public class UniversalMongoTemplate {
             return mongoTemplate.updateMulti(query, updatableInfo, entityClass).wasAcknowledged();
         } catch (Exception e) {
             log.info(e.getMessage());
-            if (e.getMessage().contains("Document failed validation")) { //todo: make this string as constant somewhere
+            if (e.getMessage().contains("Document failed validation")) {
                 log.info("entry failed against db validation");  //todo: return validation??
             }
-            return false;
+            throw e;
         }
     }
 }

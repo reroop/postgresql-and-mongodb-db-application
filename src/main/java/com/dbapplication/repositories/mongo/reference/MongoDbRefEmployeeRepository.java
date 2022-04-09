@@ -30,16 +30,19 @@ public class MongoDbRefEmployeeRepository {
         return universalMongoTemplate.getOneByQuery(queryFindByPersonId, Employee.class);
     }
 
-    public Employee.EmployeeDbEntry addEmployee(Employee employee) {
+    public Employee.EmployeeDbEntry addEmployee(Employee employee) throws Throwable {
         Employee.EmployeeDbEntry dbEntry = new Employee.EmployeeDbEntry(
                 employee.getPerson_id(),
                 employee.getEmployee_status_type_code()
         );
-        if (employee.getMentor_id() != null && !Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+        if (employee.getMentor_id() != null) {
+            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor"));
+            }
             dbEntry.setMentor_id(new ObjectId(employee.getMentor_id()));
         }
         if (getEmployeeByPersonId(employee.getPerson_id()) != null) {
-            return null;
+            throw new Exception(new Throwable("this person is already registered as an employee"));
         }
         return universalMongoTemplate.addEntity(dbEntry);
     }
@@ -50,7 +53,7 @@ public class MongoDbRefEmployeeRepository {
         return universalMongoTemplate.deleteEntity(queryFindByPersonId, Employee.class);
     }
 
-    public boolean updateEmployee(Employee employee) {
+    public boolean updateEmployee(Employee employee) throws Throwable {
         Query queryFindByPersonId = new Query(Criteria.where("person_id").is(new ObjectId(employee.getPerson_id())));
 
         Update updatableInfo = new Update();
@@ -58,7 +61,10 @@ public class MongoDbRefEmployeeRepository {
             updatableInfo.set("employee_status_type_code", employee.getEmployee_status_type_code());
         }
         //NOTE: mentorId is deleted if it is not set in Employee
-        if (employee.getMentor_id() != null && !Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+        if (employee.getMentor_id() != null) {
+            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor"));
+            }
             updatableInfo.set("mentor_id", new ObjectId(employee.getMentor_id()));
         } else {
             updatableInfo.unset("mentor_id");

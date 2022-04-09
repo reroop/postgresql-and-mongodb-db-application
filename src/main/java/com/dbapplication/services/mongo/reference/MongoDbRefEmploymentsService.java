@@ -27,15 +27,15 @@ public class MongoDbRefEmploymentsService {
         return mongoDbRefEmploymentRepository.getEmployeeAllEmployments(personId);
     }
 
-    public Employment.EmploymentDbEntry addEmployment(Employment employment) {
+    public Employment.EmploymentDbEntry addEmployment(Employment employment) throws Throwable {
         return mongoDbRefEmploymentRepository.addEmployment(employment);
     }
 
-    public boolean endEmployeeActiveEmployment(Employment employment) {
+    public boolean endEmployeeActiveEmployment(Employment employment) throws Throwable {
         return mongoDbRefEmploymentRepository.endEmployeeActiveEmployment(employment);
     }
 
-    public boolean endEmployeeAllEmployments(Employment employment) {
+    public boolean endEmployeeAllEmployments(Employment employment) throws Throwable {
         return mongoDbRefEmploymentRepository.endEmployeeAllEmployments(employment);
     }
 

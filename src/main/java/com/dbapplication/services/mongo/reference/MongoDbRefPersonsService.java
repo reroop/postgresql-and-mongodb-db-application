@@ -23,19 +23,11 @@ public class MongoDbRefPersonsService {
         return mongoDbRefPersonRepository.getPersonBy_id(objectId);
     }
 
-    public Person getPersonByCountryCodeAndPersonalIdCode(String countryCode, String personalIdCode) {
-        return mongoDbRefPersonRepository.getPersonByCountryCodeAndPersonalIdCode(countryCode, personalIdCode);
-    }
-
-    public Person addPerson(Person person) {
+    public Person addPerson(Person person) throws Throwable {
         return mongoDbRefPersonRepository.addPerson(person);
     }
 
-    public Person deletePersonBy_id(String objectId) {
-        return mongoDbRefPersonRepository.deletePersonBy_id(objectId);
-    }
-
-    public boolean updatePerson(Person person) {
+    public boolean updatePerson(Person person) throws Throwable {
         return mongoDbRefPersonRepository.updatePerson(person);
     }
 }

@@ -23,7 +23,7 @@ public class MongoDbRefEmployeesService {
         return mongoDbRefEmployeeRepository.getEmployeeByPersonId(personId);
     }
 
-    public Employee.EmployeeDbEntry addEmployee(Employee employee) {
+    public Employee.EmployeeDbEntry addEmployee(Employee employee) throws Throwable {
         return mongoDbRefEmployeeRepository.addEmployee(employee);
     }
 
@@ -31,7 +31,7 @@ public class MongoDbRefEmployeesService {
         return mongoDbRefEmployeeRepository.deleteEmployeeByPersonId(personId);
     }
 
-    public boolean updateEmployee(Employee employee) {
+    public boolean updateEmployee(Employee employee) throws Throwable {
         return mongoDbRefEmployeeRepository.updateEmployee(employee);
     }
 }

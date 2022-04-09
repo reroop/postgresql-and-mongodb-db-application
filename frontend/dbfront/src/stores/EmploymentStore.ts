@@ -97,6 +97,8 @@ class EmploymentStore {
             return (await API.post(employmentsEndPoint, {employment})).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 
@@ -106,6 +108,8 @@ class EmploymentStore {
             return (await API.put(employmentsEndPoint, {employment})).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 
@@ -115,6 +119,8 @@ class EmploymentStore {
             return (await API.put(employmentsEndPoint+'/endEmployments', {employment})).data;
         } catch (e) {
             console.error(e);
+            // @ts-ignore
+            window.alert(e.response.data.message);
         }
     }
 }

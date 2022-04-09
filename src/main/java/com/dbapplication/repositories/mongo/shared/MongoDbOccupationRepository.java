@@ -30,23 +30,4 @@ public class MongoDbOccupationRepository {
     public Occupation addOccupation(Occupation occupation) {
         return universalMongoTemplate.addEntity(occupation);
     }
-
-    public Occupation deleteOccupationByOccupationCode(Integer occupationCode) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupationCode));
-        return universalMongoTemplate.deleteEntity(queryFindByOccupationCode, Occupation.class);
-    }
-
-    public boolean updateOccupation(Occupation occupation) {
-        Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupation.getOccupation_code()));
-        Update updatableInfo = new Update();
-        if (occupation.getName() != null) {
-            updatableInfo.set("name", occupation.getName());
-        }
-        if (occupation.getDescription() != null) {
-            updatableInfo.set("description", occupation.getDescription());
-        } else {
-            updatableInfo.unset("description");
-        }
-        return universalMongoTemplate.updateEntity(queryFindByOccupationCode, updatableInfo, Occupation.class);
-    }
 }

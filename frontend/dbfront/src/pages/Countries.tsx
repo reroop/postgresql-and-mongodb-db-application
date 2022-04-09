@@ -8,8 +8,8 @@ interface CountriesProps {
 }
 
 interface State {
-    newCountryCode: string,
-    newCountryName: string
+    newCountryCode: string | null,
+    newCountryName: string | null
 }
 
 @inject('countryStore')
@@ -19,8 +19,8 @@ class Countries extends React.Component<CountriesProps, State> {
     constructor(props) {
         super(props);
         this.state = {
-            newCountryCode: '',
-            newCountryName: ''
+            newCountryCode: null,
+            newCountryName: null
         }
     }
 
@@ -41,7 +41,7 @@ class Countries extends React.Component<CountriesProps, State> {
             name: this.state.newCountryName
         };
         this.props.countryStore!!.addCountry(newCountry).then((e) => {
-            this.setState({newCountryCode: '', newCountryName: ''});
+            //this.setState({newCountryCode: null, newCountryName: null});
             }
         );
     }
@@ -62,16 +62,16 @@ class Countries extends React.Component<CountriesProps, State> {
                                 <Form.Label>Country code:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country code"
-                                    value={this.state.newCountryCode}
-                                    onChange={(e) => this.setState({newCountryCode: e.target.value})}
+                                    value={this.state.newCountryCode!!}
+                                    onChange={(e) => this.setState({newCountryCode: e.target.value == '' ? null : e.target.value})}
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addCountryName">
                                 <Form.Label>Country name:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country name"
-                                    value={this.state.newCountryName}
-                                    onChange={(e) =>  this.setState({newCountryName: e.target.value})}/>
+                                    value={this.state.newCountryName!!}
+                                    onChange={(e) =>  this.setState({newCountryName: e.target.value == '' ? null : e.target.value})}/>
                             </Form.Group>
                             <Button variant="success" onClick={() => this.handleAddCountryClick()}>Add new country</Button>
                         </Form>

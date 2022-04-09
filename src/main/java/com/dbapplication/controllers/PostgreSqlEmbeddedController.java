@@ -55,7 +55,7 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PostMapping("countries")
-    public CountryPostgreJsonCommon addNewCountry(@RequestBody Country.CountryDto countryDto) {
+    public CountryPostgreJsonCommon addNewCountry(@RequestBody Country.CountryDto countryDto) throws Throwable {
         Country country = countryDto.getCountry();
         return postgreJsonCommonCountryService.addCountry(convertCountryToCountryPostgreJsonCommon(country));
     }
@@ -72,7 +72,7 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PostMapping("occupations")
-    public OccupationPostgreJsonCommon addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
+    public OccupationPostgreJsonCommon addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) throws Throwable {
         Occupation newOccupation = occupationDto.getOccupation();
         return postgreJsonCommonOccupationService.addOccupation(convertOccupationToOccupationPostgreJsonCommon(newOccupation));
     }
@@ -89,7 +89,7 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PostMapping("employeeStatusTypes")
-    public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+    public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         EmployeeStatusType employeeStatusType = employeeStatusTypeDto.getEmployeeStatusType();
         return postgreJsonCommonEmployeeStatusTypeService.addEmployeeStatusType(convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(employeeStatusType));
     }
@@ -106,12 +106,12 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PostMapping("persons")
-    public PersonEmb addPerson(@RequestBody Person.PersonDto personDto) {
+    public PersonEmb addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreEmbPersonService.addPerson(convertPersonToPersonEmb(personDto.getPerson()));
     }
 
     @PutMapping("persons")
-    public PersonEmb updatePerson(@RequestBody Person.PersonDto personDto) {
+    public PersonEmb updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreEmbPersonService.updatePerson(convertPersonToPersonEmb(personDto.getPerson()));
     }
 
@@ -127,18 +127,18 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PostMapping("employees")
-    public EmployeeEmb addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeEmb addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreEmbPersonService.addEmployee(employee);
     }
 
     @DeleteMapping("employees/{personId}")
-    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) {
+    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) throws Throwable {
         postgreEmbPersonService.deleteEmployeeByPersonId(personId);
     }
 
     @PutMapping("employees")
-    public EmployeeEmb updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeEmb updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreEmbPersonService.updateEmployee(employee);
     }
@@ -151,12 +151,12 @@ public class PostgreSqlEmbeddedController {
     }
 
     @GetMapping("employments/personId={personId}")
-    public List<Employment.FrontEmployment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) {
+    public List<Employment.FrontEmployment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) throws Throwable {
         return postgreEmbPersonService.getEmployeeAllEmployments(personId);
     }
 
     @PostMapping("employments")
-    public EmploymentEmb addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public EmploymentEmb addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreEmbPersonService.addEmployment(
                 Long.valueOf(employmentDto.getEmployment().getPerson_id()),
                 employmentDto.createPostgreEmbEmployment()
@@ -164,7 +164,7 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PutMapping("employments")
-    public EmploymentEmb endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public EmploymentEmb endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreEmbPersonService.endEmployeeActiveEmployment(
                 Long.valueOf(employmentDto.getEmployment().getPerson_id()),
                 employmentDto.createPostgreEmbEmployment()
@@ -172,7 +172,7 @@ public class PostgreSqlEmbeddedController {
     }
 
     @PutMapping("employments/endEmployments")
-    public List<EmploymentEmb> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+    public List<EmploymentEmb> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreEmbPersonService.endEmployeeAllEmployments(
                 Long.valueOf(employmentDto.getEmployment().getPerson_id()),
                 employmentDto.createPostgreEmbEmployment()

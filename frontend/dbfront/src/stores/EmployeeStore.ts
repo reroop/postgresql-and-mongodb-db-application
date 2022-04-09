@@ -50,7 +50,7 @@ class EmployeeStore {
                 personIdCode: person.nat_id_code,
                 personGivenName: person.given_name,
                 personSurname: person.surname,
-                employeeStatus: employeeStatus.name,
+                employeeStatus: employeeStatus.name!!,
                 personRegDate: person.reg_time,
                 mentor_id: employee.mentor_id!!
             }

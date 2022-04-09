@@ -3,8 +3,8 @@ import API from '../util/ApiUtil';
 
 export interface Country {
     _id?: string,
-    country_code: string,
-    name: string
+    country_code: string | null,
+    name: string | null
 }
 
 const countriesEndpoint: string = '/countries';

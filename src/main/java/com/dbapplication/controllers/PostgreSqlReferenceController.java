@@ -59,7 +59,7 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("countries")
-    public CountryPostgreJsonCommon addNewCountry(@RequestBody Country.CountryDto countryDto) {
+    public CountryPostgreJsonCommon addNewCountry(@RequestBody Country.CountryDto countryDto) throws Throwable {
         Country country = countryDto.getCountry();
         return postgreJsonCommonCountryService.addCountry(convertCountryToCountryPostgreJsonCommon(country));
     }
@@ -76,7 +76,7 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("occupations")
-    public OccupationPostgreJsonCommon addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
+    public OccupationPostgreJsonCommon addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) throws Throwable {
         Occupation newOccupation = occupationDto.getOccupation();
         return postgreJsonCommonOccupationService.addOccupation(convertOccupationToOccupationPostgreJsonCommon(newOccupation));
     }
@@ -93,7 +93,7 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("employeeStatusTypes")
-    public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+    public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         EmployeeStatusType employeeStatusType = employeeStatusTypeDto.getEmployeeStatusType();
         return postgreJsonCommonEmployeeStatusTypeService.addEmployeeStatusType(convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(employeeStatusType));
     }
@@ -110,12 +110,12 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("persons")
-    public PersonRef addPerson(@RequestBody Person.PersonDto personDto) {
+    public PersonRef addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreRefPersonService.addPerson(convertPersonToPersonRef(personDto.getPerson()));
     }
 
     @PutMapping("persons")
-    public PersonRef updatePerson(@RequestBody Person.PersonDto personDto) {
+    public PersonRef updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreRefPersonService.updatePerson(convertPersonToPersonRef(personDto.getPerson()));
     }
 
@@ -131,24 +131,24 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("employees")
-    public EmployeeRef addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeRef addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreRefEmployeeService.addEmployee(employee);
     }
 
     @DeleteMapping("employees/{personId}")
-    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) {
+    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) throws Throwable {
         List<Employment.FrontEmployment> employeeEmployments = postgreRefEmploymentService.getEmployeeAllEmployments(personId);
         for (Employment.FrontEmployment employment : employeeEmployments) {
             if (employment.getEnd_time() == null) {
-                return;
+                throw new Exception(new Throwable("employee's employment with occupation code " + employment.getOccupation_code() + " is not ended, set an end time before deleting employee!"));
             }
         }
         postgreRefEmployeeService.deleteEmployeeByPersonId(personId);
     }
 
     @PutMapping("employees")
-    public EmployeeRef updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public EmployeeRef updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreRefEmployeeService.updateEmployee(employee);
     }
@@ -166,17 +166,17 @@ public class PostgreSqlReferenceController {
     }
 
     @PostMapping("employments")
-    public EmploymentRef addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public EmploymentRef addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreRefEmploymentService.addEmployment(employmentDto.createPostgreRefEmployment());
     }
 
     @PutMapping("employments")
-    public EmploymentRef endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public EmploymentRef endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreRefEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreRefEmployment());
     }
 
     @PutMapping("employments/endEmployments")
-    public List<EmploymentRef> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+    public List<EmploymentRef> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreRefEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreRefEmployment());
     }
 

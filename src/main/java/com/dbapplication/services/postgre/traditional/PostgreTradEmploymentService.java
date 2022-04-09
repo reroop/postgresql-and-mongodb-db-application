@@ -25,38 +25,50 @@ public class PostgreTradEmploymentService {
         return convertListOfEmploymentsToListOfFrontEmployments(employmentRepository.findAllByPersonId(personId));
     }
 
-    public Employment addEmployment(Employment employment) {
+    public Employment addEmployment(Employment employment) throws Throwable {
         //check if is already in active employment for that occupation
         List<Employment> employeeEmploymentsInOccupation = employmentRepository.findAllByPersonIdAndOccupationCode(employment.getPersonId(), employment.getOccupationCode());
         for (Employment savedEmployment: employeeEmploymentsInOccupation) {
-            if (savedEmployment.getEndTime() == null || savedEmployment.getStartTime().equals(employment.getStartTime())) {
-                return null;
+            if (savedEmployment.getEndTime() == null) {
+                throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
+            }
+            if (savedEmployment.getStartTime().equals(employment.getStartTime())) {
+                throw new Exception(new Throwable("Employment with this occupation and this start time (" + savedEmployment.getStartTime() + ") has already been registered! Change the occupation or start date"));
             }
         }
-
-        return employmentRepository.save(employment);
+        try {
+            return employmentRepository.save(employment);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
 
-    public Employment endEmployeeActiveEmployment(Employment employment) {
+    public Employment endEmployeeActiveEmployment(Employment employment) throws Throwable {
         Employment.EmploymentCompositeKey key = new Employment.EmploymentCompositeKey(employment.getPersonId(), employment.getOccupationCode(), employment.getStartTime());
         Employment foundEmployment = employmentRepository.findById(key).orElse(null);
         if (foundEmployment==null) {
             return null;
         }
         foundEmployment.setEndTime(employment.getEndTime());
-        return employmentRepository.save(foundEmployment);
+        try {
+            return employmentRepository.save(foundEmployment);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public List<Employment> endEmployeeAllEmployments(Employment endEmploymentInfo) {
+    public List<Employment> endEmployeeAllEmployments(Employment endEmploymentInfo) throws Throwable {
         List<Employment> employeeAllEmployments = employmentRepository.findAllByPersonId(endEmploymentInfo.getPersonId());
         for (Employment employment : employeeAllEmployments) {
             if (employment.getEndTime()==null) {
                 employment.setEndTime(endEmploymentInfo.getEndTime());
             }
         }
-        return employmentRepository.saveAll(employeeAllEmployments);
+        try {
+            return employmentRepository.saveAll(employeeAllEmployments);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
-
-
 }

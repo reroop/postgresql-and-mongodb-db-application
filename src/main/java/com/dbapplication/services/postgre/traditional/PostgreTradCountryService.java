@@ -23,10 +23,15 @@ public class PostgreTradCountryService {
         return countryRepository.findById(countryCode).orElse(null);
     }
 
-    public Country addCountry(Country country) {
+    public Country addCountry(Country country) throws Throwable {
         if (countryRepository.findById(country.getCountry_code()).isPresent()) {
-            return null;
+            throw new Exception(new Throwable("country with code " + country.getCountry_code() + " is already present!"));
         }
-        return countryRepository.save(country);
+        try {
+            return countryRepository.save(country);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
+
     }
 }

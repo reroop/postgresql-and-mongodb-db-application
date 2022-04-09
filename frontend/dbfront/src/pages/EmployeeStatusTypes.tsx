@@ -8,9 +8,9 @@ interface EmployeeStatusTypesProps {
 }
 
 interface State {
-    newEmployeeStatusTypeCode?: number,
-    newEmployeeStatusTypeName?: string,
-    newEmployeeStatusTypeDescription?: string
+    newEmployeeStatusTypeCode: number | null,
+    newEmployeeStatusTypeName: string | null,
+    newEmployeeStatusTypeDescription?: string | null
 }
 
 @inject('employeeStatusTypeStore')
@@ -20,9 +20,9 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
     constructor(props) {
         super(props);
         this.state = {
-            newEmployeeStatusTypeCode: undefined,
-            newEmployeeStatusTypeName: '',
-            newEmployeeStatusTypeDescription: undefined
+            newEmployeeStatusTypeCode: null,
+            newEmployeeStatusTypeName: null,
+            newEmployeeStatusTypeDescription: null
         }
     }
 
@@ -32,6 +32,7 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
 
     private handleAddTypeButtonClick() {
         //todo: remove this block? back should send error and display that
+        /*
         if (this.state.newEmployeeStatusTypeCode == undefined || this.state.newEmployeeStatusTypeName == undefined) {
             this.setState({
                 newEmployeeStatusTypeCode: undefined,
@@ -41,17 +42,20 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
             return;
         }
 
+         */
+
         const newStatusType: EmployeeStatusType = {
             employee_status_type_code: this.state.newEmployeeStatusTypeCode,
-            name: this.state.newEmployeeStatusTypeName
+            name: this.state.newEmployeeStatusTypeName,
+            description: this.state.newEmployeeStatusTypeDescription
         };
 
-        this.state.newEmployeeStatusTypeDescription != '' ?  newStatusType.description = this.state.newEmployeeStatusTypeDescription : newStatusType.description = undefined;
+        //this.state.newEmployeeStatusTypeDescription != '' ?  newStatusType.description = this.state.newEmployeeStatusTypeDescription : newStatusType.description = undefined;
         this.props.employeeStatusTypeStore!!.addEmployeeStatusType(newStatusType).then((e) => (
             this.setState({
-                newEmployeeStatusTypeCode: undefined,
-                newEmployeeStatusTypeName: '',
-                newEmployeeStatusTypeDescription: ''
+            //newEmployeeStatusTypeCode: null,
+                newEmployeeStatusTypeName: null,
+                newEmployeeStatusTypeDescription: null
             })
         ));
 
@@ -74,7 +78,7 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
                                 <Form.Control
                                     placeholder="Enter employee status type code (number)"
                                     type="number"
-                                    value={this.state.newEmployeeStatusTypeCode}
+                                    value={this.state.newEmployeeStatusTypeCode!!}
                                     onChange={(e) => this.setState({newEmployeeStatusTypeCode: Number(e.target.value)})}
                                 />
                             </Form.Group>
@@ -82,16 +86,16 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
                                 <Form.Label>Employee status type name:</Form.Label>
                                 <Form.Control
                                     placeholder="Enter employee status type name"
-                                    value={this.state.newEmployeeStatusTypeName}
-                                    onChange={(e) => this.setState({newEmployeeStatusTypeName: e.target.value})}/>
+                                    value={this.state.newEmployeeStatusTypeName!!}
+                                    onChange={(e) => this.setState({newEmployeeStatusTypeName: e.target.value == '' ? null : e.target.value})}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTypeDescription">
                                 <Form.Label>Employee status type description:</Form.Label>
                                 <Form.Control
                                     as="textarea" rows={3}
-                                    value={this.state.newEmployeeStatusTypeDescription}
+                                    value={this.state.newEmployeeStatusTypeDescription!!}
                                     placeholder="Enter employee status type description (optional)"
-                                    onChange={(e) => this.setState({newEmployeeStatusTypeDescription: e.target.value})}/>
+                                    onChange={(e) => this.setState({newEmployeeStatusTypeDescription: e.target.value == '' ? null : e.target.value})}/>
                             </Form.Group>
                             <Button variant="success" onClick={() => this.handleAddTypeButtonClick()}>Add new employee status type</Button>
                         </Form>

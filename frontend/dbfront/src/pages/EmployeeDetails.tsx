@@ -122,7 +122,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                         {countries.map( country => (
                                             <Dropdown.Item
                                                 onClick={() => {
-                                                    this.setState(state => (state.person!!.country_code = country.country_code, state));
+                                                    this.setState(state => (state.person!!.country_code = country.country_code!!, state));
                                                 }}>
                                                 {country.country_code + ' - ' + country.name}
                                             </Dropdown.Item>
@@ -196,7 +196,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                     <Dropdown.Menu>
                                         {employeeStatusTypes.map(status => (
                                             <Dropdown.Item onClick={() => {
-                                                this.setState(state => (state.employee!!.employee_status_type_code = status.employee_status_type_code, state));
+                                                this.setState(state => (state.employee!!.employee_status_type_code = status.employee_status_type_code!!, state));
                                             }}>
                                                 {status.employee_status_type_code + ' - ' + status.name}
                                             </Dropdown.Item>

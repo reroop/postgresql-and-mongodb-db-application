@@ -33,17 +33,25 @@ public class PostgreRefEmployeeService {
                 : new Employee(employeeRef.getPerson_id(), employeeRef.getMentor_id(), employeeRef.getEmployee_status_type_code());
     }
 
-    public EmployeeRef addEmployee(Employee employee) {
+    public EmployeeRef addEmployee(Employee employee) throws Throwable {
         if (employeeRepository.findById(employee.getPerson_id()).isPresent()) {
-            return null;
+            throw new Exception(new Throwable("this person is already registered as an employee!"));
         }
         EmployeeRef employeeRef = new EmployeeRef(employee.getPerson_id(), employee.getMentor_id(), employee.getEmployee_status_type_code());
-        return employeeRepository.save(employeeRef);
+        try {
+            return employeeRepository.save(employeeRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public EmployeeRef updateEmployee(Employee employee) {
+    public EmployeeRef updateEmployee(Employee employee) throws Throwable {
         EmployeeRef employeeRef = new EmployeeRef(employee.getPerson_id(), employee.getMentor_id(), employee.getEmployee_status_type_code());
-        return employeeRepository.save(employeeRef);
+        try {
+            return employeeRepository.save(employeeRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
     public void deleteEmployeeByPersonId(Long personId) {

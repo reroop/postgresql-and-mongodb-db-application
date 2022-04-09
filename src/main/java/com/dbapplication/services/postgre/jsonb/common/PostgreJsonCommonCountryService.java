@@ -3,6 +3,7 @@ package com.dbapplication.services.postgre.jsonb.common;
 import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
 import com.dbapplication.models.postgre.traditional.Country;
 import com.dbapplication.repositories.postgre.jsonb.common.PostgreJsonCommonCountryRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -28,10 +29,14 @@ public class PostgreJsonCommonCountryService {
         return repoCountry == null ? null : convertCountryPostgreJsonCommonToCountry(repoCountry);
     }
 
-    public CountryPostgreJsonCommon addCountry(CountryPostgreJsonCommon countryPostgreJsonCommon) {
+    public CountryPostgreJsonCommon addCountry(CountryPostgreJsonCommon countryPostgreJsonCommon) throws Throwable {
         if (countryRepository.findById(countryPostgreJsonCommon.getCountry_code()).isPresent()) {
-            return null;
+            throw new Exception(new Throwable("country with code " + countryPostgreJsonCommon.getCountry_code() + " is already present!"));
         }
-        return countryRepository.save(countryPostgreJsonCommon);
+        try {
+            return countryRepository.save(countryPostgreJsonCommon);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

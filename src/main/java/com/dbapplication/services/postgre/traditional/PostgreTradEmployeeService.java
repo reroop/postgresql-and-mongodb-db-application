@@ -23,15 +23,24 @@ public class PostgreTradEmployeeService {
         return employeeRepository.findById(personId).orElse(null);
     }
 
-    public Employee addEmployee(Employee employee) {
+    public Employee addEmployee(Employee employee) throws Throwable {
         if (employeeRepository.findById(employee.getPerson_id()).isPresent()) {
-            return null;
+            throw new Exception(new Throwable("this person is already registered as an employee!"));
         }
-        return employeeRepository.save(employee);
+        try {
+            return employeeRepository.save(employee);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
+
     }
 
-    public Employee updateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+    public Employee updateEmployee(Employee employee) throws Throwable {
+        try {
+            return employeeRepository.save(employee);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
     public void deleteEmployeeByPersonId(Long personId) {

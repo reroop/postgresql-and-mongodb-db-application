@@ -36,13 +36,18 @@ public class PostgreEmbPersonService {
         return personEmb == null ? null : convertPersonEmbToPerson(personEmb);
     }
 
-    public PersonEmb addPerson(PersonEmb personEmb) {
-        System.out.println(personEmb);
-        return !isPostgreJsonEmbPersonValid(personEmb) ? null : personRepository.save(personEmb);
+    public PersonEmb addPerson(PersonEmb personEmb) throws Throwable{
+        if (!isPostgreJsonEmbPersonValid(personEmb)) {
+            return null;
+        }
+        try {
+            return personRepository.save(personEmb);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public PersonEmb updatePerson(PersonEmb personEmb) {
-        log.info(personEmb.toString());
+    public PersonEmb updatePerson(PersonEmb personEmb) throws Throwable {
         if (!isPostgreJsonEmbPersonValid(personEmb)) {
             return null;
         }
@@ -52,7 +57,11 @@ public class PostgreEmbPersonService {
         }
         person.setCountry_code(personEmb.getCountry_code());
         person.setData(personEmb.getData());
-        return personRepository.save(person);
+        try {
+            return personRepository.save(person);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
     //----employee
@@ -73,45 +82,59 @@ public class PostgreEmbPersonService {
                 : new Employee(personEmb.get_id(), personEmb.getEmployee().getMentor_id(), personEmb.getEmployee().getEmployee_status_type_code());
     }
 
-    public EmployeeEmb addEmployee(Employee employee) {
+    public EmployeeEmb addEmployee(Employee employee) throws Throwable {
         EmployeeEmb employeeEmb = new EmployeeEmb(employee.getEmployee_status_type_code(), employee.getMentor_id(), null);
         PersonEmb personEmb = personRepository.findById(employee.getPerson_id()).orElse(null);
-        if (personEmb==null || personEmb.getEmployee() != null) {
-            return null;
+        if (personEmb==null) {
+            throw new Exception(new Throwable("Person not found!"));
+        }
+        if (personEmb.getEmployee() != null) {
+            throw new Exception(new Throwable("This person is already registered as an employee!"));
         }
         personEmb.setEmployee(employeeEmb);
-        PersonEmb savedPersonEmb = personRepository.save(personEmb);
-        return savedPersonEmb.getEmployee();
+        try {
+            PersonEmb savedPersonEmb = personRepository.save(personEmb);
+            return savedPersonEmb.getEmployee();
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public void deleteEmployeeByPersonId(Long personId) {
+    public void deleteEmployeeByPersonId(Long personId) throws Throwable {
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
         if (personEmb == null || personEmb.getEmployee() == null) {
-            return;
+            throw new Exception(new Throwable("Person or employee not found!"));
         }
         for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
             if (employmentEmb.getEnd_time() == null) {
-                return;
+                throw new Exception(new Throwable("employee's employment with occupation code " + employmentEmb.getOccupation_code() + " is not ended, set an end time before deleting employee!"));
             }
         }
         personEmb.setEmployee(null);
-        personRepository.save(personEmb);
-        this.removeDeletedEmployeeAsMentorFromOtherEmployees(personId);
+        try {
+            personRepository.save(personEmb);
+            this.removeDeletedEmployeeAsMentorFromOtherEmployees(personId);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public EmployeeEmb updateEmployee(Employee employee) {
+    public EmployeeEmb updateEmployee(Employee employee) throws Throwable {
         PersonEmb personEmb = personRepository.findById(employee.getPerson_id()).orElse(null);
         if (personEmb == null || personEmb.getEmployee() == null) {
-            return null;
+            throw new Exception(new Throwable("Person or employee not found!"));
         }
         personEmb.getEmployee().setEmployee_status_type_code(employee.getEmployee_status_type_code());
         personEmb.getEmployee().setMentor_id(employee.getMentor_id());
-        log.info(personEmb.toString());
-        PersonEmb savedPersonEmb = personRepository.save(personEmb);
-        return savedPersonEmb.getEmployee();
+        try {
+            PersonEmb savedPersonEmb = personRepository.save(personEmb);
+            return savedPersonEmb.getEmployee();
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    private void removeDeletedEmployeeAsMentorFromOtherEmployees(Long deletedEmployeeId) {
+    private void removeDeletedEmployeeAsMentorFromOtherEmployees(Long deletedEmployeeId) throws Throwable {
         List<PersonEmb> repoRes = personRepository.findAllByEmployeeNotNull();
         List<PersonEmb> employeesWithChangedMentorId = new ArrayList<>();
 
@@ -121,7 +144,11 @@ public class PostgreEmbPersonService {
                 employeesWithChangedMentorId.add(person);
             }
         }
-        personRepository.saveAll(employeesWithChangedMentorId);
+        try {
+            personRepository.saveAll(employeesWithChangedMentorId);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
     //---employment---
@@ -148,10 +175,10 @@ public class PostgreEmbPersonService {
         return result;
     }
 
-    public List<Employment.FrontEmployment> getEmployeeAllEmployments(Long personId) {
+    public List<Employment.FrontEmployment> getEmployeeAllEmployments(Long personId) throws Throwable {
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
         if (personEmb == null) {
-            return null;
+            throw new Exception(new Throwable("Person or employee not found!"));
         }
         List<Employment.FrontEmployment> result = new ArrayList<>();
         if (personEmb.getEmployee().getEmployment() == null) {
@@ -170,44 +197,52 @@ public class PostgreEmbPersonService {
         return result;
     }
 
-    public EmploymentEmb addEmployment(Long personId, EmploymentEmb newEmploymentEmb) {
+    public EmploymentEmb addEmployment(Long personId, EmploymentEmb newEmploymentEmb) throws Throwable {
         if (!isDateInRange2010to2100(newEmploymentEmb.getStart_time())) {
-            log.info("employmentref starttime not in range 2010-2100");
-            return null;
+            log.info("employmentemb starttime not in range 2010-2100");
+            throw new Exception(new Throwable("Employment start time not in range 2010-2100! Current reg. time: " + newEmploymentEmb.getStart_time()));
         }
 
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
         if (personEmb == null) {
-            return null;
+            throw new Exception(new Throwable("Person or employee not found!"));
         }
 
         if (personEmb.getEmployee().getEmployment() == null) {
             personEmb.getEmployee().setEmployment(List.of(newEmploymentEmb));
-            personRepository.save(personEmb);
-            return newEmploymentEmb;
+            try {
+                personRepository.save(personEmb);
+                return newEmploymentEmb;
+            } catch (Exception e) {
+                throw new Exception(new Throwable(e.getMessage()));
+            }
         }
 
         for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
             if (employmentEmb.getOccupation_code().equals(newEmploymentEmb.getOccupation_code()) && employmentEmb.getEnd_time() == null) {
-                log.info("already in active employment");
-                return null;
+                log.info("already in active employment!");
+                throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
             }
         }
 
         personEmb.getEmployee().getEmployment().add(newEmploymentEmb);
-        personRepository.save(personEmb);
-        return newEmploymentEmb;
+        try {
+            personRepository.save(personEmb);
+            return newEmploymentEmb;
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public EmploymentEmb endEmployeeActiveEmployment(Long personId, EmploymentEmb endEmbEmployment) {
+    public EmploymentEmb endEmployeeActiveEmployment(Long personId, EmploymentEmb endEmbEmployment) throws Throwable {
         if (!isDateInRange2010to2100(endEmbEmployment.getEnd_time())) {
-            log.info("employmentref endtime not in range 2010-2100");
-            return null;
+            log.info("employmentemb starttime not in range 2010-2100");
+            throw new Exception(new Throwable("Employment end time not in range 2010-2100! Current end time: " + endEmbEmployment.getEnd_time()));
         }
 
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
         if (personEmb == null) {
-            return null;
+            throw new Exception(new Throwable("Person or employee not found!"));
         }
 
         EmploymentEmb finishedEmployment = null;
@@ -215,21 +250,25 @@ public class PostgreEmbPersonService {
             if (employmentEmb.getOccupation_code().equals(endEmbEmployment.getOccupation_code()) && employmentEmb.getEnd_time() == null) {
                 if (!isFirstDateBeforeSecondDate(employmentEmb.getStart_time(), endEmbEmployment.getEnd_time())) {
                     log.info("employmentemb endtime is before start time");
-                    return null;
+                    throw new Exception(new Throwable("Employment end time (" + endEmbEmployment.getEnd_time() + ") is before start time " + employmentEmb.getStart_time()));
                 }
                 employmentEmb.setEnd_time(endEmbEmployment.getEnd_time());
                 finishedEmployment = employmentEmb;
                 break;
             }
         }
-        personRepository.save(personEmb);
-        return finishedEmployment;
+        try {
+            personRepository.save(personEmb);
+            return finishedEmployment;
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public List<EmploymentEmb> endEmployeeAllEmployments(Long personId, EmploymentEmb endEmbEmployment) {
+    public List<EmploymentEmb> endEmployeeAllEmployments(Long personId, EmploymentEmb endEmbEmployment) throws Throwable {
         if (!isDateInRange2010to2100(endEmbEmployment.getEnd_time())) {
-            log.info("employmentref endtime not in range 2010-2100");
-            return null;
+            log.info("Employment end time not in range 2010-2100! Current reg. time: " + endEmbEmployment.getEnd_time());
+            throw new Exception(new Throwable("Employment end time not in range 2010-2100! Current reg. time: " + endEmbEmployment.getEnd_time()));
         }
 
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
@@ -241,15 +280,17 @@ public class PostgreEmbPersonService {
         for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
             if (employmentEmb.getEnd_time() == null) {
                 if (!isFirstDateBeforeSecondDate(employmentEmb.getStart_time(), endEmbEmployment.getEnd_time())) {
-                    log.info("employmentemb endtime is before start time");
-                    return null;
+                    log.info("employmentref endtime is before start time");
+                    throw new Exception(new Throwable("Employment end time (" + endEmbEmployment.getEnd_time() + ") is before start time " + employmentEmb.getStart_time()));
                 }
                 employmentEmb.setEnd_time(endEmbEmployment.getEnd_time());
             }
         }
-        return personRepository.save(personEmb).getEmployee().getEmployment();
-
-
+        try {
+            return personRepository.save(personEmb).getEmployee().getEmployment();
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
 }

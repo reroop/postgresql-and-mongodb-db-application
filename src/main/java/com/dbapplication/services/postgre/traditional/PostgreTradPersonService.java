@@ -25,12 +25,20 @@ public class PostgreTradPersonService {
         return personRepository.findById(id).orElse(null);
     }
 
-    public Person addPerson(Person person) {
-        return personRepository.save(convertPersonEmptyValuesToNulls(person));
+    public Person addPerson(Person person) throws Throwable {
+        try {
+            return personRepository.save(convertPersonEmptyValuesToNulls(person));
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public Person updatePerson(Person updatePerson) {
-        return personRepository.save(convertPersonEmptyValuesToNulls(updatePerson));
+    public Person updatePerson(Person updatePerson) throws Throwable {
+        try {
+            return personRepository.save(convertPersonEmptyValuesToNulls(updatePerson));
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
 }

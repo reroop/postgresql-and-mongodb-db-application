@@ -50,7 +50,7 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("countries")
-    public Country addNewCountry(@RequestBody Country.CountryDto countryDto) {
+    public Country addNewCountry(@RequestBody Country.CountryDto countryDto) throws Throwable {
         return postgreTradCountryService.addCountry(countryDto.getCountry());
     }
 
@@ -67,7 +67,7 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("occupations")
-    public Occupation addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
+    public Occupation addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) throws Throwable {
         return postgreTradOccupationService.addOccupation(occupationDto.getOccupation());
     }
 
@@ -84,7 +84,7 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("employeeStatusTypes")
-    public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
+    public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         return postgreTradEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
 
@@ -100,12 +100,12 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("persons")
-    public Person addPerson(@RequestBody Person.PersonDto personDto) {
+    public Person addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreTradPersonService.addPerson(personDto.getPerson());
     }
 
     @PutMapping("persons")
-    public Person updatePerson(@RequestBody Person.PersonDto personDto) {
+    public Person updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreTradPersonService.updatePerson(personDto.getPerson());
     }
 
@@ -121,23 +121,33 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("employees")
-    public Employee addEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public Employee addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
+        //todo: why is this here??? should be in delete
+        /*
         List<Employment.FrontEmployment> employeeEmployments = postgreTradEmploymentService.getEmployeeAllEmployments(employeeDto.getEmployee().getPerson_id());
         for (Employment.FrontEmployment employment : employeeEmployments) {
             if (employment.getEnd_time() == null) {
                 return null;
             }
         }
+
+         */
         return postgreTradEmployeeService.addEmployee(employeeDto.getEmployee());
     }
 
     @DeleteMapping("employees/{personId}")
-    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) {
+    public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) throws Throwable {
+        List<Employment.FrontEmployment> employeeEmployments = postgreTradEmploymentService.getEmployeeAllEmployments(personId);
+        for (Employment.FrontEmployment employment : employeeEmployments) {
+            if (employment.getEnd_time() == null) {
+                throw new Exception(new Throwable("employee's employment with occupation code " + employment.getOccupation_code() + " is not ended, set an end time before deleting employee!"));
+            }
+        }
         postgreTradEmployeeService.deleteEmployeeByPersonId(personId);
     }
 
     @PutMapping("employees")
-    public Employee updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) {
+    public Employee updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return postgreTradEmployeeService.updateEmployee(employeeDto.getEmployee());
     }
 
@@ -155,17 +165,17 @@ public class PostgreSqlTraditionalController {
     }
 
     @PostMapping("employments")
-    public Employment addEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public Employment addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreTradEmploymentService.addEmployment(employmentDto.createPostgreEmployment());
     }
 
     @PutMapping("employments")
-    public Employment endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) {
+    public Employment endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreTradEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreEmployment());
     }
 
     @PutMapping("employments/endEmployments")
-    public List<Employment> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) {
+    public List<Employment> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreTradEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreEmployment());
     }
 

@@ -3,6 +3,7 @@ package com.dbapplication.services.postgre.jsonb.ref;
 import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import com.dbapplication.models.postgre.traditional.Person;
 import com.dbapplication.repositories.postgre.jsonb.ref.PostgreRefPersonRepository;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,25 @@ public class PostgreRefPersonService {
         return personRef == null ? null : convertPersonRefToPerson(personRef);
     }
 
-    public PersonRef addPerson(PersonRef personRef) {
-        return !isPostgreJsonRefPersonValid(personRef) ? null : personRepository.save(personRef);
+    public PersonRef addPerson(PersonRef personRef) throws Throwable {
+        if (!isPostgreJsonRefPersonValid(personRef)) {
+            return null;
+        }
+        try {
+            return personRepository.save(personRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public PersonRef updatePerson(PersonRef personRef) {
-        return !isPostgreJsonRefPersonValid(personRef) ? null : personRepository.save(personRef);
+    public PersonRef updatePerson(PersonRef personRef) throws Throwable {
+        if (!isPostgreJsonRefPersonValid(personRef)) {
+            return null;
+        }
+        try {
+            return personRepository.save(personRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

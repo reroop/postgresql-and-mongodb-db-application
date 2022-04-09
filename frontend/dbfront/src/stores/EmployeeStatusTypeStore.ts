@@ -3,9 +3,9 @@ import API from '../util/ApiUtil';
 
 export interface EmployeeStatusType {
     _id?: string,
-    employee_status_type_code: number,
-    name: string,
-    description?: string
+    employee_status_type_code: number | null,
+    name: string | null,
+    description?: string | null
 }
 
 const employeeStatusTypesEndpoint: string = '/employeeStatusTypes';

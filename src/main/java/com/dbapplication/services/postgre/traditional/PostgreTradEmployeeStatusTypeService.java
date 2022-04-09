@@ -23,10 +23,14 @@ public class PostgreTradEmployeeStatusTypeService {
         return statusTypeRepository.findById(statusTypeCode).orElse(null);
     }
 
-    public EmployeeStatusType addEmployeeStatusType(EmployeeStatusType employeeStatusType) {
+    public EmployeeStatusType addEmployeeStatusType(EmployeeStatusType employeeStatusType) throws Throwable {
         if (statusTypeRepository.findById(employeeStatusType.getEmployee_status_type_code()).isPresent()) {
-            return null;
+            throw new Exception(new Throwable("employee status type with code " + employeeStatusType.getEmployee_status_type_code() + " is already present!"));
         }
-        return statusTypeRepository.save(employeeStatusType);
+        try {
+            return statusTypeRepository.save(employeeStatusType);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

@@ -30,9 +30,14 @@ public class PostgreJsonCommonOccupationService {
                 : convertOccupationPostgreJsonCommonToOccupation(occupationPostgreJsonCommon);
     }
 
-    public OccupationPostgreJsonCommon addOccupation(OccupationPostgreJsonCommon occupationPostgreJsonCommon) {
-        return occupationRepository.findById(occupationPostgreJsonCommon.getOccupation_code()).isPresent()
-                ? null
-                : occupationRepository.save(occupationPostgreJsonCommon);
+    public OccupationPostgreJsonCommon addOccupation(OccupationPostgreJsonCommon occupationPostgreJsonCommon) throws Throwable {
+        if (occupationRepository.findById(occupationPostgreJsonCommon.getOccupation_code()).isPresent()) {
+            throw new Exception(new Throwable("occupation with code " + occupationPostgreJsonCommon.getOccupation_code() + " is already present!"));
+        }
+        try {
+            return occupationRepository.save(occupationPostgreJsonCommon);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

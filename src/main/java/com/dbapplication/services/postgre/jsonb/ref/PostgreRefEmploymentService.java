@@ -53,32 +53,36 @@ public class PostgreRefEmploymentService {
         return result;
     }
 
-    public EmploymentRef addEmployment(EmploymentRef employmentRef) {
+    public EmploymentRef addEmployment(EmploymentRef employmentRef) throws Throwable {
         //todo: add null check to front and delete this
         if (employmentRef.getData().getStart_time()== null) {
-            log.info("employmentref starttime is null, returning null");
-            return null;
+            log.info("employmentref start time is null, returning null");
+            throw new Exception(new Throwable("Employment start time is null!"));
+            //return null;
         }
         if (!isDateInRange2010to2100(employmentRef.getData().getStart_time())) {
             log.info("employmentref starttime not in range 2010-2100");
-            return null;
+            throw new Exception(new Throwable("Employment start time not in range 2010-2100! Current start time: " + employmentRef.getData().getStart_time()));
         }
 
         List<EmploymentRef> employeeEmploymentsForOccupationCode = employmentRepository.findAllByPersonIdAndOccupationCode(employmentRef.getPersonId(), employmentRef.getOccupationCode());
         for (EmploymentRef ref : employeeEmploymentsForOccupationCode) {
             if (ref.getData().getEnd_time()==null) {
                 log.info("already in active employment!");
-                return null;
+                throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
             }
         }
-
-        return employmentRepository.save(employmentRef);
+        try {
+            return employmentRepository.save(employmentRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public EmploymentRef endEmployeeActiveEmployment(EmploymentRef employmentRef) {
+    public EmploymentRef endEmployeeActiveEmployment(EmploymentRef employmentRef) throws Throwable {
         if (!isDateInRange2010to2100(employmentRef.getData().getEnd_time())) {
-            log.info("employmentref endtime not in range 2010-2100");
-            return null;
+            log.info("Employment end time not in range 2010-2100! Current end time: " + employmentRef.getData().getEnd_time());
+            throw new Exception(new Throwable("Employment end time not in range 2010-2100! Current reg. time: " + employmentRef.getData().getEnd_time()));
         }
 
         List<EmploymentRef> employeeEmploymentsForOccupationCode = employmentRepository.findAllByPersonIdAndOccupationCode(employmentRef.getPersonId(), employmentRef.getOccupationCode());
@@ -96,17 +100,21 @@ public class PostgreRefEmploymentService {
 
         if (!isFirstDateBeforeSecondDate(editableEmploymentRef.getData().getStart_time() ,employmentRef.getData().getEnd_time())) {
             log.info("employmentref endtime is before start time");
-            return null;
+            throw new Exception(new Throwable("Employment end time (" + employmentRef.getData().getEnd_time() + ") is before start time " + editableEmploymentRef.getData().getStart_time()));
         }
 
         editableEmploymentRef.getData().setEnd_time(employmentRef.getData().getEnd_time());
-        return employmentRepository.save(editableEmploymentRef);
+        try {
+            return employmentRepository.save(editableEmploymentRef);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 
-    public List<EmploymentRef> endEmployeeAllEmployments(EmploymentRef endEmploymentRef) {
+    public List<EmploymentRef> endEmployeeAllEmployments(EmploymentRef endEmploymentRef) throws Throwable {
         if (!isDateInRange2010to2100(endEmploymentRef.getData().getEnd_time())) {
-            log.info("employmentref endtime not in range 2010-2100");
-            return null;
+            log.info("Employment end time not in range 2010-2100! Current reg. time: " + endEmploymentRef.getData().getEnd_time());
+            throw new Exception(new Throwable("Employment end time not in range 2010-2100! Current reg. time: " + endEmploymentRef.getData().getEnd_time()));
         }
 
         List<EmploymentRef> employeeAllEmployments = employmentRepository.findAllByPersonId(endEmploymentRef.getPersonId());
@@ -114,11 +122,15 @@ public class PostgreRefEmploymentService {
             if (employmentRef.getData().getEnd_time()==null) {
                 if (!isFirstDateBeforeSecondDate(employmentRef.getData().getStart_time() ,endEmploymentRef.getData().getEnd_time())) {
                     log.info("employmentref endtime is before start time");
-                    return null;
+                    throw new Exception(new Throwable("Employment end time (" + endEmploymentRef.getData().getEnd_time() + ") is before start time " + employmentRef.getData().getStart_time()));
                 }
                 employmentRef.getData().setEnd_time(endEmploymentRef.getData().getEnd_time());
             }
         }
-        return employmentRepository.saveAll(employeeAllEmployments);
+        try {
+            return employmentRepository.saveAll(employeeAllEmployments);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

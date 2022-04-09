@@ -31,9 +31,14 @@ public class PostgreJsonCommonEmployeeStatusTypeService {
 
     }
 
-    public EmployeeStatusTypePostgreJsonCommon addEmployeeStatusType(EmployeeStatusTypePostgreJsonCommon statusTypeRef) {
-        return statusTypeRepository.findById(statusTypeRef.getEmployee_status_type_code()).isPresent()
-                ? null
-                : statusTypeRepository.save(statusTypeRef);
+    public EmployeeStatusTypePostgreJsonCommon addEmployeeStatusType(EmployeeStatusTypePostgreJsonCommon statusType) throws Throwable {
+        if (statusTypeRepository.findById(statusType.getEmployee_status_type_code()).isPresent()) {
+            throw new Exception(new Throwable("employee status type with code " + statusType.getEmployee_status_type_code() + " is already present!"));
+        }
+        try {
+            return statusTypeRepository.save(statusType);
+        } catch (Exception e) {
+            throw new Exception(new Throwable(e.getMessage()));
+        }
     }
 }

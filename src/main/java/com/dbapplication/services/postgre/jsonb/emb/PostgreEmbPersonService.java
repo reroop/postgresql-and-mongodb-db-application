@@ -161,7 +161,7 @@ public class PostgreEmbPersonService {
                 continue;
             }
             for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
-                if (employmentEmb.getOccupation_code().equals(occupationCode)) {
+                if (employmentEmb.getOccupation_code().equals(occupationCode) && employmentEmb.getEnd_time() == null) {
                     Employment employment = new Employment(
                             personEmb.get_id(),
                             employmentEmb.getOccupation_code(),

@@ -146,7 +146,7 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                     {occupation.name}
                                 </td>
                                 <td>
-                                    {occupation.description}
+                                    {occupation.description ? occupation.description : '[no description]'}
                                 </td>
                             </tr>
                         ))}

@@ -41,13 +41,15 @@ public class PostgreRefEmploymentService {
         List<EmploymentRef> repoRes = employmentRepository.findAllByOccupationCode(occupationCode);
         List<Employment> result = new ArrayList<>();
         for (EmploymentRef employmentRef: repoRes) {
-            Employment employment = new Employment(
-                    employmentRef.getPersonId(),
-                    employmentRef.getOccupationCode(),
-                    employmentRef.getData().getStart_time(),
-                    employmentRef.getData().getEnd_time()
-            );
-            result.add(employment);
+            if (employmentRef.getData().getEnd_time() == null) {
+                Employment employment = new Employment(
+                        employmentRef.getPersonId(),
+                        employmentRef.getOccupationCode(),
+                        employmentRef.getData().getStart_time(),
+                        employmentRef.getData().getEnd_time()
+                );
+                result.add(employment);
+            }
         }
 
         return result;

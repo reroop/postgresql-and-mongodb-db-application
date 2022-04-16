@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PostgreTradEmploymentRepository extends JpaRepository<Employment, Employment.EmploymentCompositeKey> {
 
-    List<Employment> findAllByOccupationCode(Integer occupationCode);
+    List<Employment> findAllByOccupationCodeAndEndTimeIsNull(Integer occupationCode);
 
     List<Employment> findAllByPersonId(Long personId);
 

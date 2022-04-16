@@ -123,7 +123,7 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
                                     {statusType.name}
                                 </td>
                                 <td>
-                                    {statusType.description}
+                                    {statusType.description ? statusType.description : '[no description]'}
                                 </td>
                             </tr>
                         ))}

@@ -122,10 +122,10 @@ class AllEmployeesList extends React.Component<EmployeesListProps & any, State> 
                                             {employee.personIdCode}
                                         </td>
                                         <td>
-                                            {employee.personGivenName}
+                                            {employee.personGivenName ? employee.personGivenName : '-'}
                                         </td>
                                         <td>
-                                            {employee.personSurname}
+                                            {employee.personSurname ? employee.personSurname : '-'}
                                         </td>
                                         <td>
                                             {employee.employeeStatus}

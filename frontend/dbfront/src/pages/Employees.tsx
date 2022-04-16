@@ -272,10 +272,11 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                     <Dropdown.Menu>
                                                         {persons.map((person) => (
                                                             <Dropdown.Item onClick={() => {
-                                                                this.setState({currentEmployeePersonName: person.given_name + ' ' + person.surname})
+                                                                // this.setState({currentEmployeePersonName: person.given_name + ' ' + person.surname})
+                                                                this.setState({currentEmployeePersonName: (person.given_name ? person.given_name : '[no given name]') + ' ' + (person.surname ? person.surname : '[no surname]')})
                                                                 this.setState({currentEmployeePerson_id: person._id!!})
                                                             }}>
-                                                                {person.given_name + ' ' + person.surname + ' (' + person.country_code + ' - ' + person.nat_id_code + ')'}
+                                                                {(person.given_name ? person.given_name : '[no given name]') + ' ' + (person.surname ? person.surname : '[no surname]') + ' (' + person.country_code + ' - ' + person.nat_id_code + ')'}
                                                             </Dropdown.Item>
                                                         ))}
                                                     </Dropdown.Menu>
@@ -322,9 +323,13 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                 {personsAsEmployees.map((employee) => (
                                                     <Dropdown.Item onClick={() => {
                                                         this.setState({currentEmployeeMentorId: employee.person_id});
-                                                        this.setState({currentEmployeeMentorName: employee.personGivenName + ' ' + employee.personSurname});
+                                                        // this.setState({currentEmployeeMentorName: employee.personGivenName + ' ' + employee.personSurname});
+                                                        this.setState({currentEmployeeMentorName: (employee.personGivenName ? employee.personGivenName : '[no given name]') + ' ' + (employee.personSurname ? employee.personSurname : '[no surname]')});
                                                     }}>
-                                                        {employee.personGivenName + ' ' + employee.personSurname}
+                                                        {(employee.personGivenName ? employee.personGivenName : '[no given name]')
+                                                            + ' ' + (employee.personSurname ? employee.personSurname : '[no surname]')
+                                                            + ' (' + employee.personCountryCode
+                                                            + ' - ' + employee.personIdCode + ')'}
                                                     </Dropdown.Item>
                                                 ))}
                                             </Dropdown.Menu>

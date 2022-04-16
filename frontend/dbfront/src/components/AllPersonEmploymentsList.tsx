@@ -137,7 +137,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                             {entry.occupation?.name}
                                         </td>
                                         <td>
-                                            {entry.occupation?.description}
+                                            {entry.occupation?.description ? entry.occupation.description : '[no description]'}
                                         </td>
                                         <td>
                                             <FormControl

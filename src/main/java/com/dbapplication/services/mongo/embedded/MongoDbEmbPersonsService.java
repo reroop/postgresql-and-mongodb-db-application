@@ -179,7 +179,7 @@ public class MongoDbEmbPersonsService {
         for (EmbeddedPerson embeddedPerson: embeddedPersonEmployeeList) {
             List<Employment> personAllEmploymentsConverted = convertEmbeddedEmploymentsToEmployments(embeddedPerson);
             for (Employment employment : personAllEmploymentsConverted) {
-                if (Objects.equals(employment.getOccupation_code(), occupationCode)) {
+                if (Objects.equals(employment.getOccupation_code(), occupationCode) && employment.getEnd_time() == null) {
                     result.add(employment);
                 }
             }

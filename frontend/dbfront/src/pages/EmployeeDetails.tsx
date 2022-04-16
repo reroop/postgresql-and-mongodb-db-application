@@ -213,14 +213,16 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                     <Col>
                                         <Dropdown>
                                             <Dropdown.Toggle id="dropdown-autoclose-true">
-                                                {mentor != null ? mentor.personGivenName + ' ' + mentor.personSurname : 'No mentor assigned'}
+                                                {mentor != null ? ((mentor.personGivenName ? mentor.personGivenName : '[no given name]') + ' ' + (mentor.personSurname ? mentor.personSurname : '[no surname]')) : 'No mentor assigned'}
                                             </Dropdown.Toggle>
                                             <Dropdown.Menu>
                                                 {possibleMentors.map(mentor => (
                                                     <Dropdown.Item onClick={() => {
                                                         this.setState(state => (state.employee!!.mentor_id = mentor.person_id, state));
                                                     }}>
-                                                        {mentor.personGivenName + ' ' + mentor.personSurname}
+                                                        {(mentor.personGivenName ? mentor.personGivenName : '[no given name]')
+                                                            + ' ' + (mentor.personSurname ? mentor.personSurname : '[no surname]')
+                                                            + ' (' + mentor.personCountryCode + ' - ' + mentor.personIdCode + ')'}
                                                     </Dropdown.Item>
                                                 ))}
                                             </Dropdown.Menu>

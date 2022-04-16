@@ -18,7 +18,7 @@ public class PostgreTradEmploymentService {
     private PostgreTradEmploymentRepository employmentRepository;
 
     public List<Employment> getAllEmploymentsByOccupationCode(Integer occupationCode) {
-        return employmentRepository.findAllByOccupationCode(occupationCode);
+        return employmentRepository.findAllByOccupationCodeAndEndTimeIsNull(occupationCode);
     }
 
     public List<Employment.FrontEmployment> getEmployeeAllEmployments(Long personId) {

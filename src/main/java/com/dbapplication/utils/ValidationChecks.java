@@ -1,4 +1,4 @@
-package com.dbapplication.utils.mongodb;
+package com.dbapplication.utils;
 
 import com.dbapplication.models.mongo.embedded.EmbeddedPerson;
 import com.dbapplication.models.mongo.reference.Person;

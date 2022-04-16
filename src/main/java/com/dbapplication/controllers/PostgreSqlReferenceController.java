@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.dbapplication.utils.UniversalConstants.*;
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.*;
 
 @Profile("postgreref")
@@ -48,95 +49,95 @@ public class PostgreSqlReferenceController {
 
 
     //--countries---
-    @GetMapping("countries")
+    @GetMapping(COUNTRIES)
     public List<Country> getAllCountries() {
         return postgreJsonCommonCountryService.getAllCountries();
     }
 
-    @GetMapping("countries/{countryCode}")
+    @GetMapping(COUNTRIES_COUNTRYCODE)
     public Country getCountryByCountryCode(@PathVariable(value = "countryCode") String countryCode) {
         return postgreJsonCommonCountryService.getCountryByCountryCode(countryCode);
     }
 
-    @PostMapping("countries")
+    @PostMapping(COUNTRIES)
     public CountryPostgreJsonCommon addNewCountry(@RequestBody Country.CountryDto countryDto) throws Throwable {
         Country country = countryDto.getCountry();
         return postgreJsonCommonCountryService.addCountry(convertCountryToCountryPostgreJsonCommon(country));
     }
 
     //---occupations---
-    @GetMapping("occupations")
+    @GetMapping(OCCUPATIONS)
     public List<Occupation> getAllOccupations() {
         return postgreJsonCommonOccupationService.getAllOccupations();
     }
 
-    @GetMapping("occupations/{occupationCode}")
+    @GetMapping(OCCUPATIONS_OCCUPATIONCODE)
     public Occupation getOccupationByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
         return postgreJsonCommonOccupationService.getOccupationByOccupationCode(occupationCode);
     }
 
-    @PostMapping("occupations")
+    @PostMapping(OCCUPATIONS)
     public OccupationPostgreJsonCommon addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) throws Throwable {
         Occupation newOccupation = occupationDto.getOccupation();
         return postgreJsonCommonOccupationService.addOccupation(convertOccupationToOccupationPostgreJsonCommon(newOccupation));
     }
 
     //-----employee status types-----
-    @GetMapping("employeeStatusTypes")
+    @GetMapping(EMPLOYEESTATUSTYPES)
     public List<EmployeeStatusType> getAllEmployeeStatusTypes() {
         return postgreJsonCommonEmployeeStatusTypeService.getAllEmployeeStatusTypes();
     }
 
-    @GetMapping("employeeStatusTypes/{employeeStatusTypeCode}")
+    @GetMapping(EMPLOYEESTATUSTYPES_TYPECODE)
     public EmployeeStatusType getEmployeeStatusTypeByEmployeeStatusTypeCode(@PathVariable(value = "employeeStatusTypeCode") Integer employeeStatusTypeCode) {
         return postgreJsonCommonEmployeeStatusTypeService.getEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
     }
 
-    @PostMapping("employeeStatusTypes")
+    @PostMapping(EMPLOYEESTATUSTYPES)
     public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         EmployeeStatusType employeeStatusType = employeeStatusTypeDto.getEmployeeStatusType();
         return postgreJsonCommonEmployeeStatusTypeService.addEmployeeStatusType(convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(employeeStatusType));
     }
 
     //----persons-----
-    @GetMapping("persons")
+    @GetMapping(PERSONS)
     public List<Person> getAllPersons() {
         return postgreRefPersonService.getAllPersons();
     }
 
-    @GetMapping("persons/{_id}")
+    @GetMapping(PERSONS_ID)
     public Person getPersonByPerson_id(@PathVariable(value = "_id") Long _id) {
         return postgreRefPersonService.getPersonBy_id(_id);
     }
 
-    @PostMapping("persons")
+    @PostMapping(PERSONS)
     public PersonRef addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreRefPersonService.addPerson(convertPersonToPersonRef(personDto.getPerson()));
     }
 
-    @PutMapping("persons")
+    @PutMapping(PERSONS)
     public PersonRef updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return postgreRefPersonService.updatePerson(convertPersonToPersonRef(personDto.getPerson()));
     }
 
     //----employees---
-    @GetMapping("employees")
+    @GetMapping(EMPLOYEES)
     public List<Employee> getAllEmployees() {
         return postgreRefEmployeeService.getAllEmployees();
     }
 
-    @GetMapping("employees/{personId}")
+    @GetMapping(EMPLOYEES_PERSONID)
     public Employee getEmployeeByPersonId(@PathVariable(value = "personId") Long personId) {
         return postgreRefEmployeeService.getEmployeeByPersonId(personId);
     }
 
-    @PostMapping("employees")
+    @PostMapping(EMPLOYEES)
     public EmployeeRef addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreRefEmployeeService.addEmployee(employee);
     }
 
-    @DeleteMapping("employees/{personId}")
+    @DeleteMapping(EMPLOYEES_PERSONID)
     public void deleteEmployeeByPersonId(@PathVariable(value="personId") Long personId) throws Throwable {
         List<Employment.FrontEmployment> employeeEmployments = postgreRefEmploymentService.getEmployeeAllEmployments(personId);
         for (Employment.FrontEmployment employment : employeeEmployments) {
@@ -147,7 +148,7 @@ public class PostgreSqlReferenceController {
         postgreRefEmployeeService.deleteEmployeeByPersonId(personId);
     }
 
-    @PutMapping("employees")
+    @PutMapping(EMPLOYEES)
     public EmployeeRef updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         Employee employee = employeeDto.getEmployee();
         return postgreRefEmployeeService.updateEmployee(employee);
@@ -155,29 +156,37 @@ public class PostgreSqlReferenceController {
 
     //----employments-----
 
-    @GetMapping("employments/occupationCode={occupationCode}")
+    @GetMapping(EMPLOYMENTS_BY_OCCUPATIONCODE)
     public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
         return postgreRefEmploymentService.getAllEmploymentsByOccupationCode(occupationCode);
     }
 
-    @GetMapping("employments/personId={personId}")
+    @GetMapping(EMPLOYMENTS_BY_EMPLOYEE)
     public List<Employment.FrontEmployment> getEmployeeAllEmployments(@PathVariable(value = "personId") Long personId) {
         return postgreRefEmploymentService.getEmployeeAllEmployments(personId);
     }
 
-    @PostMapping("employments")
+    @PostMapping(EMPLOYMENTS)
     public EmploymentRef addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
+        Employee employee = postgreRefEmployeeService.getEmployeeByPersonId(Long.valueOf(employmentDto.getEmployment().getPerson_id()));
+        if (employee.getEmployee_status_type_code() == EMPLOYEE_STATUS_HAS_FINISHED_WORKING) {
+            throw new Exception(new Throwable(ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS));
+        }
         return postgreRefEmploymentService.addEmployment(employmentDto.createPostgreRefEmployment());
     }
 
-    @PutMapping("employments")
+    @PutMapping(EMPLOYMENTS)
     public EmploymentRef endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return postgreRefEmploymentService.endEmployeeActiveEmployment(employmentDto.createPostgreRefEmployment());
     }
 
-    @PutMapping("employments/endEmployments")
+    @PutMapping(EMPLOYMENTS_END_EMPLOYMENTS)
     public List<EmploymentRef> endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
-        return postgreRefEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreRefEmployment());
+        List<EmploymentRef> endedEmplyoments =  postgreRefEmploymentService.endEmployeeAllEmployments(employmentDto.createPostgreRefEmployment());
+        Employee employee = postgreRefEmployeeService.getEmployeeByPersonId(Long.valueOf(employmentDto.getEmployment().getPerson_id()));
+        employee.setEmployee_status_type_code(EMPLOYEE_STATUS_HAS_FINISHED_WORKING);
+        postgreRefEmployeeService.updateEmployee(employee);
+        return endedEmplyoments;
     }
 
 }

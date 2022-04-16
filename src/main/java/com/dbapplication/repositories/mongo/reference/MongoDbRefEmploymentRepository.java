@@ -2,7 +2,6 @@ package com.dbapplication.repositories.mongo.reference;
 
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
-import com.dbapplication.utils.mongodb.ValidationChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.isDateInRange2010to2100;
-import static com.dbapplication.utils.mongodb.ValidationChecks.isFirstDateBeforeSecondDate;
+import static com.dbapplication.utils.ValidationChecks.isDateInRange2010to2100;
+import static com.dbapplication.utils.ValidationChecks.isFirstDateBeforeSecondDate;
 
 @Slf4j
 @Component

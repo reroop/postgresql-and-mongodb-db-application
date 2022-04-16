@@ -76,7 +76,8 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
         }
         //todo FIX BUG: put setting employee status to ended in back together with ending all employments
         this.props.employmentStore?.endAllEmployments(endEmployments).then(() => {
-            this.props.employeeStore?.setEmployeeStatusToEnded(this.state.person_id!!).then(this.refreshPage)
+            //(this.props.employeeStore?.setEmployeeStatusToEnded(this.state.person_id!!).then(this.refreshPage)
+            this.refreshPage();
         });
     }
 

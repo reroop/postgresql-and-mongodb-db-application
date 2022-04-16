@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.*;
+import static com.dbapplication.utils.UniversalConstants.ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS;
+import static com.dbapplication.utils.UniversalConstants.EMPLOYEE_STATUS_HAS_FINISHED_WORKING;
+import static com.dbapplication.utils.ValidationChecks.*;
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertPersonEmbListToPersonList;
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertPersonEmbToPerson;
 
@@ -207,6 +209,9 @@ public class PostgreEmbPersonService {
         if (personEmb == null) {
             throw new Exception(new Throwable("Person or employee not found!"));
         }
+        if (personEmb.getEmployee().getEmployee_status_type_code() == EMPLOYEE_STATUS_HAS_FINISHED_WORKING) {
+            throw new Exception(new Throwable(ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS));
+        }
 
         if (personEmb.getEmployee().getEmployment() == null) {
             personEmb.getEmployee().setEmployment(List.of(newEmploymentEmb));
@@ -286,6 +291,8 @@ public class PostgreEmbPersonService {
                 employmentEmb.setEnd_time(endEmbEmployment.getEnd_time());
             }
         }
+        personEmb.getEmployee().setEmployee_status_type_code(EMPLOYEE_STATUS_HAS_FINISHED_WORKING);
+
         try {
             return personRepository.save(personEmb).getEmployee().getEmployment();
         } catch (Exception e) {

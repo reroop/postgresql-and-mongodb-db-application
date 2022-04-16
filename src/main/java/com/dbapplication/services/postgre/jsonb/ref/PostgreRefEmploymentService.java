@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.isDateInRange2010to2100;
-import static com.dbapplication.utils.mongodb.ValidationChecks.isFirstDateBeforeSecondDate;
+import static com.dbapplication.utils.ValidationChecks.isDateInRange2010to2100;
+import static com.dbapplication.utils.ValidationChecks.isFirstDateBeforeSecondDate;
 
 @Slf4j
 @Service

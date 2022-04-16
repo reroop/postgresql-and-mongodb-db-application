@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.dbapplication.utils.UniversalConstants.*;
+
 @Slf4j
 @Profile("mongoemb")
 @RestController
@@ -44,123 +46,123 @@ public class MongoDbEmbeddedController {
     //---------------------------------------
 
     //----countries-----
-    @GetMapping("countries")
+    @GetMapping(COUNTRIES)
     public List<Country> getAlLCountries() {
         return mongoDbCountriesService.getAllCountries();
     }
 
 
-    @GetMapping("countries/{countryCode}")
+    @GetMapping(COUNTRIES_COUNTRYCODE)
     public Country getCountryByCountryCode(@PathVariable(value = "countryCode") String countryCode) {
         return mongoDbCountriesService.getCountryByCountryCode(countryCode);
     }
 
-    @PostMapping("countries")
+    @PostMapping(COUNTRIES)
     public Country addNewCountry(@RequestBody Country.CountryDto newCountryDto) {
         return mongoDbCountriesService.addCountry(newCountryDto.getCountry());
     }
 
     //-------occupations--------
-    @GetMapping("occupations")
+    @GetMapping(OCCUPATIONS)
     public List<Occupation> getAllOccupations() {
         return mongoDbOccupationsService.getAllOccupations();
     }
 
-    @GetMapping("occupations/{occupationCode}")
+    @GetMapping(OCCUPATIONS_OCCUPATIONCODE)
     public Occupation getOccupationByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
         return mongoDbOccupationsService.getOccupationByOccupationCode(occupationCode);
     }
 
-    @PostMapping("occupations")
+    @PostMapping(OCCUPATIONS)
     public Occupation addNewOccupation(@RequestBody Occupation.OccupationDto occupationDto) {
         return mongoDbOccupationsService.addOccupation(occupationDto.getOccupation());
     }
 
     //-------employee status types--------
-    @GetMapping("employeeStatusTypes")
+    @GetMapping(EMPLOYEESTATUSTYPES)
     public List<EmployeeStatusType> getAllEmployeeStatusTypes() {
         return mongoDbEmployeeStatusTypeService.getAllEmployeeStatusTypes();
     }
 
-    @GetMapping("employeeStatusTypes/{employeeStatusTypeCode}")
+    @GetMapping(EMPLOYEESTATUSTYPES_TYPECODE)
     public EmployeeStatusType getEmployeeStatusTypeByEmployeeStatusTypeCode(@PathVariable(value = "employeeStatusTypeCode") Integer employeeStatusTypeCode) {
         return mongoDbEmployeeStatusTypeService.getEmployeeStatusTypeByEmployeeStatusTypeCode(employeeStatusTypeCode);
     }
 
-    @PostMapping("employeeStatusTypes")
+    @PostMapping(EMPLOYEESTATUSTYPES)
     public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
         return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
     }
 
     //-----------persons---------
-    @GetMapping("persons")
+    @GetMapping(PERSONS)
     public List<Person> getAllPersons() {
         return mongoDbEmbPersonsService.getAllPersons();
     }
 
-    @GetMapping("persons/{objectId}")
+    @GetMapping(PERSONS_OBJECTID)
     public Person getPersonByPerson_id(@PathVariable(value = "objectId") String objectId) {
         return mongoDbEmbPersonsService.getPersonBy_id(objectId);
     }
 
-    @PostMapping("persons")
+    @PostMapping(PERSONS)
     public Person addPerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbEmbPersonsService.addPerson(personDto.getPerson());
     }
 
-    @PutMapping("persons")
+    @PutMapping(PERSONS)
     public boolean updatePerson(@RequestBody Person.PersonDto personDto) throws Throwable {
         return mongoDbEmbPersonsService.updatePerson(personDto.getPerson());
     }
 
     //-----employees-------
-    @GetMapping("employees")
+    @GetMapping(EMPLOYEES)
     public List<Employee> getAllEmployees() {
         return mongoDbEmbPersonsService.getAllEmployees();
     }
 
-    @GetMapping("employees/{personId}")
+    @GetMapping(EMPLOYEES_PERSONID)
     public Employee getEmployeeByPersonId(@PathVariable(value = "personId") String personId) {
         return mongoDbEmbPersonsService.getEmployeeByPersonId(personId);
     }
 
-    @PostMapping("employees")
+    @PostMapping(EMPLOYEES)
     public boolean addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbEmbPersonsService.addEmployee(employeeDto.getEmployee());
     }
 
-    @DeleteMapping("employees/{personId}")
+    @DeleteMapping(EMPLOYEES_PERSONID)
     public boolean deleteEmployeeByPersonId(@PathVariable(value="personId") String personId) {
         return mongoDbEmbPersonsService.deleteEmployeeByPersonId(personId);
     }
 
-    @PutMapping("employees")
+    @PutMapping(EMPLOYEES)
     public boolean updateEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbEmbPersonsService.updateEmployee(employeeDto.getEmployee());
     }
 
     //----employments-----
-    @GetMapping("employments/occupationCode={occupationCode}")
+    @GetMapping(EMPLOYMENTS_BY_OCCUPATIONCODE)
     public List<Employment> getAllEmploymentsByOccupationCode(@PathVariable(value = "occupationCode") Integer occupationCode) {
         return mongoDbEmbPersonsService.getAllEmploymentsByOccupationCode(occupationCode);
     }
 
-    @GetMapping("employments/personId={personId}")
+    @GetMapping(EMPLOYMENTS_BY_EMPLOYEE)
     public List<Employment> getEmployeeAllEmployments(@PathVariable(value = "personId") String personId) {
         return mongoDbEmbPersonsService.getEmployeeAllEmployments(personId);
     }
 
-    @PostMapping("employments")
+    @PostMapping(EMPLOYMENTS)
     public boolean addEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.addEmployment(employmentDto.getEmployment());
     }
 
-    @PutMapping("employments")
+    @PutMapping(EMPLOYMENTS)
     public boolean endEmployeeActiveEmployment(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.endEmployeeActiveEmployment(employmentDto.getEmployment());
     }
 
-    @PutMapping("employments/endEmployments")
+    @PutMapping(EMPLOYMENTS_END_EMPLOYMENTS)
     public boolean endEmployeeAllEmployments(@RequestBody Employment.EmploymentDto employmentDto) throws Throwable {
         return mongoDbEmbPersonsService.endEmployeeAllEmployments(employmentDto.getEmployment());
     }

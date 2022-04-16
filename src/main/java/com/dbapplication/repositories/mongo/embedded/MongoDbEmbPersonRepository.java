@@ -3,10 +3,8 @@ package com.dbapplication.repositories.mongo.embedded;
 import com.dbapplication.models.mongo.embedded.EmbeddedEmployee;
 import com.dbapplication.models.mongo.embedded.EmbeddedEmployment;
 import com.dbapplication.models.mongo.embedded.EmbeddedPerson;
-import com.dbapplication.models.mongo.embedded.EmbeddedUserAccount;
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
-import com.dbapplication.utils.mongodb.ValidationChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.*;
+import static com.dbapplication.utils.UniversalConstants.ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS;
+import static com.dbapplication.utils.UniversalConstants.EMPLOYEE_STATUS_HAS_FINISHED_WORKING;
+import static com.dbapplication.utils.ValidationChecks.*;
 
 @Slf4j
 @Component
@@ -77,10 +77,15 @@ public class MongoDbEmbPersonRepository {
         if (!isDateInRange2010to2100(newEmbeddedEmployment.getStart_time())) {
             log.info("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time());
             throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time()));
-            //return false;
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
+
+        //check employee status
+        if (person.getEmployee().getEmployee_status_type_code() == EMPLOYEE_STATUS_HAS_FINISHED_WORKING) {
+            throw new Exception(new Throwable(ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS));
+        }
+
         List<EmbeddedEmployment> employments = person.getEmployee().getEmployment() != null ?  person.getEmployee().getEmployment() : new ArrayList<>();
 
         //if no employments, then we can add employment without further validating and save
@@ -201,7 +206,6 @@ public class MongoDbEmbPersonRepository {
         if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
             log.info("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!");
             throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!"));
-            //return false;
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
@@ -216,13 +220,13 @@ public class MongoDbEmbPersonRepository {
                 if (!isFirstDateBeforeSecondDate(embeddedEmployment.getStart_time(), endEmploymentInfo.getEnd_time())) {
                     log.info("end all employments, end date is before start date");
                     throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " is before start date " + embeddedEmployment.getStart_time() + " for employment with occupation code " + embeddedEmployment.getOccupation_code()));
-                    //return false;
                 }
                 embeddedEmployment.setEnd_time(endEmploymentInfo.getEnd_time());
             }
         }
 
         Update updatableInfo = new Update().set("employee.employment", employments);
+        updatableInfo.set("employee.employee_status_type_code",EMPLOYEE_STATUS_HAS_FINISHED_WORKING);
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);
     }
 

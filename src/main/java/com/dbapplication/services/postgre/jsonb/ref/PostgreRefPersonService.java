@@ -3,14 +3,13 @@ package com.dbapplication.services.postgre.jsonb.ref;
 import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import com.dbapplication.models.postgre.traditional.Person;
 import com.dbapplication.repositories.postgre.jsonb.ref.PostgreRefPersonRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.isPostgreJsonRefPersonValid;
+import static com.dbapplication.utils.ValidationChecks.isPostgreJsonRefPersonValid;
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertPersonRefListToPersonList;
 import static com.dbapplication.utils.postgre.PostgreObjectConverter.convertPersonRefToPerson;
 

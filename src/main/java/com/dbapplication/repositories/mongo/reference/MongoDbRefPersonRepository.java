@@ -2,7 +2,6 @@ package com.dbapplication.repositories.mongo.reference;
 
 import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.repositories.mongo.UniversalMongoTemplate;
-import com.dbapplication.utils.mongodb.ValidationChecks;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -13,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.dbapplication.utils.mongodb.ValidationChecks.isMongoPersonInfoValid;
+import static com.dbapplication.utils.ValidationChecks.isMongoPersonInfoValid;
 
 @Slf4j
 @Component

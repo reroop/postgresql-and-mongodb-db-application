@@ -98,10 +98,13 @@ public class MongoDbEmbPersonRepository {
         //check if is already active in this occupation or we're trying to save same occupation with same start date
         for (EmbeddedEmployment embeddedEmployment : employments) {
             if (Objects.equals(embeddedEmployment.getOccupation_code(), newEmbeddedEmployment.getOccupation_code())) {
-                if (embeddedEmployment.getEnd_time() == null || embeddedEmployment.getStart_time().equals(newEmbeddedEmployment.getStart_time())) {
+                if (embeddedEmployment.getEnd_time() == null) {
                     log.info("add employment, employee already actively employed in that occupation");
-                    throw new Exception(new Throwable("employee is already actively employed in that occupation!"));
-                    //return false;
+                    throw new Exception(new Throwable("Employee is already actively employed in that occupation!"));
+                }
+                if (embeddedEmployment.getStart_time().equals(newEmbeddedEmployment.getStart_time())) {
+                    log.info("add employment, employment with this occupation and start time already registered");
+                    throw new Exception(new Throwable("Employment with this occupation and start time is already registered!"));
                 }
             }
         }

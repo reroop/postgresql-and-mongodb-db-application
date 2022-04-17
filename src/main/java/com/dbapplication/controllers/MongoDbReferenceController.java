@@ -134,7 +134,7 @@ public class MongoDbReferenceController {
         return mongoDbRefEmployeesService.getEmployeeByPersonId(personId);
     }
 
-    @PostMapping("EMPLOYEES")
+    @PostMapping(EMPLOYEES)
     public Employee.EmployeeDbEntry addEmployee(@RequestBody Employee.EmployeeDto employeeDto) throws Throwable {
         return mongoDbRefEmployeesService.addEmployee(employeeDto.getEmployee());
     }

@@ -224,9 +224,15 @@ public class PostgreEmbPersonService {
         }
 
         for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
-            if (employmentEmb.getOccupation_code().equals(newEmploymentEmb.getOccupation_code()) && employmentEmb.getEnd_time() == null) {
-                log.info("already in active employment!");
-                throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
+            if (employmentEmb.getOccupation_code().equals(newEmploymentEmb.getOccupation_code())) {
+                if (employmentEmb.getEnd_time() == null) {
+                    log.info("add employment, already in active employment!");
+                    throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
+                }
+                if (employmentEmb.getStart_time().equals(newEmploymentEmb.getStart_time())) {
+                    log.info("add employment, employment with this occupation and start time already registered");
+                    throw new Exception(new Throwable("Employment with this occupation and start time is already registered!"));
+                }
             }
         }
 

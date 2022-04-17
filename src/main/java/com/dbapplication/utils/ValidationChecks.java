@@ -31,6 +31,10 @@ public class ValidationChecks {
     }
 
     public static boolean isPostgreJsonRefPersonValid(PersonRef personRef) throws Throwable {
+        if (personRef.getData().getBirth_date() == null) {
+            log.info("person birthdate is null");
+            throw new Exception(new Throwable("Person birthdate must be set!"));
+        }
         LocalDateTime birthDateInLocalDateTime =  LocalDateTime.ofInstant(personRef.getData().getBirth_date().toInstant(), ZoneId.systemDefault());
 
         if (!isDateInRange1900to2100(birthDateInLocalDateTime)) {
@@ -49,6 +53,10 @@ public class ValidationChecks {
     }
 
     public static boolean isPostgreJsonEmbPersonValid(PersonEmb personEmb) throws Throwable {
+        if (personEmb.getData().getBirth_date() == null) {
+            log.info("person birthdate is null");
+            throw new Exception(new Throwable("Person birthdate must be set!"));
+        }
         LocalDateTime birthDateInLocalDateTime =  LocalDateTime.ofInstant(personEmb.getData().getBirth_date().toInstant(), ZoneId.systemDefault());
 
         System.out.println(birthDateInLocalDateTime);

@@ -15,10 +15,6 @@ public class MongoDbRefEmploymentsService {
     @Autowired
     private MongoDbRefEmploymentRepository mongoDbRefEmploymentRepository;
 
-    public List<Employment> getAllEmployments() {
-        return mongoDbRefEmploymentRepository.getAllEmployments();
-    }
-
     public List<Employment> getAllEmploymentsByOccupationCode(Integer occupationCode) {
         return mongoDbRefEmploymentRepository.getEmploymentsByOccupationCode(occupationCode);
     }

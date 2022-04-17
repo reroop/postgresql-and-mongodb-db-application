@@ -56,11 +56,9 @@ public class PostgreRefEmploymentService {
     }
 
     public EmploymentRef addEmployment(EmploymentRef employmentRef) throws Throwable {
-        //todo: add null check to front and delete this
         if (employmentRef.getData().getStart_time()== null) {
             log.info("employmentref start time is null, returning null");
             throw new Exception(new Throwable("Employment start time is null!"));
-            //return null;
         }
         if (!isDateInRange2010to2100(employmentRef.getData().getStart_time())) {
             log.info("employmentref starttime not in range 2010-2100");
@@ -72,6 +70,10 @@ public class PostgreRefEmploymentService {
             if (ref.getData().getEnd_time()==null) {
                 log.info("already in active employment!");
                 throw new Exception(new Throwable("Employee is already actively employed in this occupation!"));
+            }
+            if (ref.getData().getStart_time().equals(employmentRef.getData().getStart_time())) {
+                log.info("add employment, employment with this occupation and start time already registered");
+                throw new Exception(new Throwable("Employment with this occupation and start time is already registered!"));
             }
         }
         try {

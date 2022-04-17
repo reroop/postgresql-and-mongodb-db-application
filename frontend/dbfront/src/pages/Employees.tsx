@@ -3,7 +3,7 @@ import {inject, observer} from "mobx-react";
 import PersonStore, {Person} from "../stores/PersonStore";
 import CountryStore, {Country} from "../stores/CountryStore";
 import EmployeeStatusTypeStore, {EmployeeStatusType} from "../stores/EmployeeStatusTypeStore";
-import {Button, Card, Col, Container, Dropdown, Form, Modal, Row} from "react-bootstrap";
+import {Button, Card, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import EmployeeStore, {Employee, PersonAsEmployee} from "../stores/EmployeeStore";
 import {AllEmployeesList} from "../components";
 

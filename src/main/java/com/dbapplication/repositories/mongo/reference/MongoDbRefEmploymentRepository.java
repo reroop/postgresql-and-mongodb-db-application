@@ -22,10 +22,6 @@ public class MongoDbRefEmploymentRepository {
     @Autowired
     private UniversalMongoTemplate universalMongoTemplate;
 
-    public List<Employment> getAllEmployments() {
-        return universalMongoTemplate.getAll(Employment.class);
-    }
-
     public List<Employment> getEmploymentsByOccupationCode(Integer occupationCode) {
         Query queryFindByOccupationCode = new Query(Criteria.where("occupation_code").is(occupationCode));
         queryFindByOccupationCode.addCriteria(Criteria.where("end_time").is(null));

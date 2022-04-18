@@ -76,6 +76,12 @@ public class MongoDbRefPersonRepository {
         } else {
             updatableInfo.unset("address");
         }
+        //set tel_nr to null if not specified
+        if (person.getTel_nr() != null && person.getTel_nr().length() != 0) {
+            updatableInfo.set("tel_nr", person.getTel_nr());
+        } else {
+            updatableInfo.unset("tel_nr");
+        }
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, Person.class);
     }
 }

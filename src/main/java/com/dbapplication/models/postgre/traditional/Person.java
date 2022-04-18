@@ -25,6 +25,7 @@ public class Person {
     private String given_name;
     private String surname;
     private String address;
+    private String tel_nr;
 
     @NoArgsConstructor
     @AllArgsConstructor

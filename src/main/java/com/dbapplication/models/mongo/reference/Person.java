@@ -26,17 +26,7 @@ public class Person {
     private String given_name;
     private String surname;
     private String address;
-
-    public Person(String nat_id_code, String country_code, String e_mail, LocalDateTime birth_date, LocalDateTime reg_time, String given_name, String surname, String address) {
-        this.nat_id_code = nat_id_code;
-        this.country_code = country_code;
-        this.e_mail = e_mail;
-        this.birth_date = birth_date;
-        this.reg_time = reg_time;
-        this.given_name = given_name;
-        this.surname = surname;
-        this.address = address;
-    }
+    private String tel_nr;
 
     @Override
     public String toString() {
@@ -50,6 +40,7 @@ public class Person {
                 ", given_name='" + given_name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", address='" + address + '\'' +
+                ", tel_nr='" + tel_nr + '\'' +
                 '}';
     }
 

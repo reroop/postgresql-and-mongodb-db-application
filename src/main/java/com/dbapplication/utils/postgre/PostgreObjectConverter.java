@@ -35,6 +35,9 @@ public class PostgreObjectConverter {
         if (Objects.equals(person.getAddress(), "")) {
             person.setAddress(null);
         }
+        if (Objects.equals(person.getTel_nr(), "")) {
+            person.setTel_nr(null);
+        }
         return person;
     }
 
@@ -49,7 +52,8 @@ public class PostgreObjectConverter {
                     person.getReg_time(),
                     person.getGiven_name(),
                     person.getSurname(),
-                    person.getAddress()
+                    person.getAddress(),
+                    person.getTel_nr()
                     )
         );
         return personRef;
@@ -65,7 +69,8 @@ public class PostgreObjectConverter {
                 personRef.getData().getReg_time(),
                 personRef.getData().getGiven_name(),
                 personRef.getData().getSurname(),
-                personRef.getData().getAddress()
+                personRef.getData().getAddress(),
+                personRef.getData().getTel_nr()
         );
         return person;
     }
@@ -136,7 +141,8 @@ public class PostgreObjectConverter {
                     person.getReg_time(),
                     person.getGiven_name(),
                     person.getSurname(),
-                    person.getAddress()
+                    person.getAddress(),
+                    person.getTel_nr()
                 ),
                 null
         );
@@ -153,7 +159,8 @@ public class PostgreObjectConverter {
                 personEmb.getData().getReg_time(),
                 personEmb.getData().getGiven_name(),
                 personEmb.getData().getSurname(),
-                personEmb.getData().getAddress()
+                personEmb.getData().getAddress(),
+                personEmb.getData().getTel_nr()
         );
         return person;
     }

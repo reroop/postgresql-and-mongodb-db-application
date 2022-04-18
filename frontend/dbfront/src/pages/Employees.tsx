@@ -23,6 +23,7 @@ interface State {
     newPersonGivenName: string,
     newPersonSurname: string,
     newPersonAddress: string,
+    newPersonTelNr: string,
     currentEmployeePersonName: string,
     currentEmployeePerson_id: string | null,
     currentEmployeeStatusTypeCode: number,
@@ -45,6 +46,7 @@ class Employees extends React.Component<EmployeesProps, State> {
             newPersonGivenName: '',
             newPersonSurname: '',
             newPersonAddress: '',
+            newPersonTelNr: '',
             currentEmployeePersonName: '(choose person)',
             currentEmployeePerson_id: null,
             currentEmployeeStatusTypeCode: 1,
@@ -68,7 +70,8 @@ class Employees extends React.Component<EmployeesProps, State> {
             newPersonBirthdate: '',
             newPersonGivenName: '',
             newPersonSurname: '',
-            newPersonAddress: ''
+            newPersonAddress: '',
+            newPersonTelNr: ''
         });
     }
 
@@ -111,6 +114,9 @@ class Employees extends React.Component<EmployeesProps, State> {
             }
             if (this.state.newPersonAddress !== '') {
                 newPerson.address = this.state.newPersonAddress;
+            }
+            if (this.state.newPersonTelNr !== '') {
+                newPerson.tel_nr = this.state.newPersonTelNr;
             }
             const savedPersonPromise: Promise<Person> | undefined = this.props.personStore?.addPerson(newPerson);
             savedPersonPromise?.then(savedPerson => {
@@ -243,6 +249,12 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                     <Form.Control
                                                                         placeholder="Enter address (optional)"
                                                                         onChange={(e) => this.setState({newPersonAddress: e.target.value})}/>
+                                                                </Form.Group>
+                                                                <Form.Group className="mb-3" controlId="addTelNr">
+                                                                    <Form.Label>Tel. nr.:</Form.Label>
+                                                                    <Form.Control
+                                                                        placeholder="Enter tel. nr. (optional, 7-20 characters)"
+                                                                        onChange={(e) => this.setState({newPersonTelNr: e.target.value})}/>
                                                                 </Form.Group>
                                                             </Form>
                                                         </Card.Body>

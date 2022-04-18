@@ -45,8 +45,8 @@ public class MongoDbEmbPersonRepository {
         }
 
         /**
-         * Set UserAccount and Employee info to nulls even if they are set, because
-         * we have other endpoints later to add UserAccount or Employee info to Person
+         * Set Employee info to null even if it is set, because
+         * we have other endpoints later to add Employee info to Person
          */
         embeddedPerson.setEmployee(null);
         return universalMongoTemplate.addEntity(embeddedPerson);
@@ -153,6 +153,12 @@ public class MongoDbEmbPersonRepository {
             updatableInfo.set("address", embeddedPerson.getAddress());
         } else {
             updatableInfo.unset("address");
+        }
+        //set tel_nr to null if not specified
+        if (embeddedPerson.getTel_nr() != null && embeddedPerson.getTel_nr().length() != 0) {
+            updatableInfo.set("tel_nr", embeddedPerson.getTel_nr());
+        } else {
+            updatableInfo.unset("tel_nr");
         }
 
         return universalMongoTemplate.updateEntity(queryFindByObjectId, updatableInfo, EmbeddedPerson.class);

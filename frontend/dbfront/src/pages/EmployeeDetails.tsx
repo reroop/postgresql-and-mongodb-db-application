@@ -176,9 +176,16 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                             <Form.Group className="mb-3" controlId="addAddress">
                                 <Form.Label>Address:</Form.Label>
                                 <Form.Control
-                                    value={this.state.person?.address}
+                                    value={this.state.person?.address!!}
                                     placeholder="Enter address (optional)"
-                                    onChange={(e) => this.setState(state => (state.person!!.address = e.target.value, state))}/>
+                                    onChange={(e) => this.setState(state => (state.person!!.address = e.target.value == '' ? null : e.target.value, state))}/>
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="addTelNr">
+                                <Form.Label>Tel. nr.:</Form.Label>
+                                <Form.Control
+                                    value={this.state.person?.tel_nr!!}
+                                    placeholder="Enter tel. nr. (optional, 7-20 characters)"
+                                    onChange={(e) => this.setState(state => (state.person!!.tel_nr = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                         </Form>
                     </Col>

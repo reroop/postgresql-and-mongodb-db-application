@@ -33,7 +33,6 @@ public class PersonRef {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class PersonData {
-
         private String nat_id_code;
         private String e_mail;
         private Date birth_date;
@@ -41,5 +40,6 @@ public class PersonRef {
         private String given_name;
         private String surname;
         private String address;
+        private String tel_nr;
     }
 }

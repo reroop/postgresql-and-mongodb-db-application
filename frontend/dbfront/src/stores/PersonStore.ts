@@ -10,7 +10,8 @@ export interface Person {
     reg_time?: string,
     given_name?: string|null,
     surname?: string|null,
-    address?: string
+    address?: string|null,
+    tel_nr?: string|null
 }
 
 const personsEndpoint: string = '/persons';

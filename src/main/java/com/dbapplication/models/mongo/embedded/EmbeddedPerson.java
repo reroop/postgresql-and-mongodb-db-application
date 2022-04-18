@@ -26,6 +26,7 @@ public class EmbeddedPerson {
     private String given_name;
     private String surname;
     private String address;
+    private String tel_nr;
     private EmbeddedEmployee employee;
 
     @Override
@@ -40,6 +41,7 @@ public class EmbeddedPerson {
                 ", given_name='" + given_name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", address='" + address + '\'' +
+                ", tel_nr='" + tel_nr + '\'' +
                 ", employee=" + employee +
                 '}';
     }

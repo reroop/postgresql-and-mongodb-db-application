@@ -31,16 +31,11 @@ public class MongoDbEmbPersonsService {
         person.setE_mail(embeddedPerson.getE_mail());
         person.setBirth_date(embeddedPerson.getBirth_date());
         person.setReg_time(embeddedPerson.getReg_time());
+        person.setGiven_name(embeddedPerson.getGiven_name());
+        person.setSurname(embeddedPerson.getSurname());
+        person.setAddress(embeddedPerson.getAddress());
+        person.setTel_nr(embeddedPerson.getTel_nr());
 
-        if (embeddedPerson.getGiven_name() != null) {
-            person.setGiven_name(embeddedPerson.getGiven_name());
-        }
-        if (embeddedPerson.getSurname() != null) {
-            person.setSurname(embeddedPerson.getSurname());
-        }
-        if (embeddedPerson.getAddress() != null) {
-            person.setAddress(embeddedPerson.getAddress());
-        }
         return person;
     }
 
@@ -52,16 +47,10 @@ public class MongoDbEmbPersonsService {
         embeddedPerson.setE_mail(person.getE_mail());
         embeddedPerson.setBirth_date(person.getBirth_date());
         embeddedPerson.setReg_time(person.getReg_time());
-
-        if (person.getGiven_name() != null) {
-            embeddedPerson.setGiven_name(person.getGiven_name());
-        }
-        if (person.getSurname() != null) {
-            embeddedPerson.setSurname(person.getSurname());
-        }
-        if (person.getAddress() != null) {
-            embeddedPerson.setAddress(person.getAddress());
-        }
+        embeddedPerson.setTel_nr(person.getTel_nr());
+        embeddedPerson.setGiven_name(person.getGiven_name());
+        embeddedPerson.setSurname(person.getSurname());
+        embeddedPerson.setAddress(person.getAddress());
 
         return embeddedPerson;
     }

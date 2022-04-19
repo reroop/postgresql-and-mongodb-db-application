@@ -130,6 +130,9 @@ public class MongoDbEmbPersonRepository {
         if (embeddedPerson.getCountry_code() != null) {
             updatableInfo.set("country_code", embeddedPerson.getCountry_code());
         }
+        if (embeddedPerson.getPerson_status_type_code() != null) {
+            updatableInfo.set("person_status_type_code", embeddedPerson.getPerson_status_type_code());
+        }
         if (embeddedPerson.getE_mail() != null) {
             updatableInfo.set("e_mail", embeddedPerson.getE_mail());
         }

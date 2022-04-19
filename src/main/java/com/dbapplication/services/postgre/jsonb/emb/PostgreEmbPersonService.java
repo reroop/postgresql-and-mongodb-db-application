@@ -58,6 +58,7 @@ public class PostgreEmbPersonService {
             return null;
         }
         person.setCountry_code(personEmb.getCountry_code());
+        person.setPerson_status_type_code(personEmb.getPerson_status_type_code());
         person.setData(personEmb.getData());
         try {
             return personRepository.save(person);
@@ -107,9 +108,11 @@ public class PostgreEmbPersonService {
         if (personEmb == null || personEmb.getEmployee() == null) {
             throw new Exception(new Throwable("Person or employee not found!"));
         }
-        for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
-            if (employmentEmb.getEnd_time() == null) {
-                throw new Exception(new Throwable("employee's employment with occupation code " + employmentEmb.getOccupation_code() + " is not ended, set an end time before deleting employee!"));
+        if (personEmb.getEmployee().getEmployment() != null) {
+            for (EmploymentEmb employmentEmb : personEmb.getEmployee().getEmployment()) {
+                if (employmentEmb.getEnd_time() == null) {
+                    throw new Exception(new Throwable("employee's employment with occupation code " + employmentEmb.getOccupation_code() + " is not ended, set an end time before deleting employee!"));
+                }
             }
         }
         personEmb.setEmployee(null);
@@ -285,6 +288,8 @@ public class PostgreEmbPersonService {
         PersonEmb personEmb = personRepository.findById(personId).orElse(null);
         if (personEmb == null || personEmb.getEmployee().getEmployment() == null) {
             log.info("personemb or employments is null");
+            personEmb.getEmployee().setEmployee_status_type_code(EMPLOYEE_STATUS_HAS_FINISHED_WORKING);
+            personRepository.save(personEmb);
             return null;
         }
 

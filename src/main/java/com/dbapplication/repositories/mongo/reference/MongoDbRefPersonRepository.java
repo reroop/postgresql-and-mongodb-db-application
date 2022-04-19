@@ -52,6 +52,9 @@ public class MongoDbRefPersonRepository {
         if (person.getCountry_code() != null) {
             updatableInfo.set("country_code", person.getCountry_code());
         }
+        if (person.getPerson_status_type_code() != null) {
+            updatableInfo.set("person_status_type_code", person.getPerson_status_type_code());
+        }
         if (person.getE_mail() != null) {
             updatableInfo.set("e_mail", person.getE_mail());
         }

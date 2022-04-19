@@ -12,6 +12,9 @@ public class UniversalConstants {
     //employee status types
     public static final String EMPLOYEESTATUSTYPES = "employeeStatusTypes";
     public static final String EMPLOYEESTATUSTYPES_TYPECODE = EMPLOYEESTATUSTYPES + "/{employeeStatusTypeCode}";
+    //person status types
+    public static final String PERSONSTATUSTYPES = "personStatusTypes";
+    public static final String PERSONSTATUSTYPES_TYPECODE = PERSONSTATUSTYPES + "/{personStatusTypeCode}";
     //persons
     public static final String PERSONS = "persons";
     public static final String PERSONS_OBJECTID = PERSONS + "/{objectId}";

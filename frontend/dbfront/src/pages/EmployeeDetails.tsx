@@ -10,6 +10,7 @@ import {withRouter} from "react-router";
 import {Button, Col, Dropdown, Form, FormControl, Row} from "react-bootstrap";
 import EmploymentStore, {Employment} from "../stores/EmploymentStore";
 import EmployeeStatusTypeStore from "../stores/EmployeeStatusTypeStore";
+import PersonStatusTypeStore, {PersonStatusType} from "../stores/PersonStatusTypeStore";
 
 
 interface EmployeeDetailsProps {
@@ -18,7 +19,8 @@ interface EmployeeDetailsProps {
     employeeStore?: EmployeeStore,
     employeeStatusTypeStore?: EmployeeStatusTypeStore,
     occupationStore?: OccupationStore,
-    employmentStore?: EmploymentStore
+    employmentStore?: EmploymentStore,
+    personStatusTypeStore?: PersonStatusTypeStore
 }
 
 interface State {
@@ -29,7 +31,7 @@ interface State {
     endEmploymentsDate: string
 }
 
-@inject('personStore', 'countryStore', 'employeeStore', 'employeeStatusTypeStore', 'occupationStore', 'employmentStore')
+@inject('personStore', 'countryStore', 'employeeStore', 'employeeStatusTypeStore', 'occupationStore', 'employmentStore', 'personStatusTypeStore')
 @observer
 class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
 
@@ -47,6 +49,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
     public componentDidMount() {
         this.props.countryStore?.getCountries();
         this.props.employeeStatusTypeStore?.getEmployeeStatusTypes();
+        this.props.personStatusTypeStore?.getPersonStatusTypes();
         this.props.employeeStore?.getEmployees();
         this.props.personStore?.getPersonBy_id(this.state.person_id!!).then((response) => {
             this.setState({person: response});
@@ -75,7 +78,6 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
             person_id: this.state.person_id!!
         }
         this.props.employmentStore?.endAllEmployments(endEmployments).then(() => {
-            //(this.props.employeeStore?.setEmployeeStatusToEnded(this.state.person_id!!).then(this.refreshPage)
             this.refreshPage();
         });
     }
@@ -87,6 +89,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
     public render() {
         const countries: Country[] = this.props.countryStore!!.countries;
         const employeeStatusTypes: EmployeeStatusType[] = this.props.employeeStatusTypeStore!!.employeeStatusTypes;
+        const personStatusTypes: PersonStatusType[] = this.props.personStatusTypeStore!!.personStatusTypes;
         const possibleMentors: PersonAsEmployee[] = this.props.employeeStore!!.personsAsEmployees.filter(employee => employee.person_id !== this.state.person_id);
 
         let mentor: PersonAsEmployee|undefined = undefined;
@@ -130,7 +133,25 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                     </Dropdown.Menu>
                                 </Dropdown>
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="addNatIdCode">
+                            <Form.Group controlId="addPersonStatusTypeCode" className={'mt-3'}>
+                                <Form.Label>Person status type:</Form.Label>
+                                <Dropdown className="d-inline mx-2">
+                                    <Dropdown.Toggle id="dropdown-autoclose-true">
+                                        {this.state.person?.person_status_type_code}
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                        {personStatusTypes.map( personStatusType => (
+                                            <Dropdown.Item
+                                                onClick={() => {
+                                                    this.setState(state => (state.person!!.person_status_type_code = personStatusType.person_status_type_code!!, state));
+                                                }}>
+                                                {personStatusType.person_status_type_code + ' - ' + personStatusType.name}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                            </Form.Group>
+                            <Form.Group className="mb-3 mt-3" controlId="addNatIdCode">
                                 <Form.Label>Nat. Id. code:</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.nat_id_code}

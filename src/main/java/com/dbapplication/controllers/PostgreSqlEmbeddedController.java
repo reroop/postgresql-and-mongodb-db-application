@@ -3,6 +3,7 @@ package com.dbapplication.controllers;
 import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.EmployeeStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.OccupationPostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.common.PersonStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.emb.EmployeeEmb;
 import com.dbapplication.models.postgre.jsonb.emb.EmploymentEmb;
 import com.dbapplication.models.postgre.jsonb.emb.PersonEmb;
@@ -10,6 +11,7 @@ import com.dbapplication.models.postgre.traditional.*;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonCountryService;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonEmployeeStatusTypeService;
 import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonOccupationService;
+import com.dbapplication.services.postgre.jsonb.common.PostgreJsonCommonPersonStatusTypeService;
 import com.dbapplication.services.postgre.jsonb.emb.PostgreEmbPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -35,6 +37,9 @@ public class PostgreSqlEmbeddedController {
 
     @Autowired
     private PostgreEmbPersonService postgreEmbPersonService;
+
+    @Autowired
+    private PostgreJsonCommonPersonStatusTypeService postgreJsonCommonPersonStatusTypeService;
 
 
     //---health checker----
@@ -93,6 +98,23 @@ public class PostgreSqlEmbeddedController {
     public EmployeeStatusTypePostgreJsonCommon addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         EmployeeStatusType employeeStatusType = employeeStatusTypeDto.getEmployeeStatusType();
         return postgreJsonCommonEmployeeStatusTypeService.addEmployeeStatusType(convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(employeeStatusType));
+    }
+
+    //---------person status types-------
+    @GetMapping(PERSONSTATUSTYPES)
+    public List<PersonStatusType> getAllPersonStatusTypes() {
+        return postgreJsonCommonPersonStatusTypeService.getAllPersonStatusTypes();
+    }
+
+    @GetMapping(PERSONSTATUSTYPES_TYPECODE)
+    public PersonStatusType getPersonStatusTypeByPersonStatusTypeCode(@PathVariable(value= "personStatusTypeCode") Integer personStatusTypeCode) {
+        return postgreJsonCommonPersonStatusTypeService.getPersonStatusTypeByPersonStatusTypeCode(personStatusTypeCode);
+    }
+
+    @PostMapping(PERSONSTATUSTYPES)
+    public PersonStatusTypePostgreJsonCommon addNewPersonStatusType(@RequestBody PersonStatusType.PersonStatusTypeDto personStatusTypeDto) throws Throwable {
+        PersonStatusType personStatusType = personStatusTypeDto.getPersonStatusType();
+        return postgreJsonCommonPersonStatusTypeService.addPersonStatusType(convertPersonStatusTypeToPersonStatusTypePostgreJsonCommon(personStatusType));
     }
 
     //----persons-----

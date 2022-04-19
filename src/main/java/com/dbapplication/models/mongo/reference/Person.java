@@ -20,6 +20,7 @@ public class Person {
     private String _id;
     private String nat_id_code;
     private String country_code;
+    private Integer person_status_type_code;
     private String e_mail;
     private LocalDateTime birth_date;
     private LocalDateTime reg_time;
@@ -34,6 +35,7 @@ public class Person {
                 "_id='" + _id + '\'' +
                 ", nat_id_code='" + nat_id_code + '\'' +
                 ", country_code='" + country_code + '\'' +
+                ", person_status_type_code=" + person_status_type_code +
                 ", e_mail='" + e_mail + '\'' +
                 ", birth_date=" + birth_date +
                 ", reg_time=" + reg_time +

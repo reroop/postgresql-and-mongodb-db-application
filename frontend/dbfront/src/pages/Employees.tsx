@@ -6,18 +6,21 @@ import EmployeeStatusTypeStore, {EmployeeStatusType} from "../stores/EmployeeSta
 import {Button, Card, Col, Dropdown, Form, Modal, Row} from "react-bootstrap";
 import EmployeeStore, {Employee, PersonAsEmployee} from "../stores/EmployeeStore";
 import {AllEmployeesList} from "../components";
+import PersonStatusTypeStore, {PersonStatusType} from "../stores/PersonStatusTypeStore";
 
 interface EmployeesProps {
     personStore?: PersonStore,
     countryStore?: CountryStore,
     employeeStatusTypeStore?: EmployeeStatusTypeStore,
-    employeeStore?: EmployeeStore
+    employeeStore?: EmployeeStore,
+    personStatusTypeStore?: PersonStatusTypeStore
 }
 
 interface State {
     showCreateNewPersonModal: boolean,
     newPersonNationalIdCode: string,
     newPersonCountryCode: string,
+    newPersonStatusTypeCode: number,
     newPersonEmail: string,
     newPersonBirthdate: string,
     newPersonGivenName: string,
@@ -31,7 +34,7 @@ interface State {
     currentEmployeeMentorName: string
 }
 
-@inject('personStore', 'countryStore', 'employeeStatusTypeStore', 'employeeStore')
+@inject('personStore', 'countryStore', 'employeeStatusTypeStore', 'employeeStore', 'personStatusTypeStore')
 @observer
 class Employees extends React.Component<EmployeesProps, State> {
 
@@ -40,6 +43,7 @@ class Employees extends React.Component<EmployeesProps, State> {
         this.state = {
             showCreateNewPersonModal: false,
             newPersonCountryCode: '(select country)',
+            newPersonStatusTypeCode: 1,
             newPersonNationalIdCode: '',
             newPersonEmail: '',
             newPersonBirthdate: '',
@@ -58,6 +62,7 @@ class Employees extends React.Component<EmployeesProps, State> {
     public componentDidMount() {
         this.props.countryStore?.getCountries();
         this.props.employeeStatusTypeStore?.getEmployeeStatusTypes();
+        this.props.personStatusTypeStore?.getPersonStatusTypes();
         this.props.personStore?.getPersons();
         this.props.employeeStore?.getEmployees();
     }
@@ -65,6 +70,7 @@ class Employees extends React.Component<EmployeesProps, State> {
     private resetNewPersonStateVariables() {
         this.setState({
             newPersonCountryCode: '(select country)',
+            newPersonStatusTypeCode: 1,
             newPersonNationalIdCode: '',
             newPersonEmail: '',
             newPersonBirthdate: '',
@@ -103,6 +109,7 @@ class Employees extends React.Component<EmployeesProps, State> {
             const newPerson: Person = {
                 country_code: this.state.newPersonCountryCode,
                 nat_id_code: this.state.newPersonNationalIdCode,
+                person_status_type_code: this.state.newPersonStatusTypeCode,
                 e_mail: this.state.newPersonEmail,
                 birth_date: this.state.newPersonBirthdate,
             };
@@ -163,7 +170,7 @@ class Employees extends React.Component<EmployeesProps, State> {
         const persons: Person[] = this.props.personStore!!.persons;
         const employeeStatusTypes: EmployeeStatusType[] = this.props.employeeStatusTypeStore!!.employeeStatusTypes;
         const personsAsEmployees: PersonAsEmployee[] = this.props.employeeStore!!.personsAsEmployees;
-
+        const personStatusTypes: PersonStatusType[] = this.props.personStatusTypeStore!!.personStatusTypes;
 
         return (
             <div>
@@ -211,7 +218,25 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                         </Dropdown.Menu>
                                                                     </Dropdown>
                                                                 </Form.Group>
-                                                                <Form.Group className="mb-3" controlId="addNatIdCode">
+                                                                <Form.Group controlId="addPersonStatusTypeCode" className={'mt-2'}>
+                                                                    <Form.Label>Person status type:</Form.Label>
+                                                                    <Dropdown className="d-inline mx-2">
+                                                                        <Dropdown.Toggle id="dropdown-autoclose-true">
+                                                                            {this.state.newPersonStatusTypeCode}
+                                                                        </Dropdown.Toggle>
+                                                                        <Dropdown.Menu>
+                                                                            {personStatusTypes.map( personStatusType => (
+                                                                                <Dropdown.Item
+                                                                                    onClick={() => {
+                                                                                        this.setState({newPersonStatusTypeCode: personStatusType.person_status_type_code!!});
+                                                                                    }}>
+                                                                                    {personStatusType.person_status_type_code + ' - ' + personStatusType.name}
+                                                                                </Dropdown.Item>
+                                                                            ))}
+                                                                        </Dropdown.Menu>
+                                                                    </Dropdown>
+                                                                </Form.Group>
+                                                                <Form.Group className="mb-3 mt-3" controlId="addNatIdCode">
                                                                     <Form.Label>Nat. Id. code:</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter nat. id. code"

@@ -24,6 +24,7 @@ public class PersonEmb {
     private Long _id;
 
     private String country_code;
+    private Integer person_status_type_code;
 
     @Type(type="jsonb")
     @Column(columnDefinition = "jsonb")

@@ -28,6 +28,7 @@ public class MongoDbEmbPersonsService {
         person.set_id(embeddedPerson.get_id());
         person.setNat_id_code(embeddedPerson.getNat_id_code());
         person.setCountry_code(embeddedPerson.getCountry_code());
+        person.setPerson_status_type_code(embeddedPerson.getPerson_status_type_code());
         person.setE_mail(embeddedPerson.getE_mail());
         person.setBirth_date(embeddedPerson.getBirth_date());
         person.setReg_time(embeddedPerson.getReg_time());
@@ -44,6 +45,7 @@ public class MongoDbEmbPersonsService {
         embeddedPerson.set_id(person.get_id());
         embeddedPerson.setNat_id_code(person.getNat_id_code());
         embeddedPerson.setCountry_code(person.getCountry_code());
+        embeddedPerson.setPerson_status_type_code(person.getPerson_status_type_code());
         embeddedPerson.setE_mail(person.getE_mail());
         embeddedPerson.setBirth_date(person.getBirth_date());
         embeddedPerson.setReg_time(person.getReg_time());

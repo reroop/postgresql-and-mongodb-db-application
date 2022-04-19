@@ -19,6 +19,7 @@ public class Person {
 
     private String nat_id_code;
     private String country_code;
+    private Integer person_status_type_code;
     private String e_mail;
     private Date birth_date;
     private LocalDateTime reg_time = LocalDateTime.now();

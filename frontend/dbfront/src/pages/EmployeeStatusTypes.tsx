@@ -31,19 +31,6 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
     }
 
     private handleAddTypeButtonClick() {
-        //todo: remove this block? back should send error and display that
-        /*
-        if (this.state.newEmployeeStatusTypeCode == undefined || this.state.newEmployeeStatusTypeName == undefined) {
-            this.setState({
-                newEmployeeStatusTypeCode: undefined,
-                newEmployeeStatusTypeName: '',
-                newEmployeeStatusTypeDescription: ''
-            })
-            return;
-        }
-
-         */
-
         const newStatusType: EmployeeStatusType = {
             employee_status_type_code: this.state.newEmployeeStatusTypeCode,
             name: this.state.newEmployeeStatusTypeName,

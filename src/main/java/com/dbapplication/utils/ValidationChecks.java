@@ -59,8 +59,6 @@ public class ValidationChecks {
         }
         LocalDateTime birthDateInLocalDateTime =  LocalDateTime.ofInstant(personEmb.getData().getBirth_date().toInstant(), ZoneId.systemDefault());
 
-        System.out.println(birthDateInLocalDateTime);
-
         if (!isDateInRange1900to2100(birthDateInLocalDateTime)) {
             log.info("person birthdate not in range 1900-2100! Current birthdate: " + birthDateInLocalDateTime);
             throw new Exception(new Throwable("person birthdate not in range 1900-2100! Current birthdate: " + birthDateInLocalDateTime));

@@ -3,6 +3,7 @@ package com.dbapplication.utils.postgre;
 import com.dbapplication.models.postgre.jsonb.common.CountryPostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.EmployeeStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.common.OccupationPostgreJsonCommon;
+import com.dbapplication.models.postgre.jsonb.common.PersonStatusTypePostgreJsonCommon;
 import com.dbapplication.models.postgre.jsonb.emb.PersonEmb;
 import com.dbapplication.models.postgre.jsonb.ref.PersonRef;
 import com.dbapplication.models.postgre.traditional.*;
@@ -10,6 +11,7 @@ import com.dbapplication.models.postgre.traditional.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class PostgreObjectConverter {
 
@@ -45,7 +47,9 @@ public class PostgreObjectConverter {
         //Person convertedPerson = convertPersonEmptyValuesToNulls(person);
         PersonRef personRef = new PersonRef(
                 person.get_id(),
-                person.getCountry_code(), new PersonRef.PersonData(
+                person.getCountry_code(),
+                person.getPerson_status_type_code(),
+                new PersonRef.PersonData(
                     person.getNat_id_code(),
                     person.getE_mail(),
                     person.getBirth_date(),
@@ -64,6 +68,7 @@ public class PostgreObjectConverter {
                 personRef.get_id(),
                 personRef.getData().getNat_id_code(),
                 personRef.getCountry_code(),
+                personRef.getPerson_status_type_code(),
                 personRef.getData().getE_mail(),
                 personRef.getData().getBirth_date(),
                 personRef.getData().getReg_time(),
@@ -97,6 +102,18 @@ public class PostgreObjectConverter {
 
     public static EmployeeStatusTypePostgreJsonCommon convertEmployeeStatusTypeToEmployeeStatusTypePostgreJsonCommon(EmployeeStatusType employeeStatusType) {
        return new EmployeeStatusTypePostgreJsonCommon(employeeStatusType.getEmployee_status_type_code(), new EmployeeStatusTypePostgreJsonCommon.EmployeeStatusTypeData(employeeStatusType.getName(), employeeStatusType.getDescription()));
+    }
+
+    public static PersonStatusType convertPersonStatusTypePostgreJsonCommonToPersonStatusType(PersonStatusTypePostgreJsonCommon personStatusTypePostgreJsonCommon) {
+        return new PersonStatusType(personStatusTypePostgreJsonCommon.getPerson_status_type_code(), personStatusTypePostgreJsonCommon.getData().getName(), personStatusTypePostgreJsonCommon.getData().getDescription());
+    }
+
+    public static List<PersonStatusType> convertPersonStatusTypePostgreJsonCommonListToPersonStatusTypeList(List<PersonStatusTypePostgreJsonCommon> personStatusTypePostgreJsonCommonList) {
+        return personStatusTypePostgreJsonCommonList.stream().map(PostgreObjectConverter::convertPersonStatusTypePostgreJsonCommonToPersonStatusType).collect(Collectors.toList());
+    }
+
+    public static PersonStatusTypePostgreJsonCommon convertPersonStatusTypeToPersonStatusTypePostgreJsonCommon(PersonStatusType personStatusType) {
+        return new PersonStatusTypePostgreJsonCommon(personStatusType.getPerson_status_type_code(), new PersonStatusTypePostgreJsonCommon.PersonStatusTypeData(personStatusType.getName(), personStatusType.getDescription()));
     }
 
     public static Occupation convertOccupationPostgreJsonCommonToOccupation(OccupationPostgreJsonCommon occupationPostgreJsonCommon) {
@@ -134,7 +151,9 @@ public class PostgreObjectConverter {
     public static PersonEmb convertPersonToPersonEmb(Person person){
         PersonEmb personEmb = new PersonEmb(
                 person.get_id(),
-                person.getCountry_code(), new PersonEmb.PersonData(
+                person.getCountry_code(),
+                person.getPerson_status_type_code(),
+                new PersonEmb.PersonData(
                     person.getNat_id_code(),
                     person.getE_mail(),
                     person.getBirth_date(),
@@ -154,6 +173,7 @@ public class PostgreObjectConverter {
                 personEmb.get_id(),
                 personEmb.getData().getNat_id_code(),
                 personEmb.getCountry_code(),
+                personEmb.getPerson_status_type_code(),
                 personEmb.getData().getE_mail(),
                 personEmb.getData().getBirth_date(),
                 personEmb.getData().getReg_time(),

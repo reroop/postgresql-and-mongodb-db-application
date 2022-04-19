@@ -6,12 +6,14 @@ import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.models.mongo.shared.Country;
 import com.dbapplication.models.mongo.shared.EmployeeStatusType;
 import com.dbapplication.models.mongo.shared.Occupation;
+import com.dbapplication.models.mongo.shared.PersonStatusType;
 import com.dbapplication.services.mongo.reference.MongoDbRefEmployeesService;
 import com.dbapplication.services.mongo.reference.MongoDbRefEmploymentsService;
 import com.dbapplication.services.mongo.reference.MongoDbRefPersonsService;
 import com.dbapplication.services.mongo.shared.MongoDbCountriesService;
 import com.dbapplication.services.mongo.shared.MongoDbEmployeeStatusTypeService;
 import com.dbapplication.services.mongo.shared.MongoDbOccupationsService;
+import com.dbapplication.services.mongo.shared.MongoDbPersonStatusTypeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -34,6 +36,9 @@ public class MongoDbReferenceController {
 
     @Autowired
     private MongoDbEmployeeStatusTypeService mongoDbEmployeeStatusTypeService;
+
+    @Autowired
+    private MongoDbPersonStatusTypeService mongoDbPersonStatusTypeService;
 
     @Autowired
     private MongoDbRefPersonsService mongoDbRefPersonsService;
@@ -100,6 +105,22 @@ public class MongoDbReferenceController {
     @PostMapping(EMPLOYEESTATUSTYPES)
     public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) {
         return mongoDbEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
+    }
+
+    //---------person status types-------
+    @GetMapping(PERSONSTATUSTYPES)
+    public List<PersonStatusType> getAllPersonStatusTypes() {
+        return mongoDbPersonStatusTypeService.getAllPersonStatusTypes();
+    }
+
+    @GetMapping(PERSONSTATUSTYPES_TYPECODE)
+    public PersonStatusType getPersonStatusTypeByPersonStatusTypeCode(@PathVariable(value= "personStatusTypeCode") Integer personStatusTypeCode) {
+        return mongoDbPersonStatusTypeService.getPersonStatusTypeByPersonStatusTypeCode(personStatusTypeCode);
+    }
+
+    @PostMapping(PERSONSTATUSTYPES)
+    public PersonStatusType addPersonStatusType(@RequestBody PersonStatusType.PersonStatusTypeDto personStatusTypeDto) {
+        return mongoDbPersonStatusTypeService.addPersonStatusType(personStatusTypeDto.getPersonStatusType());
     }
 
     //-----------persons---------

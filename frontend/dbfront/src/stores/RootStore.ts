@@ -4,6 +4,7 @@ import EmployeeStatusTypeStore from "./EmployeeStatusTypeStore";
 import PersonStore from "./PersonStore";
 import EmployeeStore from "./EmployeeStore";
 import EmploymentStore from "./EmploymentStore";
+import PersonStatusTypeStore from "./PersonStatusTypeStore";
 
 export class RootStore {
     public countryStore: CountryStore;
@@ -12,6 +13,7 @@ export class RootStore {
     public personStore: PersonStore;
     public employeeStore: EmployeeStore;
     public employmentStore: EmploymentStore;
+    public personStatusTypeStore: PersonStatusTypeStore;
 
     constructor() {
         this.countryStore = new CountryStore();
@@ -20,5 +22,6 @@ export class RootStore {
         this.personStore = new PersonStore();
         this.employeeStore = new EmployeeStore();
         this.employmentStore = new EmploymentStore();
+        this.personStatusTypeStore = new PersonStatusTypeStore();
     }
 }

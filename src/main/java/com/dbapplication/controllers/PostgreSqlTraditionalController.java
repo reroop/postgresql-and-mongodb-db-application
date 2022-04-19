@@ -33,6 +33,9 @@ public class PostgreSqlTraditionalController {
     @Autowired
     private PostgreTradEmploymentService postgreTradEmploymentService;
 
+    @Autowired
+    private PostgreTradPersonStatusTypeService postgreTradPersonStatusTypeService;
+
     //---health checker----
     @GetMapping
     public String index() {
@@ -88,6 +91,22 @@ public class PostgreSqlTraditionalController {
     @PostMapping(EMPLOYEESTATUSTYPES)
     public EmployeeStatusType addNewEmployeeStatusType(@RequestBody EmployeeStatusType.EmployeeStatusTypeDto employeeStatusTypeDto) throws Throwable {
         return postgreTradEmployeeStatusTypeService.addEmployeeStatusType(employeeStatusTypeDto.getEmployeeStatusType());
+    }
+
+    //---------person status types-------
+    @GetMapping(PERSONSTATUSTYPES)
+    public List<PersonStatusType> getAllPersonStatusTypes() {
+        return postgreTradPersonStatusTypeService.getAllPersonStatusTypes();
+    }
+
+    @GetMapping(PERSONSTATUSTYPES_TYPECODE)
+    public PersonStatusType getPersonStatusTypeByPersonStatusTypeCode(@PathVariable(value= "personStatusTypeCode") Integer personStatusTypeCode) {
+        return postgreTradPersonStatusTypeService.getPersonStatusTypeByPersonStatusTypeCode(personStatusTypeCode);
+    }
+
+    @PostMapping(PERSONSTATUSTYPES)
+    public PersonStatusType addPersonStatusType(@RequestBody PersonStatusType.PersonStatusTypeDto personStatusTypeDto) throws Throwable {
+        return postgreTradPersonStatusTypeService.addPersonStatusType(personStatusTypeDto.getPersonStatusType());
     }
 
     //----persons-----

@@ -95,7 +95,6 @@ public class Employment {
                     this.employment.getStart_time(),
                     this.employment.getEnd_time());
 
-            //System.out.println("createdpostgreemployment");
             return employment;
         }
 

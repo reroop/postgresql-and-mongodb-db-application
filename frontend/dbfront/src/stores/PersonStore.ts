@@ -5,6 +5,7 @@ export interface Person {
     _id?: string,
     nat_id_code: string,
     country_code: string,
+    person_status_type_code?: number,
     e_mail: string,
     birth_date: string,
     reg_time?: string,

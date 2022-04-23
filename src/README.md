@@ -29,6 +29,11 @@ Useful links/credit:
 - GET `http://localhost:8080/employeeStatusTypes/{employeeStatusTypeCode}` <-- get employee status type by code
 - POST `http://localhost:8080/employeeStatusTypes` <-- add a new employee status type
 
+### Person status types:
+- GET `http://localhost:8080/personStatusTypes` <-- get all person status types
+- GET `http://localhost:8080/personStatusTypes/{personStatusTypeCode}` <-- get person status type by code
+- POST `http://localhost:8080/personStatusTypes` <-- add a new person status type
+
 ### Persons:
 - GET `http://localhost:8080/persons` <-- get all persons
 - GET `http://localhost:8080/persons/{objectID}` <-- get person by id

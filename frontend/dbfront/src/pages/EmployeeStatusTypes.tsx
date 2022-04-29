@@ -61,7 +61,7 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
                     <Card.Body>
                         <Form>
                             <Form.Group className="mb-3" controlId="addTypeCode">
-                                <Form.Label>Employee status type code:</Form.Label>
+                                <Form.Label>Employee status type code *</Form.Label>
                                 <Form.Control
                                     placeholder="Enter employee status type code (number)"
                                     type="number"
@@ -70,14 +70,14 @@ class EmployeeStatusTypes extends React.Component<EmployeeStatusTypesProps, Stat
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTypeName">
-                                <Form.Label>Employee status type name:</Form.Label>
+                                <Form.Label>Employee status type name *</Form.Label>
                                 <Form.Control
                                     placeholder="Enter employee status type name"
                                     value={this.state.newEmployeeStatusTypeName!!}
                                     onChange={(e) => this.setState({newEmployeeStatusTypeName: e.target.value == '' ? null : e.target.value})}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTypeDescription">
-                                <Form.Label>Employee status type description:</Form.Label>
+                                <Form.Label>Employee status type description</Form.Label>
                                 <Form.Control
                                     as="textarea" rows={3}
                                     value={this.state.newEmployeeStatusTypeDescription!!}

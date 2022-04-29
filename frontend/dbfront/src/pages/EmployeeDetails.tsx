@@ -116,7 +116,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                         <h4>Update personal info:</h4>
                         <Form>
                             <Form.Group controlId="addCountryCode" className={'mt-2'}>
-                                <Form.Label>Country code:</Form.Label>
+                                <Form.Label>Country code *</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
                                         {this.state.person?.country_code}
@@ -134,7 +134,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                 </Dropdown>
                             </Form.Group>
                             <Form.Group controlId="addPersonStatusTypeCode" className={'mt-3'}>
-                                <Form.Label>Person status type:</Form.Label>
+                                <Form.Label>Person status type *</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
                                         {this.state.person?.person_status_type_code}
@@ -152,7 +152,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                 </Dropdown>
                             </Form.Group>
                             <Form.Group className="mb-3 mt-3" controlId="addNatIdCode">
-                                <Form.Label>Nat. Id. code:</Form.Label>
+                                <Form.Label>Nat. Id. code *</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.nat_id_code}
                                     placeholder="Enter nat. id. code"
@@ -160,14 +160,14 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addEmail">
-                                <Form.Label>Email:</Form.Label>
+                                <Form.Label>Email *</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.e_mail}
                                     placeholder="Enter email"
                                     onChange={(e) => this.setState(state => (state.person!!.e_mail = e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addBirthdate">
-                                <Form.Label>Birthdate:</Form.Label>
+                                <Form.Label>Birthdate *</Form.Label>
                                 <Form.Control
                                     type={"date"}
                                     value={new Date(this.state.person?.birth_date!!).toLocaleDateString("sv-SE")}
@@ -175,34 +175,34 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="regDate">
-                                <Form.Label>Reg. date:</Form.Label>
+                                <Form.Label>Reg. date</Form.Label>
                                 <FormControl
                                     type={"date"}
                                     value={new Date(this.state.person?.reg_time!!).toLocaleDateString("sv-SE")}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addFirstName">
-                                <Form.Label>Given name:</Form.Label>
+                                <Form.Label>Given name</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.given_name!!}
                                     placeholder="Enter first name (optional, at least first or last name must be set)"
                                     onChange={(e) => this.setState(state => (state.person!!.given_name = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addLastName">
-                                <Form.Label>Surname:</Form.Label>
+                                <Form.Label>Surname</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.surname!!}
                                     placeholder="Enter last name (optional, at least first or last name must be set)"
                                     onChange={(e) => this.setState(state => (state.person!!.surname = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addAddress">
-                                <Form.Label>Address:</Form.Label>
+                                <Form.Label>Address</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.address!!}
                                     placeholder="Enter address (optional)"
                                     onChange={(e) => this.setState(state => (state.person!!.address = e.target.value == '' ? null : e.target.value, state))}/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addTelNr">
-                                <Form.Label>Tel. nr.:</Form.Label>
+                                <Form.Label>Tel. nr.</Form.Label>
                                 <Form.Control
                                     value={this.state.person?.tel_nr!!}
                                     placeholder="Enter tel. nr. (optional, 7-20 characters)"
@@ -215,7 +215,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                         <h4>Update employee info:</h4>
 
                         <Row className={'mt-4'}>
-                            <Col>Employee status:</Col>
+                            <Col>Employee status *</Col>
                             <Col>
                                 <Dropdown>
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
@@ -235,7 +235,7 @@ class EmployeeDetails extends React.Component<EmployeeDetailsProps, State> {
                         </Row>
 
                         <Row className={'mt-4'}>
-                            <Col>Mentor:</Col>
+                            <Col>Mentor</Col>
                             <Col>
                                 <Row>
                                     <Col>

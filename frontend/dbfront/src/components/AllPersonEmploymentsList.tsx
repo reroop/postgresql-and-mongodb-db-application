@@ -81,7 +81,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                     <Card.Body>
                         <Form>
                             <Form.Group className="mb-3" controlId="addEmploymentOccupationCode">
-                                <Form.Label>Occupation:</Form.Label>
+                                <Form.Label>Occupation *</Form.Label>
                                 <Dropdown className="d-inline mx-2">
                                     <Dropdown.Toggle id="dropdown-autoclose-true">
                                         {this.state.newEmploymentOccupation?.name}
@@ -98,7 +98,7 @@ class AllPersonEmploymentsList extends React.Component<AllPersonEmploymentsListP
                                 </Dropdown>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addEmploymentStartDate">
-                                <Form.Label>Start date:</Form.Label>
+                                <Form.Label>Start date *</Form.Label>
                                 <Form.Control
                                     type={"date"}
                                     onChange={(e) => {

@@ -77,7 +77,7 @@ class Occupations extends React.Component<OccupationsProps, State> {
                             <Card.Body>
                                 <Form>
                                     <Form.Group className="mb-3" controlId="addOccupationCode">
-                                        <Form.Label>Occupation code:</Form.Label>
+                                        <Form.Label>Occupation code *</Form.Label>
                                         <Form.Control
                                             placeholder="Enter occupation code (number)"
                                             type="number"
@@ -86,14 +86,14 @@ class Occupations extends React.Component<OccupationsProps, State> {
                                         />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="addOccupationName">
-                                        <Form.Label>Occupation name:</Form.Label>
+                                        <Form.Label>Occupation name *</Form.Label>
                                         <Form.Control
                                             placeholder="Enter occupation name"
                                             value={this.state.newOccupationName}
                                             onChange={(e) => this.setState({newOccupationName: e.target.value})}/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="addOccupationDescription">
-                                        <Form.Label>Occupation description:</Form.Label>
+                                        <Form.Label>Occupation description</Form.Label>
                                         <Form.Control
                                             as="textarea" rows={3}
                                             value={this.state.newOccupationDescription}

@@ -3,7 +3,6 @@ package com.dbapplication.services.mongo.embedded;
 import com.dbapplication.models.mongo.embedded.EmbeddedEmployee;
 import com.dbapplication.models.mongo.embedded.EmbeddedEmployment;
 import com.dbapplication.models.mongo.embedded.EmbeddedPerson;
-import com.dbapplication.models.mongo.embedded.EmbeddedUserAccount;
 import com.dbapplication.models.mongo.reference.Employee;
 import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.models.mongo.reference.Person;

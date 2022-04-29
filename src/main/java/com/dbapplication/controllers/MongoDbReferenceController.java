@@ -210,6 +210,4 @@ public class MongoDbReferenceController {
         mongoDbRefEmployeesService.updateEmployee(employee);
         return wereAllEmploymentsEnded;
     }
-
-    //--------------------
 }

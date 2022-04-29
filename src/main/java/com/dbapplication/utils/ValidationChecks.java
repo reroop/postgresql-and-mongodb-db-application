@@ -76,6 +76,10 @@ public class ValidationChecks {
 
 
     public static boolean isMongoPersonInfoValid(Person person) throws Throwable {
+        if(person.getNat_id_code().replaceAll("\\s+", "").equals("")) {
+            log.info("person, nat_id_code is empty string");
+            throw new Exception(new Throwable("Person nat. id. code cannot be an empty string!"));
+        }
         if (!isDateInRange1900to2100(person.getBirth_date())) {
             log.info("person, birthdate not in range 1900-2100");
             throw new Exception(new Throwable("person birthdate not in range 1900-2100! Current birthdate: " + person.getBirth_date()));
@@ -98,12 +102,16 @@ public class ValidationChecks {
 
 
     public static boolean isMongoEmbeddedPersonInfoValid(EmbeddedPerson embeddedPerson) throws Throwable {
+        if(embeddedPerson.getNat_id_code().replaceAll("\\s+", "").equals("")) {
+            log.info("person, nat_id_code is empty string");
+            throw new Exception(new Throwable("Person nat. id. code cannot be an empty string!"));
+        }
         if (!isDateInRange1900to2100(embeddedPerson.getBirth_date())) {
             log.info("person, birthdate not in range 1900-2100");
             throw new Exception(new Throwable("person birthdate not in range 1900-2100! Current birthdate: " + embeddedPerson.getBirth_date()));
         }
         if (embeddedPerson.getGiven_name() == null && embeddedPerson.getSurname() == null ||
-                Objects.equals(embeddedPerson.getGiven_name(), "") && Objects.equals(embeddedPerson.getSurname(), "")) {
+                Objects.equals(embeddedPerson.getGiven_name().replaceAll("\\s+",""), "") && Objects.equals(embeddedPerson.getSurname().replaceAll("\\s+",""), "")) {
             log.info("person, given name or surname must be set");
             throw new Exception(new Throwable("given name or surname must be set!"));
         }

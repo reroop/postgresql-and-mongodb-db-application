@@ -202,7 +202,7 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                         <Card.Body>
                                                             <Form>
                                                                 <Form.Group className="mb-3" controlId="addCountryCode">
-                                                                    <Form.Label>Country code:</Form.Label>
+                                                                    <Form.Label>Country code *</Form.Label>
                                                                     <Dropdown className="d-inline mx-2">
                                                                         <Dropdown.Toggle id="dropdown-autoclose-true">
                                                                             {this.state.newPersonCountryCode}
@@ -219,7 +219,7 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                     </Dropdown>
                                                                 </Form.Group>
                                                                 <Form.Group controlId="addPersonStatusTypeCode" className={'mt-2'}>
-                                                                    <Form.Label>Person status type:</Form.Label>
+                                                                    <Form.Label>Person status type *</Form.Label>
                                                                     <Dropdown className="d-inline mx-2">
                                                                         <Dropdown.Toggle id="dropdown-autoclose-true">
                                                                             {this.state.newPersonStatusTypeCode}
@@ -237,13 +237,13 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                     </Dropdown>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3 mt-3" controlId="addNatIdCode">
-                                                                    <Form.Label>Nat. Id. code:</Form.Label>
+                                                                    <Form.Label>Nat. Id. code *</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter nat. id. code"
                                                                         onChange={(e) => this.setState({newPersonNationalIdCode: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addBirthdate">
-                                                                    <Form.Label>Birthdate:</Form.Label>
+                                                                    <Form.Label>Birthdate *</Form.Label>
                                                                     <Form.Control
                                                                         type={"date"}
                                                                         onChange={(e) => {
@@ -252,31 +252,31 @@ class Employees extends React.Component<EmployeesProps, State> {
                                                                     />
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addEmail">
-                                                                    <Form.Label>Email:</Form.Label>
+                                                                    <Form.Label>Email *</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter email"
                                                                         onChange={(e) => this.setState({newPersonEmail: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addFirstName">
-                                                                    <Form.Label>Given name:</Form.Label>
+                                                                    <Form.Label>Given name</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter given name (optional, at least given name or surname must be set)"
                                                                         onChange={(e) => this.setState({newPersonGivenName: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addLastName">
-                                                                    <Form.Label>Surname:</Form.Label>
+                                                                    <Form.Label>Surname</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter surname (optional, at least given name or surname must be set)"
                                                                         onChange={(e) => this.setState({newPersonSurname: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addAddress">
-                                                                    <Form.Label>Address:</Form.Label>
+                                                                    <Form.Label>Address</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter address (optional)"
                                                                         onChange={(e) => this.setState({newPersonAddress: e.target.value})}/>
                                                                 </Form.Group>
                                                                 <Form.Group className="mb-3" controlId="addTelNr">
-                                                                    <Form.Label>Tel. nr.:</Form.Label>
+                                                                    <Form.Label>Tel. nr.</Form.Label>
                                                                     <Form.Control
                                                                         placeholder="Enter tel. nr. (optional, 7-20 characters)"
                                                                         onChange={(e) => this.setState({newPersonTelNr: e.target.value})}/>

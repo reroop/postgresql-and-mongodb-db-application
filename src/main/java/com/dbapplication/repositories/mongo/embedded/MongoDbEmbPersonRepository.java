@@ -152,7 +152,7 @@ public class MongoDbEmbPersonRepository {
             updatableInfo.unset("surname");
         }
         //set address to null if not specified
-        if (embeddedPerson.getAddress() != null && embeddedPerson.getAddress().length() != 0) {
+        if (embeddedPerson.getAddress() != null && embeddedPerson.getAddress().length() != 0 && !embeddedPerson.getAddress().replaceAll("\\s+", "").equals("")) {
             updatableInfo.set("address", embeddedPerson.getAddress());
         } else {
             updatableInfo.unset("address");

@@ -59,7 +59,7 @@ class Countries extends React.Component<CountriesProps, State> {
                     <Card.Body>
                         <Form>
                             <Form.Group className="mb-3" controlId="addCountryCode">
-                                <Form.Label>Country code:</Form.Label>
+                                <Form.Label>Country code *</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country code"
                                     value={this.state.newCountryCode!!}
@@ -67,7 +67,7 @@ class Countries extends React.Component<CountriesProps, State> {
                                 />
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="addCountryName">
-                                <Form.Label>Country name:</Form.Label>
+                                <Form.Label>Country name *</Form.Label>
                                 <Form.Control
                                     placeholder="Enter country name"
                                     value={this.state.newCountryName!!}

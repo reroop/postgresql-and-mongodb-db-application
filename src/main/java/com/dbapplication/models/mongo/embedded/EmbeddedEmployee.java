@@ -39,11 +39,6 @@ public class EmbeddedEmployee {
         private Integer employee_status_type_code;
         private ObjectId mentor_id;
 
-        public EmbeddedEmployeeDbEntry(Integer employee_status_type_code, String mentor_id) {
-            this.employee_status_type_code = employee_status_type_code;
-            this.mentor_id = new ObjectId(mentor_id);
-        }
-
         public EmbeddedEmployeeDbEntry(Integer employee_status_type_code) {
             this.employee_status_type_code = employee_status_type_code;
         }

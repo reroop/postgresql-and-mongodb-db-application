@@ -97,6 +97,10 @@ public class ValidationChecks {
             log.info("person reg. time not in range 2010-2100! Current reg. time: " + person.getReg_time());
             throw new Exception(new Throwable("person reg. time not in range 2010-2100! Current reg. time: " + person.getReg_time()));
         }
+        if (person.getAddress() != null && Objects.equals(person.getAddress().replaceAll("\\s+",""), "")) {
+            log.info("person address is empty string");
+            throw new Exception(new Throwable("address cannot be an empty string!"));
+        }
         return true;
     }
 
@@ -122,6 +126,10 @@ public class ValidationChecks {
         if (!isDateInRange2010to2100(embeddedPerson.getReg_time())) {
             log.info("person reg. time not in range 2010-2100! Current reg. time: " + embeddedPerson.getReg_time());
             throw new Exception(new Throwable("person reg. time not in range 2010-2100! Current reg. time: " + embeddedPerson.getReg_time()));
+        }
+        if (embeddedPerson.getAddress() != null && Objects.equals(embeddedPerson.getAddress().replaceAll("\\s+",""), "")) {
+            log.info("person address is empty string");
+            throw new Exception(new Throwable("address cannot be an empty string!"));
         }
         return true;
     }

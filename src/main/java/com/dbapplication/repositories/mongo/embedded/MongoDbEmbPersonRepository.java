@@ -13,14 +13,13 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static com.dbapplication.utils.UniversalConstants.ADD_EMPLOYMENT_WRONG_EMPLOYEE_STATUS;
 import static com.dbapplication.utils.UniversalConstants.EMPLOYEE_STATUS_HAS_FINISHED_WORKING;
-import static com.dbapplication.utils.ValidationChecks.*;
+import static com.dbapplication.utils.ValidationChecks.isFirstDateBeforeSecondDate;
 
 @Slf4j
 @Component
@@ -39,11 +38,6 @@ public class MongoDbEmbPersonRepository {
     }
 
     public EmbeddedPerson addPerson(EmbeddedPerson embeddedPerson) throws Throwable {
-        embeddedPerson.setReg_time(LocalDateTime.now());
-        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
-            return null;
-        }
-
         /**
          * Set Employee info to null even if it is set, because
          * we have other endpoints later to add Employee info to Person
@@ -55,9 +49,6 @@ public class MongoDbEmbPersonRepository {
     public boolean addEmployeeToPerson(String personObjectId, EmbeddedEmployee embeddedEmployee) throws Throwable {
         EmbeddedEmployee.EmbeddedEmployeeDbEntry dbEntry = new EmbeddedEmployee.EmbeddedEmployeeDbEntry(embeddedEmployee.getEmployee_status_type_code());
         if (embeddedEmployee.getMentor_id() != null) {
-            if (Objects.equals(embeddedEmployee.getMentor_id(), personObjectId)) {
-                throw new Exception(new Throwable("person can't be his/herself mentor!"));
-            }
             dbEntry.setMentor_id(new ObjectId(embeddedEmployee.getMentor_id()));
         }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
@@ -74,10 +65,6 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean addEmploymentToEmployee(String personObjectId, EmbeddedEmployment newEmbeddedEmployment) throws Throwable {
-        if (!isDateInRange2010to2100(newEmbeddedEmployment.getStart_time())) {
-            log.info("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time());
-            throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + newEmbeddedEmployment.getStart_time()));
-        }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(personObjectId));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
 
@@ -118,10 +105,6 @@ public class MongoDbEmbPersonRepository {
 
     //all updates
     public boolean updatePerson(EmbeddedPerson embeddedPerson) throws Throwable {
-        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
-            return false;
-        }
-
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(embeddedPerson.get_id()));
         Update updatableInfo = new Update();
         if (embeddedPerson.getNat_id_code() != null) {
@@ -174,9 +157,6 @@ public class MongoDbEmbPersonRepository {
             updatableInfo.set("employee.employee_status_type_code", embeddedEmployee.getEmployee_status_type_code());
         }
         if (embeddedEmployee.getMentor_id() != null) {
-            if (Objects.equals(embeddedEmployee.getMentor_id(), personId)) {
-                throw new Exception(new Throwable("person can't be his/herself mentor!"));
-            }
             updatableInfo.set("employee.mentor_id", new ObjectId(embeddedEmployee.getMentor_id()));
         } else {
             updatableInfo.unset("employee.mentor_id");
@@ -185,12 +165,6 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endActiveEmployment(Employment endEmploymentInfo) throws Throwable {
-        if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
-            log.info("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!");
-            throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " is not in range 2010-2100!"));
-
-            //return false;
-        }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
         List<EmbeddedEmployment> employments = person.getEmployee().getEmployment() != null ?  person.getEmployee().getEmployment() : new ArrayList<>();
@@ -215,10 +189,6 @@ public class MongoDbEmbPersonRepository {
     }
 
     public boolean endAllEmployments(Employment endEmploymentInfo) throws Throwable {
-        if (!isDateInRange2010to2100(endEmploymentInfo.getEnd_time())) {
-            log.info("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!");
-            throw new Exception(new Throwable("end date " + endEmploymentInfo.getEnd_time() + " for employment is not in range 2010-2100!"));
-        }
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(endEmploymentInfo.getPerson_id()));
         EmbeddedPerson person = universalMongoTemplate.getOneByQuery(queryFindByObjectId, EmbeddedPerson.class);
 

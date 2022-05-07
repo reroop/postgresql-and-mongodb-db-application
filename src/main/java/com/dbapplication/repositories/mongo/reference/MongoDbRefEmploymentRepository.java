@@ -37,11 +37,6 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public Employment.EmploymentDbEntry addEmployment(Employment employment) throws Throwable {
-        if (!isDateInRange2010to2100(employment.getStart_time())) {
-            log.info("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time());
-            throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time()));
-        }
-
         //---check if employee is already actively employed in that occupation ---
         Query query = new Query(Criteria.where("occupation_code").is(employment.getOccupation_code()));
         query.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
@@ -62,11 +57,6 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public boolean endEmployeeActiveEmployment(Employment employment) throws Throwable {
-        if (!isDateInRange2010to2100(employment.getEnd_time())) {
-            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
-            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!"));
-        }
-
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("occupation_code").is(employment.getOccupation_code()));
@@ -87,11 +77,6 @@ public class MongoDbRefEmploymentRepository {
     }
 
     public boolean endEmployeeAllEmployments(Employment employment) throws Throwable {
-        if (!isDateInRange2010to2100(employment.getEnd_time())) {
-            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
-            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!"));
-        }
-
         Query queryFindPersonActiveEmploymentInOccupation = new Query();
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("person_id").is(new ObjectId(employment.getPerson_id())));
         queryFindPersonActiveEmploymentInOccupation.addCriteria(Criteria.where("end_time").is(null));

@@ -9,10 +9,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
-import static com.dbapplication.utils.ValidationChecks.isMongoPersonInfoValid;
 
 @Slf4j
 @Component
@@ -31,19 +28,10 @@ public class MongoDbRefPersonRepository {
     }
 
     public Person addPerson(Person person) throws Throwable {
-        person.setReg_time(LocalDateTime.now());
-        if (!isMongoPersonInfoValid(person)) {
-            return null;
-        }
-
         return universalMongoTemplate.addEntity(person);
     }
 
     public boolean updatePerson(Person person) throws Throwable {
-        if (!isMongoPersonInfoValid(person)) {
-            return false;
-        }
-
         Query queryFindByObjectId = new Query(Criteria.where("_id").is(person.get_id()));
         Update updatableInfo = new Update();
         if (person.getNat_id_code() != null) {

@@ -1,0 +1,95 @@
+CREATE TABLE Country (
+	country_code VARCHAR ( 3 ) NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Country PRIMARY KEY (country_code),
+	CONSTRAINT Country_name_not_empty CHECK ((CAST (data ->> 'name' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'name' AS VARCHAR)) <> ''),
+	CONSTRAINT Country_country_code_consists_of_three_capital_letters CHECK (country_code ~ '^[A-Z]{3}$'),
+	CONSTRAINT Country_name_not_null CHECK ((CAST (data ->> 'name' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Country_name_max_length_100 CHECK (char_length((CAST (data ->> 'name' AS VARCHAR))) <= 100)
+	);
+CREATE TABLE Occupation (
+	occupation_code SMALLINT NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Occupation PRIMARY KEY (occupation_code),
+	CONSTRAINT Occupation_name_not_empty CHECK ((CAST (data ->> 'name' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'name' AS VARCHAR)) <> ''),
+	CONSTRAINT Occupation_description_not_empty CHECK ((CAST (data ->> 'description' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'description' AS VARCHAR)) <> ''),
+	CONSTRAINT Occupation_name_not_null CHECK ((CAST (data ->> 'name' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Occupation_occupation_code_greater_than_zero CHECK (occupation_code > 0),
+	CONSTRAINT Occupation_name_max_length_100 CHECK (char_length((CAST (data ->> 'name' AS VARCHAR))) <= 100)
+	);
+CREATE TABLE Employee_status_type (
+	employee_status_type_code SMALLINT NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Employee_status_type PRIMARY KEY (employee_status_type_code),
+	CONSTRAINT Employee_status_type_description_not_empty CHECK ((CAST (data ->> 'description' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'description' AS VARCHAR)) <> ''),
+	CONSTRAINT Employee_status_type_name_not_empty CHECK ((CAST (data ->> 'name' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'name' AS VARCHAR)) <> ''),
+	CONSTRAINT Employee_status_type_name_not_null CHECK ((CAST (data ->> 'name' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Employee_status_type_name_max_length_100 CHECK (char_length((CAST (data ->> 'name' AS VARCHAR))) <= 100)
+	);
+CREATE TABLE Person_status_type (
+	person_status_type_code SMALLINT NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Person_status_type PRIMARY KEY (person_status_type_code),
+	CONSTRAINT Person_status_type_description_not_empty CHECK ((CAST (data ->> 'description' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'description' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_status_type_name_not_empty CHECK ((CAST (data ->> 'name' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'name' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_status_type_name_not_null CHECK ((CAST (data ->> 'name' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_status_type_name_max_length_100 CHECK (char_length((CAST (data ->> 'name' AS VARCHAR))) <= 100)
+	);
+CREATE TABLE Person (
+	_id SERIAL NOT NULL,
+	country_code VARCHAR ( 3 ) NOT NULL,
+	person_status_type_code SMALLINT NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Person PRIMARY KEY (_id),
+	CONSTRAINT Person_e_mail_contains_atleast_one_at_sign CHECK ((CAST (data ->> 'e_mail' AS VARCHAR)) LIKE '%@%' ),
+	CONSTRAINT Person_nat_id_code_contains_valid_symbols CHECK ((CAST (data ->> 'nat_id_code' AS VARCHAR)) ~* '^[[:alnum:][:space:]+=\/-]+$'),
+	CONSTRAINT Person_address_not_contains_only_numbers CHECK ((CAST (data ->> 'address' AS VARCHAR)) !~ '^\d+?$'),
+	CONSTRAINT Person_address_not_empty CHECK ((CAST (data ->> 'address' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'address' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_given_name_or_surname_is_registered CHECK ((CAST (data ->> 'given_name' AS VARCHAR)) IS NOT NULL OR (CAST (data ->> 'surname' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_surname_not_empty CHECK ((CAST (data ->> 'surname' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'surname' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_given_name_not_empty CHECK ((CAST (data ->> 'given_name' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'given_name' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_nat_id_code_not_empty CHECK ((CAST (data ->> 'nat_id_code' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'nat_id_code' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_tel_nr_is_valid CHECK ((CAST (data ->> 'tel_nr' AS VARCHAR)) ~* '^[0-9\s\-\+]{7,20}$'),
+	CONSTRAINT Person_tel_nr_not_empty CHECK ((CAST (data ->> 'tel_nr' AS VARCHAR)) !~ '^[[:space:]]+$' AND (CAST (data ->> 'tel_nr' AS VARCHAR)) <> ''),
+	CONSTRAINT Person_e_mail_not_null CHECK (((data ->> 'e_mail' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_nat_id_code_not_null CHECK (((data ->> 'nat_id_code' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_birth_date_code_not_null CHECK (((data ->> 'birth_date' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_reg_time_not_null CHECK (((data ->> 'reg_time' AS VARCHAR)) IS NOT NULL),
+	CONSTRAINT Person_e_mail_max_length_254 CHECK (char_length((CAST (data ->> 'e_mail' AS VARCHAR))) <= 254),
+	CONSTRAINT Person_nat_id_code_max_length_50 CHECK (char_length((CAST (data ->> 'nat_id_code' AS VARCHAR))) <= 50),
+	CONSTRAINT Person_given_name_max_length_1000 CHECK (char_length((CAST (data ->> 'given_name' AS VARCHAR))) <= 1000),
+	CONSTRAINT Person_surname_max_length_1000 CHECK (char_length((CAST (data ->> 'given_name' AS VARCHAR))) <= 1000),
+	CONSTRAINT Person_address_max_length_1000 CHECK (char_length((CAST (data ->> 'address' AS VARCHAR))) <= 1000)
+	);
+CREATE TABLE Employee (
+	person_id INTEGER NOT NULL,
+	mentor_id INTEGER,
+	employee_status_type_code SMALLINT NOT NULL,
+	CONSTRAINT PK_Employee PRIMARY KEY (person_id),
+	CONSTRAINT Employee_person_id_not_mentor_id CHECK (person_id != mentor_id)
+	);
+CREATE INDEX IDX_Employee_person_id ON Employee (person_id );
+CREATE INDEX IDX_Employee_mentor_id ON Employee (mentor_id );
+CREATE TABLE Employment (
+	_id SERIAL NOT NULL,
+	person_id INTEGER NOT NULL,
+	occupation_code SMALLINT NOT NULL,
+	data JSONB NOT NULL,
+	CONSTRAINT PK_Employment PRIMARY KEY (_id),
+	CONSTRAINT Employment_start_time_not_null CHECK (((data ->> 'start_time' AS VARCHAR)) IS NOT NULL)
+	);
+CREATE INDEX IDX_Employment_person_id ON Employment (person_id );
+ALTER TABLE Employment ADD CONSTRAINT FK_Employment_person_id FOREIGN KEY (person_id) REFERENCES Employee (person_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE Employment ADD CONSTRAINT FK_Employment_occupation_code FOREIGN KEY (occupation_code) REFERENCES Occupation (occupation_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE Person ADD CONSTRAINT FK_Person_country_code FOREIGN KEY (country_code) REFERENCES Country (country_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE Person ADD CONSTRAINT FK_Person_person_status_type_code FOREIGN KEY (person_status_type_code) REFERENCES Person_status_type (person_status_type_code) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_person_id FOREIGN KEY (person_id) REFERENCES Person (_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_mentor_id FOREIGN KEY (mentor_id) REFERENCES Employee (person_id)  ON DELETE SET NULL ON UPDATE NO ACTION;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_employee_status_type_code FOREIGN KEY (employee_status_type_code) REFERENCES Employee_status_type (employee_status_type_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+CREATE UNIQUE INDEX idx_ak_country_name ON Country((CAST (data ->> 'name' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_employee_status_type_name ON Employee_status_type((CAST (data ->> 'name' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_occupation_name ON Occupation((CAST (data ->> 'name' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_person_country_and_nat_id_code ON Person(country_code, (CAST (data ->> 'nat_id_code' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_person_e_mail ON Person((CAST (data ->> 'e_mail' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_employment_person_id_occupation_code_start_time ON Employment(person_id, occupation_code, (CAST (data ->> 'start_time' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_person_status_type_name ON Person_status_type((CAST (data ->> 'name' AS VARCHAR)));

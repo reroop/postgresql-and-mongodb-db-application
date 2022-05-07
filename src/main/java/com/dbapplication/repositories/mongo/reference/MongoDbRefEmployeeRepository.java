@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -36,9 +35,6 @@ public class MongoDbRefEmployeeRepository {
                 employee.getEmployee_status_type_code()
         );
         if (employee.getMentor_id() != null) {
-            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
-                throw new Exception(new Throwable("person can't be his/herself mentor"));
-            }
             dbEntry.setMentor_id(new ObjectId(employee.getMentor_id()));
         }
         if (getEmployeeByPersonId(employee.getPerson_id()) != null) {
@@ -62,9 +58,6 @@ public class MongoDbRefEmployeeRepository {
         }
         //NOTE: mentorId is deleted if it is not set in Employee
         if (employee.getMentor_id() != null) {
-            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
-                throw new Exception(new Throwable("person can't be his/herself mentor"));
-            }
             updatableInfo.set("mentor_id", new ObjectId(employee.getMentor_id()));
         } else {
             updatableInfo.unset("mentor_id");

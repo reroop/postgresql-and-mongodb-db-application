@@ -8,12 +8,17 @@ import com.dbapplication.models.mongo.reference.Employment;
 import com.dbapplication.models.mongo.reference.Person;
 import com.dbapplication.repositories.mongo.embedded.MongoDbEmbPersonRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.dbapplication.utils.ValidationChecks.isDateInRange2010to2100;
+import static com.dbapplication.utils.ValidationChecks.isMongoEmbeddedPersonInfoValid;
 
 @Slf4j
 @Service
@@ -70,15 +75,29 @@ public class MongoDbEmbPersonsService {
     }
 
     public Person addPerson(Person person) throws Throwable {
-        EmbeddedPerson repoResponse = mongoDbEmbPersonRepository.addPerson(convertPersonToEmbeddedPerson(person));
+        EmbeddedPerson embeddedPerson = convertPersonToEmbeddedPerson(person);
+        embeddedPerson.setReg_time(LocalDateTime.now());
+        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+            return null;
+        }
+        EmbeddedPerson repoResponse = mongoDbEmbPersonRepository.addPerson(embeddedPerson);
         return convertEmbeddedPersonToPerson(repoResponse);
     }
 
     public boolean updatePerson(Person person) throws Throwable {
-        return mongoDbEmbPersonRepository.updatePerson(convertPersonToEmbeddedPerson(person));
+        EmbeddedPerson embeddedPerson = convertPersonToEmbeddedPerson(person);
+        if (!isMongoEmbeddedPersonInfoValid(embeddedPerson)) {
+            return false;
+        }
+        return mongoDbEmbPersonRepository.updatePerson(embeddedPerson);
     }
 
     public boolean updateEmployee(Employee employee) throws Throwable {
+        if (employee.getMentor_id() != null) {
+            if (Objects.equals(employee.getMentor_id(), employee.getPerson_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor!"));
+            }
+        }
         return mongoDbEmbPersonRepository.updateEmployee(employee.getPerson_id(), convertEmployeeToEmbeddedEmployee(employee));
     }
 
@@ -117,6 +136,11 @@ public class MongoDbEmbPersonsService {
 
     public boolean addEmployee(Employee employee) throws Throwable {
         EmbeddedEmployee convertedEmployee = convertEmployeeToEmbeddedEmployee(employee);
+        if (convertedEmployee.getMentor_id() != null) {
+            if (Objects.equals(convertedEmployee.getMentor_id(), employee.getPerson_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor!"));
+            }
+        }
         return mongoDbEmbPersonRepository.addEmployeeToPerson(employee.getPerson_id(), convertedEmployee);
     }
 
@@ -154,6 +178,10 @@ public class MongoDbEmbPersonsService {
     }
 
     public boolean addEmployment(Employment employment) throws Throwable {
+        if (!isDateInRange2010to2100(employment.getStart_time())) {
+            log.info("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time());
+            throw new Exception(new Throwable("employment dates must be in range 2010-2100! Current start time is " + employment.getStart_time()));
+        }
         return mongoDbEmbPersonRepository.addEmploymentToEmployee(employment.getPerson_id(), convertEmploymentToEmbeddedEmployment(employment));
     }
 
@@ -179,10 +207,18 @@ public class MongoDbEmbPersonsService {
     }
 
     public boolean endEmployeeActiveEmployment(Employment employment) throws Throwable {
+        if (!isDateInRange2010to2100(employment.getEnd_time())) {
+            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " is not in range 2010-2100!"));
+        }
         return mongoDbEmbPersonRepository.endActiveEmployment(employment);
     }
 
     public boolean endEmployeeAllEmployments(Employment employment) throws Throwable {
+        if (!isDateInRange2010to2100(employment.getEnd_time())) {
+            log.info("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!");
+            throw new Exception(new Throwable("end date " + employment.getEnd_time() + " for employment is not in range 2010-2100!"));
+        }
         return mongoDbEmbPersonRepository.endAllEmployments(employment);
     }
 

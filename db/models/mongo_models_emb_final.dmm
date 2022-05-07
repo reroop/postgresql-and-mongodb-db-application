@@ -1,0 +1,1108 @@
+{
+	"tables": {
+		"7b459b43-d686-41f3-8761-3dff0085042f": {
+			"id": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"visible": true,
+			"name": "person",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "340cf0a1-d981-4abb-91fb-48dce965aeef",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "4ca550bc-d380-4e43-b5ea-58ebdb5c8aab",
+					"name": "nat_id_code",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "National identification code cannot be empty. Max length 50 symbols, consists of valid symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '^[[:alnum:][:space:]+=\\/-]+$',\nmaxLength: 50"
+				},
+				{
+					"id": "a06c6e26-3fa5-4a0e-af0e-7e5ab41e964c",
+					"name": "country_code",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "Country code consists of three capital letters.",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "riik",
+					"validation": "pattern: '^[A-Z]{3}$'"
+				},
+				{
+					"id": "7a3f42f6-d249-4578-a8ab-fa849eca0f70",
+					"name": "person_status_type_code",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"fk": true,
+					"ref": "person_status_type"
+				},
+				{
+					"id": "5eb14c6e-c3e2-443a-bfcb-40c7207cfab3",
+					"name": "e_mail",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "E-mail contains atleast one at sign. Max length 254 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '^\\\\S+@\\\\S+$',\nmaxLength: 254"
+				},
+				{
+					"id": "8cc6b6dd-6bef-4329-b93d-8cd185cbe35d",
+					"name": "birth_date",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": ""
+				},
+				{
+					"id": "87758691-af54-480b-a164-268138d2cfbd",
+					"name": "reg_time",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": ""
+				},
+				{
+					"id": "810b875a-d892-4a73-97f7-c4999a9fe68a",
+					"name": "given_name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Given name cannot be empty. Max length 100 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S',\nmaxLength: 1000"
+				},
+				{
+					"id": "54d417c4-db26-4633-9c87-a16c6c68ca81",
+					"name": "surname",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Surname cannot be empty. Max length 100 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S',\nmaxLength: 1000"
+				},
+				{
+					"id": "0d998f5b-4e82-4959-8dcc-f5c133e3e5e3",
+					"name": "address",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Address cannot be empty. Max length 1000 symbols, not only numeric.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '(.*[^0-9].*)(\\\\S)',\nmaxLength: 1000"
+				},
+				{
+					"id": "3dc9bf32-2861-4014-bf11-24e80851b593",
+					"name": "tel_nr",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Tel. nr. can only contain numbers,whitespace,+,-. Must be 7 to 20 characters long.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '^[0-9\\\\s\\\\-\\\\+]{7,20}$'"
+				},
+				{
+					"id": "2ada4cca-ecd9-4012-986e-9c864e58dd2f",
+					"name": "employee",
+					"datatype": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [
+				"9aebdb72-ff36-45cd-9686-e4670e9441a3",
+				"2dacfa37-24a3-40ff-9623-03b4d99f135c"
+			],
+			"lines": [
+				"b13efc26-f84b-43cd-92cc-af2ba4762922"
+			],
+			"keys": [
+				{
+					"id": "48eff2c8-3148-44bf-9d5b-a01bfec08947",
+					"name": "pk_employee",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "bf34fee9-09d0-459b-9fc5-2a111fabc48c",
+							"colid": "340cf0a1-d981-4abb-91fb-48dce965aeef"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "24933def-f83c-4b96-a3df-42c86d9571c7",
+					"name": "ak_person_e_mail",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_person_e_mail\",\nunique: true\n}",
+						"fields": "{\n\"e_mail\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "eefc1c50-f16e-4406-98b6-bfd681fe70b2",
+					"name": "ak_person_country_and_nat_id_code",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_person_country_and_nat_id_code\",\nunique: true\n}",
+						"fields": "{\n\"country_code\": 1,\n\"nat_id_code\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"f3722de0-1460-4aba-a774-11c2455a2fcc": {
+			"id": "f3722de0-1460-4aba-a774-11c2455a2fcc",
+			"visible": true,
+			"name": "country",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2bd0ef4e-57cc-485d-a33a-342e8a438110",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6",
+					"name": "country_code",
+					"datatype": "string",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "Country code consists of three capital letters.",
+					"defaultvalue": "",
+					"data": "",
+					"validation": "pattern: '^[A-Z]{3}$'"
+				},
+				{
+					"id": "f064c6c9-6daf-4d1b-978a-37cdfc7eba03",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "Country name cannot be empty. Max length 100 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S',\nmaxLength: 100"
+				}
+			],
+			"relations": [
+				"9aebdb72-ff36-45cd-9686-e4670e9441a3"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "e5b604e7-c3bd-424c-a727-d240796cea1f",
+					"name": "pk_country",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "eb4b3c96-6d84-403b-b15c-d4d869eadac3",
+							"colid": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "d70c2e7c-6e98-40ea-b673-abfcda53fa93",
+					"name": "ak_country_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_country_name\",\nunique: true\n}",
+						"fields": "{\n\"name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "024359a9-fb1b-44cb-b771-2176ac78393f",
+					"name": "pk_country",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_country\",\nunique: true\n}",
+						"fields": "{\n\"country_code\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"8fb4a47f-730d-476a-a466-9293620a8b7d": {
+			"id": "8fb4a47f-730d-476a-a466-9293620a8b7d",
+			"visible": true,
+			"name": "employee_status_type",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "aa841dfe-8073-4ca1-af38-9e312a811e03",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "361617fb-25fb-4201-906b-17ce06dc9ec3",
+					"name": "employee_status_type_code",
+					"datatype": "int",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "65c0c97a-b873-49c8-81bf-52e823e13c06",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "Employee status type name not empty. Max length 100 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S',\nmaxLength: 100"
+				},
+				{
+					"id": "fd8b2846-10bb-49ee-9a12-74e2f67c3ba5",
+					"name": "description",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Employee status type description cannot be empty.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S'"
+				}
+			],
+			"relations": [],
+			"lines": [
+				"5ca124fd-36a0-4534-9b76-8cf0867b228c"
+			],
+			"keys": [
+				{
+					"id": "09cb33ae-2068-4077-9861-ae1038157fc3",
+					"name": "pk_employee_status_type",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "a39dc450-17ac-431e-8f25-cdb60a7e5aaa",
+							"colid": "361617fb-25fb-4201-906b-17ce06dc9ec3"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "f1e67743-db3c-4fb8-a80c-0944d0501a30",
+					"name": "ak_employee_status_type_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_employee_status_type_name\",\nunique: true\n}",
+						"fields": "{\n\"name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "41270fe3-31b9-4775-91c2-18055929db6b",
+					"name": "pk_employee_status_type",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_employee_status_type\",\nunique: true\n}",
+						"fields": "{\n\"employee_status_type_code\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"ce10a936-4fb2-46a2-affb-79318812bb9c": {
+			"id": "ce10a936-4fb2-46a2-affb-79318812bb9c",
+			"visible": true,
+			"name": "occupation",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "20563356-2e54-4a0c-b63d-2dd41cfaa664",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "7c7566b7-7423-4565-b85d-9733bc4abb5b",
+					"name": "occupation_code",
+					"datatype": "int",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"validation": "minimum: 1"
+				},
+				{
+					"id": "3a208619-32d7-4d9d-997e-006767d030ab",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "Occupation cannot be empty. Max 100 symbols.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S',\nmaxLength: 100"
+				},
+				{
+					"id": "2d570571-0436-4165-8813-0dcc19d2dfb0",
+					"name": "description",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Occupation description cannot be empty.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S'"
+				}
+			],
+			"relations": [],
+			"lines": [
+				"44344ae1-c68c-40e4-91cb-6d0d7307951a"
+			],
+			"keys": [
+				{
+					"id": "881187ab-cd19-4197-907c-7102677a4df8",
+					"name": "pk_occupation",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "da90503a-5e3e-4d37-9e54-6e274ee904ee",
+							"colid": "7c7566b7-7423-4565-b85d-9733bc4abb5b"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "cec95b47-9c1d-478e-89cb-732c9140f2b1",
+					"name": "ak_occupation_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_occupation_name\",\nunique: true\n}",
+						"fields": "{\n\"name\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "aa299a01-d264-444d-ac6a-5a6930df0d4f",
+					"name": "pk_occupation",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_occupation\",\nunique: true\n}",
+						"fields": "{\n\"occupation_code\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"3db654e7-b9ba-4b30-b304-e5a5c8a88dc3": {
+			"id": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+			"visible": true,
+			"name": "employee",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "b83c9aaf-c0c9-4df5-a80b-290edcb050f2",
+					"name": "employee_status_type_code",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": ""
+				},
+				{
+					"id": "c7bfd5d8-1e07-4704-90ab-5e111e3605ef",
+					"name": "mentor_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "d712a379-5261-4771-996a-dfc3a50be4a2",
+					"name": "employment",
+					"datatype": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": true,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [
+				"b13efc26-f84b-43cd-92cc-af2ba4762922",
+				"a396b142-55b1-4738-9fe4-75ae909afc5e",
+				"5ca124fd-36a0-4534-9b76-8cf0867b228c"
+			],
+			"keys": [
+				{
+					"id": "231a9e4e-2f89-4571-9401-19a1d2d5c376",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"08b127c6-9f2c-432d-82a7-3c15ffb1465f": {
+			"id": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
+			"visible": true,
+			"name": "employment",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "8cc84fde-70e9-47d0-b692-40c8124793c9",
+					"name": "occupation_code",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "fa02b0e1-d73d-45c0-a6e8-23cb28bc7aee",
+					"name": "start_time",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "98f6cc05-62bb-4b76-b894-04169301b352",
+					"name": "end_time",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [],
+			"lines": [
+				"a396b142-55b1-4738-9fe4-75ae909afc5e",
+				"44344ae1-c68c-40e4-91cb-6d0d7307951a"
+			],
+			"keys": [
+				{
+					"id": "59c58842-a87e-4678-8703-e165fdfed321",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": []
+				}
+			],
+			"indexes": [],
+			"embeddable": true,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"9236ec17-7e99-4717-b1a8-70e739823c8f": {
+			"id": "9236ec17-7e99-4717-b1a8-70e739823c8f",
+			"visible": true,
+			"name": "person_status_type",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "8d891706-7f97-42f0-aacd-9519f85dcc6a",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": ""
+				},
+				{
+					"id": "414db3f2-07f1-4a6d-a2dc-6c654746d052",
+					"name": "person_status_type_code",
+					"datatype": "int",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "59c677b9-ee42-49d1-b67e-2abfcab32175",
+					"name": "name",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "Person status type name cannot be empty. Max length 100.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"pattern": false,
+					"validation": "pattern: '\\\\S',\nmaxLength: 100"
+				},
+				{
+					"id": "e8bddf01-7c39-40a5-ac3c-14b1f20fdb46",
+					"name": "description",
+					"datatype": "string",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "Person status type description cannot be empty.",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"validation": "pattern: '\\\\S'"
+				}
+			],
+			"relations": [
+				"2dacfa37-24a3-40ff-9623-03b4d99f135c"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "898ca6e2-e862-4eda-9531-b405f4f6b63b",
+					"name": "Primary key",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "7ee4c258-9720-4688-81df-aca92b628a1e",
+							"colid": "414db3f2-07f1-4a6d-a2dc-6c654746d052"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "0ab57489-3344-46ae-bb6c-c90dfb89f91b",
+					"name": "pk_person_status_type",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_person_status_type\",\nunique: true\n}",
+						"fields": "{\n\"person_status_type_code\": 1\n}"
+					},
+					"cols": []
+				},
+				{
+					"id": "a5731a69-24f9-4718-be97-729b86d6e4e3",
+					"name": "ak_person_status_type_name",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"ak_person_status_type_name\",\nunique: true\n}",
+						"fields": "{\n\"name\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		}
+	},
+	"relations": {
+		"9aebdb72-ff36-45cd-9686-e4670e9441a3": {
+			"id": "9aebdb72-ff36-45cd-9686-e4670e9441a3",
+			"visible": true,
+			"name": "country_person",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "e5b604e7-c3bd-424c-a727-d240796cea1f",
+			"parent": "f3722de0-1460-4aba-a774-11c2455a2fcc",
+			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "9f5d1cca-fcd3-4e8b-92c2-531ea5a54dea",
+					"parentcol": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6",
+					"childcol": "a06c6e26-3fa5-4a0e-af0e-7e5ab41e964c"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"2dacfa37-24a3-40ff-9623-03b4d99f135c": {
+			"id": "2dacfa37-24a3-40ff-9623-03b4d99f135c",
+			"visible": true,
+			"name": "person_status_type_person",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "898ca6e2-e862-4eda-9531-b405f4f6b63b",
+			"parent": "9236ec17-7e99-4717-b1a8-70e739823c8f",
+			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"c_mp": "true",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "6d0e5efd-6434-487b-9375-166a6f275596",
+					"parentcol": "414db3f2-07f1-4a6d-a2dc-6c654746d052",
+					"childcol": "7a3f42f6-d249-4578-a8ab-fa849eca0f70"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		}
+	},
+	"notes": {},
+	"lines": {
+		"b13efc26-f84b-43cd-92cc-af2ba4762922": {
+			"id": "b13efc26-f84b-43cd-92cc-af2ba4762922",
+			"visible": true,
+			"name": "tootaja-isik",
+			"desc": "",
+			"style": "solid",
+			"parent": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"lineColor": "transparent",
+			"markerStart": "none",
+			"markerEnd": "none",
+			"linegraphics": "basic",
+			"generate": true
+		},
+		"a396b142-55b1-4738-9fe4-75ae909afc5e": {
+			"id": "a396b142-55b1-4738-9fe4-75ae909afc5e",
+			"visible": true,
+			"name": "tootaja-ametis_tootamine",
+			"desc": "",
+			"style": "solid",
+			"parent": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+			"child": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
+			"lineColor": "transparent",
+			"markerStart": "none",
+			"markerEnd": "none",
+			"linegraphics": "basic",
+			"generate": true
+		},
+		"5ca124fd-36a0-4534-9b76-8cf0867b228c": {
+			"id": "5ca124fd-36a0-4534-9b76-8cf0867b228c",
+			"visible": true,
+			"name": "tootaja_seisundi_liik-tootaja",
+			"desc": "",
+			"style": "solid",
+			"parent": "8fb4a47f-730d-476a-a466-9293620a8b7d",
+			"child": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+			"lineColor": "transparent",
+			"markerStart": "none",
+			"markerEnd": "none",
+			"linegraphics": "basic",
+			"generate": true
+		},
+		"44344ae1-c68c-40e4-91cb-6d0d7307951a": {
+			"id": "44344ae1-c68c-40e4-91cb-6d0d7307951a",
+			"visible": true,
+			"name": "amet-ametis_tootamine",
+			"desc": "",
+			"style": "solid",
+			"parent": "ce10a936-4fb2-46a2-affb-79318812bb9c",
+			"child": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
+			"lineColor": "transparent",
+			"markerStart": "none",
+			"markerEnd": "none",
+			"linegraphics": "basic",
+			"generate": true
+		}
+	},
+	"model": {
+		"name": "mongodb_emb_eng_exp",
+		"id": "108a7ad2-a7e3-417e-a6a5-44ef9f020e3a",
+		"activeDiagram": "1701cf5f-7790-4570-9a86-a6126e957dfe",
+		"desc": "",
+		"path": "",
+		"type": "MONGODB",
+		"version": 1,
+		"parentTableInFkCols": true,
+		"caseConvention": "under",
+		"replaceSpace": "_",
+		"color": "transparent",
+		"sideSelections": true,
+		"isDirty": false,
+		"storedin": {
+			"major": 4,
+			"minor": 5,
+			"extra": 0
+		},
+		"embeddedInParentsIsDisplayed": true,
+		"schemaContainerIsDisplayed": false,
+		"cardinalityIsDisplayed": false,
+		"estimatedSizeIsDisplayed": false,
+		"stickyParentIsDisplayed": false,
+		"def_coltopk": true,
+		"def_validationLevel": "na",
+		"def_validationAction": "na",
+		"def_collation": "",
+		"def_others": "",
+		"lastSaved": "Sat May 07 2022 09:43:27 GMT+0300 (Eastern European Summer Time)",
+		"writeFileParam": false
+	},
+	"otherObjects": {},
+	"diagrams": {
+		"1701cf5f-7790-4570-9a86-a6126e957dfe": {
+			"name": "Main Diagram",
+			"description": "",
+			"id": "1701cf5f-7790-4570-9a86-a6126e957dfe",
+			"keysgraphics": true,
+			"linegraphics": "detailed",
+			"zoom": 1,
+			"background": "transparent",
+			"lineColor": "transparent",
+			"isOpen": true,
+			"main": true,
+			"diagramItems": {
+				"7b459b43-d686-41f3-8761-3dff0085042f": {
+					"referencedItemId": "7b459b43-d686-41f3-8761-3dff0085042f",
+					"x": 519,
+					"y": 38,
+					"gHeight": 358,
+					"gWidth": 325,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": true,
+					"autoExpand": true
+				},
+				"f3722de0-1460-4aba-a774-11c2455a2fcc": {
+					"referencedItemId": "f3722de0-1460-4aba-a774-11c2455a2fcc",
+					"x": 220,
+					"y": 58,
+					"gHeight": 80,
+					"gWidth": 219,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"8fb4a47f-730d-476a-a466-9293620a8b7d": {
+					"referencedItemId": "8fb4a47f-730d-476a-a466-9293620a8b7d",
+					"x": 215,
+					"y": 460,
+					"gHeight": 106,
+					"gWidth": 269,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": true,
+					"autoExpand": true
+				},
+				"ce10a936-4fb2-46a2-affb-79318812bb9c": {
+					"referencedItemId": "ce10a936-4fb2-46a2-affb-79318812bb9c",
+					"x": 877,
+					"y": 604,
+					"gHeight": 98,
+					"gWidth": 222,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"3db654e7-b9ba-4b30-b304-e5a5c8a88dc3": {
+					"referencedItemId": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
+					"x": 537,
+					"y": 441,
+					"gHeight": 142,
+					"gWidth": 286,
+					"color": "#ffffff",
+					"background": "#8bc34a",
+					"resized": true,
+					"autoExpand": true
+				},
+				"08b127c6-9f2c-432d-82a7-3c15ffb1465f": {
+					"referencedItemId": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
+					"x": 881,
+					"y": 475,
+					"gHeight": 88,
+					"gWidth": 209,
+					"color": "#ffffff",
+					"background": "#8bc34a",
+					"resized": true,
+					"autoExpand": true
+				},
+				"9236ec17-7e99-4717-b1a8-70e739823c8f": {
+					"referencedItemId": "9236ec17-7e99-4717-b1a8-70e739823c8f",
+					"x": 938,
+					"y": 72,
+					"gHeight": 98,
+					"gWidth": 269,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				}
+			},
+			"scroll": {
+				"x": 0,
+				"y": 0
+			},
+			"type": "erd"
+		}
+	},
+	"order": []
+}

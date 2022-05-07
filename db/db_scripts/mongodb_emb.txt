@@ -1,0 +1,255 @@
+db.createCollection('person', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'person',
+      required: ['nat_id_code', 'country_code', 'person_status_type_code', 'e_mail', 'birth_date', 'reg_time'],
+      properties: {
+        nat_id_code: {
+          bsonType: 'string',
+          pattern: '^[[:alnum:][:space:]+=\/-]+$',
+          maxLength: 50,
+          description: 'National identification code cannot be empty. Max length 50 symbols, consists of valid symbols.'
+        },
+        country_code: {
+          bsonType: 'string',
+          pattern: '^[A-Z]{3}$',
+          description: 'Country code consists of three capital letters.'
+        },
+        person_status_type_code: {
+          bsonType: 'int'
+        },
+        e_mail: {
+          bsonType: 'string',
+          pattern: '^\\S+@\\S+$',
+          maxLength: 254,
+          description: 'E-mail contains atleast one at sign. Max length 254 symbols.'
+        },
+        birth_date: {
+          bsonType: 'date'
+        },
+        reg_time: {
+          bsonType: 'date'
+        },
+        given_name: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 1000,
+          description: 'Given name cannot be empty. Max length 100 symbols.'
+        },
+        surname: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 1000,
+          description: 'Surname cannot be empty. Max length 100 symbols.'
+        },
+        address: {
+          bsonType: 'string',
+          pattern: '(.*[^0-9].*)(\\S)',
+          maxLength: 1000,
+          description: 'Address cannot be empty. Max length 1000 symbols, not only numeric.'
+        },
+        tel_nr: {
+          bsonType: 'string',
+          pattern: '^[0-9\\s\\-\\+]{7,20}$',
+          description: 'Tel. nr. can only contain numbers,whitespace,+,-. Must be 7 to 20 characters long.'
+        },
+        employee: {
+          bsonType: 'object',
+          title: 'employee',
+          required: ['employee_status_type_code'],
+          properties: {
+            employee_status_type_code: {
+              bsonType: 'int'
+            },
+            mentor_id: {
+              bsonType: 'objectId'
+            },
+            employment: {
+              bsonType: 'array',
+              items: {
+                title: 'employment',
+                required: ['occupation_code', 'start_time'],
+                properties: {
+                  occupation_code: {
+                    bsonType: 'int'
+                  },
+                  start_time: {
+                    bsonType: 'date'
+                  },
+                  end_time: {
+                    bsonType: 'date'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+});
+db.person.createIndex({
+  "e_mail": 1
+}, {
+  name: "ak_person_e_mail",
+  unique: true
+})
+
+db.person.createIndex({
+  "country_code": 1,
+  "nat_id_code": 1
+}, {
+  name: "ak_person_country_and_nat_id_code",
+  unique: true
+})
+db.createCollection('country', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'country',
+      required: ['country_code', 'name'],
+      properties: {
+        country_code: {
+          bsonType: 'string',
+          pattern: '^[A-Z]{3}$',
+          description: 'Country code consists of three capital letters.'
+        },
+        name: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 100,
+          description: 'Country name cannot be empty. Max length 100 symbols.'
+        }
+      }
+    }
+  }
+});
+db.country.createIndex({
+  "name": 1
+}, {
+  name: "ak_country_name",
+  unique: true
+})
+
+db.country.createIndex({
+  "country_code": 1
+}, {
+  name: "pk_country",
+  unique: true
+})
+db.createCollection('employee_status_type', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'employee_status_type',
+      required: ['employee_status_type_code', 'name'],
+      properties: {
+        employee_status_type_code: {
+          bsonType: 'int'
+        },
+        name: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 100,
+          description: 'Employee status type name not empty. Max length 100 symbols.'
+        },
+        description: {
+          bsonType: 'string',
+          pattern: '\\S',
+          description: 'Employee status type description cannot be empty.'
+        }
+      }
+    }
+  }
+});
+db.employee_status_type.createIndex({
+  "name": 1
+}, {
+  name: "ak_employee_status_type_name",
+  unique: true
+})
+
+db.employee_status_type.createIndex({
+  "employee_status_type_code": 1
+}, {
+  name: "pk_employee_status_type",
+  unique: true
+})
+db.createCollection('occupation', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'occupation',
+      required: ['occupation_code', 'name'],
+      properties: {
+        occupation_code: {
+          bsonType: 'int',
+          minimum: 1
+        },
+        name: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 100,
+          description: 'Occupation cannot be empty. Max 100 symbols.'
+        },
+        description: {
+          bsonType: 'string',
+          pattern: '\\S',
+          description: 'Occupation description cannot be empty.'
+        }
+      }
+    }
+  }
+});
+db.occupation.createIndex({
+  "name": 1
+}, {
+  name: "ak_occupation_name",
+  unique: true
+})
+
+db.occupation.createIndex({
+  "occupation_code": 1
+}, {
+  name: "pk_occupation",
+  unique: true
+})
+db.createCollection('person_status_type', {
+  validator: {
+    $jsonSchema: {
+      bsonType: 'object',
+      title: 'person_status_type',
+      required: ['person_status_type_code', 'name'],
+      properties: {
+        person_status_type_code: {
+          bsonType: 'int'
+        },
+        name: {
+          bsonType: 'string',
+          pattern: '\\S',
+          maxLength: 100,
+          description: 'Person status type name cannot be empty. Max length 100.'
+        },
+        description: {
+          bsonType: 'string',
+          pattern: '\\S',
+          description: 'Person status type description cannot be empty.'
+        }
+      }
+    }
+  }
+});
+db.person_status_type.createIndex({
+  "person_status_type_code": 1
+}, {
+  name: "pk_person_status_type",
+  unique: true
+})
+
+db.person_status_type.createIndex({
+  "name": 1
+}, {
+  name: "ak_person_status_type_name",
+  unique: true
+})

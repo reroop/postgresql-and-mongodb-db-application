@@ -1,0 +1,93 @@
+CREATE TABLE Employment (
+	person_id INTEGER NOT NULL,
+	occupation_code SMALLINT NOT NULL,
+	start_time TIMESTAMP NOT NULL,
+	end_time TIMESTAMP,
+	CONSTRAINT PK_Employment PRIMARY KEY (person_id, start_time, occupation_code),
+	CONSTRAINT Employment_start_time_between_01_01_2010_to_31_12_2100 CHECK (start_time >= '2010-01-01' AND start_time < '2101-01-01'),
+	CONSTRAINT Employment_start_time_not_bigger_than_end_time CHECK (start_time <= end_time),
+	CONSTRAINT Employment_end_time_between_01_01_2010_to_31_12_2100 CHECK (end_time >= '2010-01-01' AND end_time < '2101-01-01')
+	);
+CREATE INDEX IDX_Employment_person_id ON Employment (person_id );
+CREATE TABLE Employee_status_type (
+	employee_status_type_code SMALLINT NOT NULL,
+	name VARCHAR ( 100 ) NOT NULL,
+	description TEXT,
+	CONSTRAINT PK_Employee_status_type PRIMARY KEY (employee_status_type_code),
+	CONSTRAINT AK_Employee_status_type_name UNIQUE (name),
+	CONSTRAINT Employee_status_type_description_not_empty CHECK (description !~ '^[[:space:]]+$' AND description <> ''),
+	CONSTRAINT Employee_status_type_name_not_empty CHECK (name !~ '^[[:space:]]+$' AND name <> '')
+	);
+CREATE TABLE Person_status_type (
+	person_status_type_code SMALLINT NOT NULL,
+	name VARCHAR(100) NOT NULL,
+	description TEXT,
+	CONSTRAINT PK_Person_status_type PRIMARY KEY (person_status_type_code),
+	CONSTRAINT AK_Person_status_type_name UNIQUE (name),
+	CONSTRAINT Person_status_type_description_not_empty CHECK (description !~ '^[[:space:]]+$' AND description <> ''),
+	CONSTRAINT Person_status_type_name_not_empty CHECK (name !~ '^[[:space:]]+$' AND name <> '')
+);
+CREATE TABLE Employee (
+	person_id INTEGER NOT NULL,
+	mentor_id INTEGER,
+	employee_status_type_code SMALLINT NOT NULL,
+	CONSTRAINT PK_Employee PRIMARY KEY (person_id),
+	CONSTRAINT Employee_person_id_not_mentor_id CHECK (person_id != mentor_id)
+	);
+CREATE INDEX IDX_Employee_person_id ON Employee (person_id );
+CREATE INDEX IDX_Employee_mentor_id ON Employee (mentor_id );
+CREATE TABLE Person (
+	_id SERIAL NOT NULL,
+	nat_id_code VARCHAR ( 50 ) NOT NULL,
+	country_code VARCHAR ( 3 ) NOT NULL,
+	person_status_type_code SMALLINT NOT NULL,
+	e_mail VARCHAR ( 254 ) NOT NULL,
+	birth_date DATE NOT NULL,
+	reg_time TIMESTAMP DEFAULT LOCALTIMESTAMP(0) NOT NULL,
+	given_name VARCHAR ( 1000 ),
+	surname VARCHAR ( 1000 ),
+	address VARCHAR ( 1000 ),
+	tel_nr VARCHAR ( 20 ),
+	CONSTRAINT AK_Person_e_mail UNIQUE (e_mail),
+	CONSTRAINT PK_Person PRIMARY KEY (_id),
+	CONSTRAINT AK_Person_country_and_nat_id_code UNIQUE (nat_id_code, country_code),
+	CONSTRAINT Person_e_mail_contains_atleast_one_at_sign CHECK (e_mail LIKE '%@%' ),
+	CONSTRAINT Person_birth_date_between_01_01_1900_to_31_12_2100 CHECK (birth_date >= '1900-01-01' AND birth_date < '2101-01-01'),
+	CONSTRAINT Person_nat_id_code_contains_valid_symbols CHECK (nat_id_code ~* '^[[:alnum:][:space:]+=\/-]+$'),
+	CONSTRAINT Person_address_not_contains_only_numbers CHECK (address !~ '^\d+?$'),
+	CONSTRAINT Person_address_not_empty CHECK (address !~ '^[[:space:]]+$' AND address <> ''),
+	CONSTRAINT Person_given_name_not_empty CHECK (given_name !~ '^[[:space:]]+$' AND given_name <> ''),
+	CONSTRAINT Person_given_name_or_surname_is_registered CHECK ((given_name IS NOT NULL) OR (surname IS NOT NULL)),
+	CONSTRAINT Person_birth_date_not_bigger_than_reg_time CHECK (birth_date <= reg_time),
+	CONSTRAINT Person_reg_time_between_01_01_2010_to_31_12_2100 CHECK (reg_time >= '2010-01-01' AND reg_time < '2101-01-01'),
+	CONSTRAINT Person_surname_not_empty CHECK (surname !~ '^[[:space:]]+$' AND surname <> ''),
+	CONSTRAINT Person_nat_id_code_not_empty CHECK (nat_id_code !~ '^[[:space:]]+$' AND nat_id_code <> ''),
+	CONSTRAINT Person_tel_nr_is_valid CHECK (tel_nr ~* '^[0-9\s\-\+]{7,20}$'),
+	CONSTRAINT Person_tel_nr_not_empty CHECK (tel_nr !~ '^[[:space:]]+$' AND tel_nr <> '')
+	);
+CREATE TABLE Country (
+	country_code VARCHAR ( 3 ) NOT NULL,
+	name VARCHAR ( 100 ) NOT NULL,
+	CONSTRAINT PK_Country PRIMARY KEY (country_code),
+	CONSTRAINT AK_Country_name UNIQUE (name),
+	CONSTRAINT Country_name_not_empty CHECK (name !~ '^[[:space:]]+$' AND name <> ''),
+	CONSTRAINT Country_country_code_consists_of_three_capital_letters CHECK (country_code ~ '^[A-Z]{3}$')
+	);
+CREATE TABLE Occupation (
+	occupation_code SMALLINT NOT NULL,
+	name VARCHAR ( 100 ) NOT NULL,
+	description TEXT,
+	CONSTRAINT AK_Occupation_name UNIQUE (name),
+	CONSTRAINT PK_Occupation PRIMARY KEY (occupation_code),
+	CONSTRAINT Occupation_name_not_empty CHECK (name !~ '^[[:space:]]+$' AND name <> ''),
+	CONSTRAINT Occupation_description_not_empty CHECK (description !~ '^[[:space:]]+$' AND description <> ''),
+	CONSTRAINT Occupation_occupation_code_greater_than_zero CHECK (occupation_code > 0)
+	);
+ALTER TABLE Person ADD CONSTRAINT FK_Person_country_code FOREIGN KEY (country_code) REFERENCES Country (country_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE Person ADD CONSTRAINT FK_Person_person_status_type_code FOREIGN KEY (person_status_type_code) REFERENCES Person_status_type (person_status_type_code) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_person_id FOREIGN KEY (person_id) REFERENCES Person (_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_mentor_id FOREIGN KEY (mentor_id) REFERENCES Employee (person_id)  ON DELETE SET NULL ON UPDATE NO ACTION;
+ALTER TABLE Employee ADD CONSTRAINT FK_Employee_employee_status_type_code FOREIGN KEY (employee_status_type_code) REFERENCES Employee_status_type (employee_status_type_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE User_account ADD CONSTRAINT FK_User_account_person_id FOREIGN KEY (person_id) REFERENCES Person (_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE Employment ADD CONSTRAINT FK_Employment_person_id FOREIGN KEY (person_id) REFERENCES Employee (person_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
+ALTER TABLE Employment ADD CONSTRAINT FK_Employment_occupation_code FOREIGN KEY (occupation_code) REFERENCES Occupation (occupation_code)  ON DELETE NO ACTION ON UPDATE CASCADE;

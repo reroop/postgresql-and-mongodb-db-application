@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -24,6 +25,11 @@ public class MongoDbRefEmployeesService {
     }
 
     public Employee.EmployeeDbEntry addEmployee(Employee employee) throws Throwable {
+        if (employee.getMentor_id() != null) {
+            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor"));
+            }
+        }
         return mongoDbRefEmployeeRepository.addEmployee(employee);
     }
 
@@ -32,6 +38,11 @@ public class MongoDbRefEmployeesService {
     }
 
     public boolean updateEmployee(Employee employee) throws Throwable {
+        if (employee.getMentor_id() != null) {
+            if (Objects.equals(employee.getPerson_id(), employee.getMentor_id())) {
+                throw new Exception(new Throwable("person can't be his/herself mentor"));
+            }
+        }
         return mongoDbRefEmployeeRepository.updateEmployee(employee);
     }
 }

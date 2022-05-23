@@ -48,7 +48,6 @@ CREATE TABLE Person (
 	surname VARCHAR ( 1000 ),
 	address VARCHAR ( 1000 ),
 	tel_nr VARCHAR ( 20 ),
-	CONSTRAINT AK_Person_e_mail UNIQUE (e_mail),
 	CONSTRAINT PK_Person PRIMARY KEY (_id),
 	CONSTRAINT AK_Person_country_and_nat_id_code UNIQUE (nat_id_code, country_code),
 	CONSTRAINT Person_e_mail_contains_atleast_one_at_sign CHECK (e_mail LIKE '%@%' ),
@@ -91,3 +90,4 @@ ALTER TABLE Employee ADD CONSTRAINT FK_Employee_employee_status_type_code FOREIG
 ALTER TABLE User_account ADD CONSTRAINT FK_User_account_person_id FOREIGN KEY (person_id) REFERENCES Person (_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE Employment ADD CONSTRAINT FK_Employment_person_id FOREIGN KEY (person_id) REFERENCES Employee (person_id)  ON DELETE CASCADE ON UPDATE NO ACTION;
 ALTER TABLE Employment ADD CONSTRAINT FK_Employment_occupation_code FOREIGN KEY (occupation_code) REFERENCES Occupation (occupation_code)  ON DELETE NO ACTION ON UPDATE CASCADE;
+CREATE UNIQUE INDEX idx_ak_person_e_mail ON Person(LOWER(e_mail));

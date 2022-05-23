@@ -93,7 +93,11 @@ db.person.createIndex({
   "e_mail": 1
 }, {
   name: "ak_person_e_mail",
-  unique: true
+  unique: true,
+  collation: {
+    locale: "et",
+    strength: 2
+  }
 })
 
 db.person.createIndex({

@@ -1,14 +1,14 @@
 {
 	"tables": {
-		"7b459b43-d686-41f3-8761-3dff0085042f": {
-			"id": "7b459b43-d686-41f3-8761-3dff0085042f",
+		"97eec710-6c48-49de-a8de-92f9a6a7346d": {
+			"id": "97eec710-6c48-49de-a8de-92f9a6a7346d",
 			"visible": true,
 			"name": "person",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "340cf0a1-d981-4abb-91fb-48dce965aeef",
+					"id": "c73f3a18-b8ae-4645-a56e-bf9f1fe28da6",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -19,7 +19,7 @@
 					"data": ""
 				},
 				{
-					"id": "4ca550bc-d380-4e43-b5ea-58ebdb5c8aab",
+					"id": "cd1adeb1-76ee-4095-b3aa-8551c4ebd27e",
 					"name": "nat_id_code",
 					"datatype": "string",
 					"param": "",
@@ -34,7 +34,7 @@
 					"validation": "pattern: '^[[:alnum:][:space:]+=\\/-]+$',\nmaxLength: 50"
 				},
 				{
-					"id": "a06c6e26-3fa5-4a0e-af0e-7e5ab41e964c",
+					"id": "8d862ef8-1f35-45c6-831e-65d4dbeb4605",
 					"name": "country_code",
 					"datatype": "string",
 					"param": "",
@@ -48,7 +48,7 @@
 					"validation": "pattern: '^[A-Z]{3}$'"
 				},
 				{
-					"id": "7a3f42f6-d249-4578-a8ab-fa849eca0f70",
+					"id": "017a987f-b389-4dc0-9783-6cbd582ef6ef",
 					"name": "person_status_type_code",
 					"datatype": "int",
 					"param": "",
@@ -64,7 +64,7 @@
 					"ref": "person_status_type"
 				},
 				{
-					"id": "5eb14c6e-c3e2-443a-bfcb-40c7207cfab3",
+					"id": "2e9333a3-dbb0-4f4e-bd46-699b72a72abd",
 					"name": "e_mail",
 					"datatype": "string",
 					"param": "",
@@ -79,7 +79,7 @@
 					"validation": "pattern: '^\\\\S+@\\\\S+$',\nmaxLength: 254"
 				},
 				{
-					"id": "8cc6b6dd-6bef-4329-b93d-8cd185cbe35d",
+					"id": "b1b43e55-e942-4495-8724-5069c8a3552b",
 					"name": "birth_date",
 					"datatype": "date",
 					"param": "",
@@ -94,7 +94,7 @@
 					"validation": ""
 				},
 				{
-					"id": "87758691-af54-480b-a164-268138d2cfbd",
+					"id": "e0fa24f2-6e54-426b-9904-e9bf89417553",
 					"name": "reg_time",
 					"datatype": "date",
 					"param": "",
@@ -109,7 +109,7 @@
 					"validation": ""
 				},
 				{
-					"id": "810b875a-d892-4a73-97f7-c4999a9fe68a",
+					"id": "462bd779-4e07-4296-94c2-ca608e13dcab",
 					"name": "given_name",
 					"datatype": "string",
 					"param": "",
@@ -124,7 +124,7 @@
 					"validation": "pattern: '\\\\S',\nmaxLength: 1000"
 				},
 				{
-					"id": "54d417c4-db26-4633-9c87-a16c6c68ca81",
+					"id": "677e556a-7272-4db3-afc7-f76893f2a0c9",
 					"name": "surname",
 					"datatype": "string",
 					"param": "",
@@ -139,7 +139,7 @@
 					"validation": "pattern: '\\\\S',\nmaxLength: 1000"
 				},
 				{
-					"id": "0d998f5b-4e82-4959-8dcc-f5c133e3e5e3",
+					"id": "45b446f6-65da-4402-afac-6356e8bbc331",
 					"name": "address",
 					"datatype": "string",
 					"param": "",
@@ -154,59 +154,45 @@
 					"validation": "pattern: '(.*[^0-9].*)(\\\\S)',\nmaxLength: 1000"
 				},
 				{
-					"id": "3dc9bf32-2861-4014-bf11-24e80851b593",
+					"id": "6ea09829-4c12-4a28-9675-c4dcddf36bf8",
 					"name": "tel_nr",
 					"datatype": "string",
 					"param": "",
 					"pk": false,
 					"nn": false,
-					"comment": "Tel. nr. can only contain numbers,whitespace,+,-. Must be 7 to 20 characters long.",
+					"comment": "Tel. nr. can only contain numbers,whitespace,+,-. Must be 7 to 20 characters long",
 					"defaultvalue": "",
 					"data": "",
 					"list": false,
 					"enum": "",
 					"validate": "",
+					"pattern": false,
 					"validation": "pattern: '^[0-9\\\\s\\\\-\\\\+]{7,20}$'"
-				},
-				{
-					"id": "2ada4cca-ecd9-4012-986e-9c864e58dd2f",
-					"name": "employee",
-					"datatype": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-					"param": "",
-					"pk": false,
-					"nn": false,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
 				}
 			],
 			"relations": [
-				"9aebdb72-ff36-45cd-9686-e4670e9441a3",
-				"2dacfa37-24a3-40ff-9623-03b4d99f135c"
+				"8502fa9d-a41e-4ae4-abfe-29fe8c57131f",
+				"860c07c4-c6a5-4f04-b5a4-c12408371c5b",
+				"9a523021-a95b-4065-9cea-34717a947e7e"
 			],
-			"lines": [
-				"b13efc26-f84b-43cd-92cc-af2ba4762922"
-			],
+			"lines": [],
 			"keys": [
 				{
-					"id": "48eff2c8-3148-44bf-9d5b-a01bfec08947",
-					"name": "pk_employee",
+					"id": "9c459788-369c-447e-a7f9-0d1db2c09187",
+					"name": "pk_person",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "bf34fee9-09d0-459b-9fc5-2a111fabc48c",
-							"colid": "340cf0a1-d981-4abb-91fb-48dce965aeef"
+							"id": "e575f699-70fa-4112-a60d-ee8162abce38",
+							"colid": "c73f3a18-b8ae-4645-a56e-bf9f1fe28da6"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "24933def-f83c-4b96-a3df-42c86d9571c7",
+					"id": "6b629f2a-70c4-4d17-923b-2cb1b7470095",
 					"name": "ak_person_e_mail",
 					"unique": false,
 					"fulltext": false,
@@ -214,13 +200,13 @@
 					"algorithm": "na",
 					"lockoption": "na",
 					"mongodb": {
-						"options": "{\nname: \"ak_person_e_mail\",\nunique: true\n}",
+						"options": "{\nname: \"ak_person_e_mail\",\nunique: true,\ncollation: {\n     locale: \"et\",\n     strength: 2\n   }\n}",
 						"fields": "{\n\"e_mail\": 1\n}"
 					},
 					"cols": []
 				},
 				{
-					"id": "eefc1c50-f16e-4406-98b6-bfd681fe70b2",
+					"id": "535bb992-624f-4ed0-913e-4fa0634f66f5",
 					"name": "ak_person_country_and_nat_id_code",
 					"unique": false,
 					"fulltext": false,
@@ -229,7 +215,7 @@
 					"lockoption": "na",
 					"mongodb": {
 						"options": "{\nname: \"ak_person_country_and_nat_id_code\",\nunique: true\n}",
-						"fields": "{\n\"country_code\": 1,\n\"nat_id_code\": 1\n}"
+						"fields": "{\n\"nat_id_code\": 1,\n\"country_code\": 1\n}"
 					},
 					"cols": []
 				}
@@ -237,21 +223,17 @@
 			"embeddable": false,
 			"generate": true,
 			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
+			"internalColumnIdRef": ""
 		},
-		"f3722de0-1460-4aba-a774-11c2455a2fcc": {
-			"id": "f3722de0-1460-4aba-a774-11c2455a2fcc",
+		"80794c16-4b35-4329-9b92-43418257351c": {
+			"id": "80794c16-4b35-4329-9b92-43418257351c",
 			"visible": true,
 			"name": "country",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "2bd0ef4e-57cc-485d-a33a-342e8a438110",
+					"id": "4602e933-1a0e-491e-bece-bfe4b1ea2414",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -265,7 +247,7 @@
 					"validate": ""
 				},
 				{
-					"id": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6",
+					"id": "90433279-1c7e-4b78-9690-a70eb914a48b",
 					"name": "country_code",
 					"datatype": "string",
 					"param": "",
@@ -274,10 +256,13 @@
 					"comment": "Country code consists of three capital letters.",
 					"defaultvalue": "",
 					"data": "",
+					"fk": false,
+					"ref": "isik",
+					"pattern": false,
 					"validation": "pattern: '^[A-Z]{3}$'"
 				},
 				{
-					"id": "f064c6c9-6daf-4d1b-978a-37cdfc7eba03",
+					"id": "92bbc2f8-cd7f-4cb8-bc73-b45e1b1a5725",
 					"name": "name",
 					"datatype": "string",
 					"param": "",
@@ -293,26 +278,26 @@
 				}
 			],
 			"relations": [
-				"9aebdb72-ff36-45cd-9686-e4670e9441a3"
+				"8502fa9d-a41e-4ae4-abfe-29fe8c57131f"
 			],
 			"lines": [],
 			"keys": [
 				{
-					"id": "e5b604e7-c3bd-424c-a727-d240796cea1f",
+					"id": "382af637-7456-4ce8-8138-1daea0d02a67",
 					"name": "pk_country",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "eb4b3c96-6d84-403b-b15c-d4d869eadac3",
-							"colid": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6"
+							"id": "4a32624b-1c81-422a-afbb-3027c37224d8",
+							"colid": "90433279-1c7e-4b78-9690-a70eb914a48b"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "d70c2e7c-6e98-40ea-b673-abfcda53fa93",
+					"id": "814db8d3-a134-4ecc-86bb-4cf6e08ba929",
 					"name": "ak_country_name",
 					"unique": false,
 					"fulltext": false,
@@ -326,7 +311,7 @@
 					"cols": []
 				},
 				{
-					"id": "024359a9-fb1b-44cb-b771-2176ac78393f",
+					"id": "40eab141-7607-40e6-a028-9f4b8311c64c",
 					"name": "pk_country",
 					"unique": false,
 					"fulltext": false,
@@ -344,20 +329,20 @@
 			"generate": true,
 			"generateCustomCode": true,
 			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
+			"validationLevel": "strict",
+			"validationAction": "error",
 			"collation": "",
 			"others": ""
 		},
-		"8fb4a47f-730d-476a-a466-9293620a8b7d": {
-			"id": "8fb4a47f-730d-476a-a466-9293620a8b7d",
+		"6f7ec45a-586a-43b5-b5f4-a70d483f0c1b": {
+			"id": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
 			"visible": true,
-			"name": "employee_status_type",
+			"name": "employee",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "aa841dfe-8073-4ca1-af38-9e312a811e03",
+					"id": "2823e2b0-1e2a-46ce-8ab4-d5cbe3c598ce",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -371,7 +356,118 @@
 					"validate": ""
 				},
 				{
-					"id": "361617fb-25fb-4201-906b-17ce06dc9ec3",
+					"id": "64a841d7-c94b-4aa0-a0f0-015a3196e399",
+					"name": "person_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "isik"
+				},
+				{
+					"id": "74415e62-97c0-4372-9960-42b6252c96d0",
+					"name": "employee_status_type_code",
+					"datatype": "int",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": "",
+					"fk": true,
+					"ref": "tootaja_seisundi_liik",
+					"validation": ""
+				},
+				{
+					"id": "3dc09b61-fffc-44e3-9130-21d4f3f18fcb",
+					"name": "mentor_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "tootaja"
+				}
+			],
+			"relations": [
+				"9eac0449-1057-44d9-84a8-6e8d9aa225fb",
+				"860c07c4-c6a5-4f04-b5a4-c12408371c5b",
+				"b14d09cc-77f3-4702-9374-ae2f78f68070",
+				"f731b107-1726-4170-8a9d-aaef9b871fe1"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "9d9ce6a0-a2e9-47d9-aa40-ba7b4b6cb121",
+					"name": "pk_employee",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "8440cc63-05e8-4880-95dc-2acf00755415",
+							"colid": "64a841d7-c94b-4aa0-a0f0-015a3196e399"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "f392e8bd-1fc8-410b-a602-877143ce0bb4",
+					"name": "pk_employee",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_employee\",\nunique: true\n}",
+						"fields": "{\n\"person_id\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"131458ad-be72-4206-8d4d-fab2e9560298": {
+			"id": "131458ad-be72-4206-8d4d-fab2e9560298",
+			"visible": true,
+			"name": "employee_status_type",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2d13cea3-4060-466d-959a-ed2eb26cf7ae",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "b32e087c-3e8c-442c-9108-e4820a13a23c",
 					"name": "employee_status_type_code",
 					"datatype": "int",
 					"param": "",
@@ -379,10 +475,13 @@
 					"nn": true,
 					"comment": "",
 					"defaultvalue": "",
-					"data": ""
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
 				},
 				{
-					"id": "65c0c97a-b873-49c8-81bf-52e823e13c06",
+					"id": "2425c7cb-5977-4184-834c-d2f20c3469aa",
 					"name": "name",
 					"datatype": "string",
 					"param": "",
@@ -391,13 +490,10 @@
 					"comment": "Employee status type name not empty. Max length 100 symbols.",
 					"defaultvalue": "",
 					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": "",
 					"validation": "pattern: '\\\\S',\nmaxLength: 100"
 				},
 				{
-					"id": "fd8b2846-10bb-49ee-9a12-74e2f67c3ba5",
+					"id": "14e485da-3fb1-4572-a9d6-8da18f96da46",
 					"name": "description",
 					"datatype": "string",
 					"param": "",
@@ -412,27 +508,27 @@
 					"validation": "pattern: '\\\\S'"
 				}
 			],
-			"relations": [],
-			"lines": [
-				"5ca124fd-36a0-4534-9b76-8cf0867b228c"
+			"relations": [
+				"9eac0449-1057-44d9-84a8-6e8d9aa225fb"
 			],
+			"lines": [],
 			"keys": [
 				{
-					"id": "09cb33ae-2068-4077-9861-ae1038157fc3",
+					"id": "06b2ca2a-8771-41d5-80b7-1df5b8863147",
 					"name": "pk_employee_status_type",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "a39dc450-17ac-431e-8f25-cdb60a7e5aaa",
-							"colid": "361617fb-25fb-4201-906b-17ce06dc9ec3"
+							"id": "29984485-1086-4a61-bb37-15d0bf3fc3d9",
+							"colid": "b32e087c-3e8c-442c-9108-e4820a13a23c"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "f1e67743-db3c-4fb8-a80c-0944d0501a30",
+					"id": "f09b1107-e7b7-4d7b-baf8-a66c6a329681",
 					"name": "ak_employee_status_type_name",
 					"unique": false,
 					"fulltext": false,
@@ -446,7 +542,7 @@
 					"cols": []
 				},
 				{
-					"id": "41270fe3-31b9-4775-91c2-18055929db6b",
+					"id": "3eb35468-495d-4a7a-ab14-983029b3f558",
 					"name": "pk_employee_status_type",
 					"unique": false,
 					"fulltext": false,
@@ -469,15 +565,15 @@
 			"collation": "",
 			"others": ""
 		},
-		"ce10a936-4fb2-46a2-affb-79318812bb9c": {
-			"id": "ce10a936-4fb2-46a2-affb-79318812bb9c",
+		"247d1d46-d97b-41f2-90a0-bbcd1027e32b": {
+			"id": "247d1d46-d97b-41f2-90a0-bbcd1027e32b",
 			"visible": true,
-			"name": "occupation",
+			"name": "employment",
 			"desc": "",
 			"estimatedSize": "",
 			"cols": [
 				{
-					"id": "20563356-2e54-4a0c-b63d-2dd41cfaa664",
+					"id": "e48093c0-27bd-48be-9501-c17688005ad4",
 					"name": "_id",
 					"datatype": "objectId",
 					"param": "",
@@ -491,7 +587,135 @@
 					"validate": ""
 				},
 				{
-					"id": "7c7566b7-7423-4565-b85d-9733bc4abb5b",
+					"id": "7af61220-559e-4021-8dcf-edd2a3373636",
+					"name": "person_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "tootaja"
+				},
+				{
+					"id": "4c69bc9a-8fe2-45ad-9965-2d2ce3d5c3d1",
+					"name": "occupation_code",
+					"datatype": "int",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"fk": true,
+					"ref": "amet"
+				},
+				{
+					"id": "783c77cc-48f1-42a8-92f4-c3f38350dd63",
+					"name": "start_time",
+					"datatype": "date",
+					"param": "",
+					"pk": true,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "3020953b-f32f-436b-b741-bf40bc9e1f30",
+					"name": "end_time",
+					"datatype": "date",
+					"param": "",
+					"pk": false,
+					"nn": false,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				}
+			],
+			"relations": [
+				"b14d09cc-77f3-4702-9374-ae2f78f68070",
+				"137a7406-c7c4-46ef-b74a-7946b2a9b688"
+			],
+			"lines": [],
+			"keys": [
+				{
+					"id": "c2bf25a1-db1b-4564-b481-39683a4a8f29",
+					"name": "pk_employment",
+					"isPk": true,
+					"using": "na",
+					"cols": [
+						{
+							"id": "d1a1bda4-c516-4ec7-891e-0fe780e10fe4",
+							"colid": "7af61220-559e-4021-8dcf-edd2a3373636"
+						},
+						{
+							"id": "f570baca-12bb-47eb-b311-26aa3daae295",
+							"colid": "4c69bc9a-8fe2-45ad-9965-2d2ce3d5c3d1"
+						},
+						{
+							"id": "42c5a706-12a4-48c7-a834-5c449549ccbd",
+							"colid": "783c77cc-48f1-42a8-92f4-c3f38350dd63"
+						}
+					]
+				}
+			],
+			"indexes": [
+				{
+					"id": "3308de66-d6a5-46dc-98f5-2da74d0b928d",
+					"name": "pk_employment",
+					"unique": false,
+					"fulltext": false,
+					"using": "na",
+					"algorithm": "na",
+					"lockoption": "na",
+					"mongodb": {
+						"options": "{\nname: \"pk_employment\",\nunique: true\n}",
+						"fields": "{\n\"person_id\": 1,\n\"occupation_code\": 1,\n\"start_time\": 1\n}"
+					},
+					"cols": []
+				}
+			],
+			"embeddable": false,
+			"generate": true,
+			"generateCustomCode": true,
+			"internalColumnIdRef": "",
+			"validationLevel": "na",
+			"validationAction": "na",
+			"collation": "",
+			"others": ""
+		},
+		"83ad3849-13b9-49b3-8f6e-020242e52923": {
+			"id": "83ad3849-13b9-49b3-8f6e-020242e52923",
+			"visible": true,
+			"name": "occupation",
+			"desc": "",
+			"estimatedSize": "",
+			"cols": [
+				{
+					"id": "2cac6a7f-3e27-4bbb-9972-929499cacb26",
+					"name": "_id",
+					"datatype": "objectId",
+					"param": "",
+					"pk": false,
+					"nn": true,
+					"comment": "",
+					"defaultvalue": "",
+					"data": "",
+					"list": false,
+					"enum": "",
+					"validate": ""
+				},
+				{
+					"id": "31c7f77a-0ffa-4bb1-8d4e-b619c9366434",
 					"name": "occupation_code",
 					"datatype": "int",
 					"param": "",
@@ -503,7 +727,7 @@
 					"validation": "minimum: 1"
 				},
 				{
-					"id": "3a208619-32d7-4d9d-997e-006767d030ab",
+					"id": "ddd9ff0e-fa04-499b-a2c6-a1dc6fa397ee",
 					"name": "name",
 					"datatype": "string",
 					"param": "",
@@ -518,7 +742,7 @@
 					"validation": "pattern: '\\\\S',\nmaxLength: 100"
 				},
 				{
-					"id": "2d570571-0436-4165-8813-0dcc19d2dfb0",
+					"id": "760d4cab-c4d4-4fe7-910e-366d90263e31",
 					"name": "description",
 					"datatype": "string",
 					"param": "",
@@ -533,27 +757,27 @@
 					"validation": "pattern: '\\\\S'"
 				}
 			],
-			"relations": [],
-			"lines": [
-				"44344ae1-c68c-40e4-91cb-6d0d7307951a"
+			"relations": [
+				"137a7406-c7c4-46ef-b74a-7946b2a9b688"
 			],
+			"lines": [],
 			"keys": [
 				{
-					"id": "881187ab-cd19-4197-907c-7102677a4df8",
+					"id": "4ebeea31-e103-4a95-9001-28d0cab674f3",
 					"name": "pk_occupation",
 					"isPk": true,
 					"using": "na",
 					"cols": [
 						{
-							"id": "da90503a-5e3e-4d37-9e54-6e274ee904ee",
-							"colid": "7c7566b7-7423-4565-b85d-9733bc4abb5b"
+							"id": "577987c4-dd54-436f-8785-38cc9b0f5bc4",
+							"colid": "31c7f77a-0ffa-4bb1-8d4e-b619c9366434"
 						}
 					]
 				}
 			],
 			"indexes": [
 				{
-					"id": "cec95b47-9c1d-478e-89cb-732c9140f2b1",
+					"id": "a3881c28-67c3-4581-9066-b7d26275f43e",
 					"name": "ak_occupation_name",
 					"unique": false,
 					"fulltext": false,
@@ -567,7 +791,7 @@
 					"cols": []
 				},
 				{
-					"id": "aa299a01-d264-444d-ac6a-5a6930df0d4f",
+					"id": "5c046c89-107b-4282-9513-6b2cd0fbcef2",
 					"name": "pk_occupation",
 					"unique": false,
 					"fulltext": false,
@@ -590,158 +814,8 @@
 			"collation": "",
 			"others": ""
 		},
-		"3db654e7-b9ba-4b30-b304-e5a5c8a88dc3": {
-			"id": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-			"visible": true,
-			"name": "employee",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "b83c9aaf-c0c9-4df5-a80b-290edcb050f2",
-					"name": "employee_status_type_code",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": "",
-					"validation": ""
-				},
-				{
-					"id": "c7bfd5d8-1e07-4704-90ab-5e111e3605ef",
-					"name": "mentor_id",
-					"datatype": "objectId",
-					"param": "",
-					"pk": false,
-					"nn": false,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "d712a379-5261-4771-996a-dfc3a50be4a2",
-					"name": "employment",
-					"datatype": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
-					"param": "",
-					"pk": false,
-					"nn": false,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": true,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [
-				"b13efc26-f84b-43cd-92cc-af2ba4762922",
-				"a396b142-55b1-4738-9fe4-75ae909afc5e",
-				"5ca124fd-36a0-4534-9b76-8cf0867b228c"
-			],
-			"keys": [
-				{
-					"id": "231a9e4e-2f89-4571-9401-19a1d2d5c376",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"08b127c6-9f2c-432d-82a7-3c15ffb1465f": {
-			"id": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
-			"visible": true,
-			"name": "employment",
-			"desc": "",
-			"estimatedSize": "",
-			"cols": [
-				{
-					"id": "8cc84fde-70e9-47d0-b692-40c8124793c9",
-					"name": "occupation_code",
-					"datatype": "int",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "fa02b0e1-d73d-45c0-a6e8-23cb28bc7aee",
-					"name": "start_time",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": true,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				},
-				{
-					"id": "98f6cc05-62bb-4b76-b894-04169301b352",
-					"name": "end_time",
-					"datatype": "date",
-					"param": "",
-					"pk": false,
-					"nn": false,
-					"comment": "",
-					"defaultvalue": "",
-					"data": "",
-					"list": false,
-					"enum": "",
-					"validate": ""
-				}
-			],
-			"relations": [],
-			"lines": [
-				"a396b142-55b1-4738-9fe4-75ae909afc5e",
-				"44344ae1-c68c-40e4-91cb-6d0d7307951a"
-			],
-			"keys": [
-				{
-					"id": "59c58842-a87e-4678-8703-e165fdfed321",
-					"name": "Primary key",
-					"isPk": true,
-					"using": "na",
-					"cols": []
-				}
-			],
-			"indexes": [],
-			"embeddable": true,
-			"generate": true,
-			"generateCustomCode": true,
-			"internalColumnIdRef": "",
-			"validationLevel": "na",
-			"validationAction": "na",
-			"collation": "",
-			"others": ""
-		},
-		"9236ec17-7e99-4717-b1a8-70e739823c8f": {
-			"id": "9236ec17-7e99-4717-b1a8-70e739823c8f",
+		"51caa57f-b1e6-4ce9-9aff-065be55b820c": {
+			"id": "51caa57f-b1e6-4ce9-9aff-065be55b820c",
 			"visible": true,
 			"name": "person_status_type",
 			"desc": "",
@@ -795,7 +869,7 @@
 					"param": "",
 					"pk": false,
 					"nn": false,
-					"comment": "Person status type description cannot be empty.",
+					"comment": "Person statys type description cannot be empty.",
 					"defaultvalue": "",
 					"data": "",
 					"list": false,
@@ -805,12 +879,12 @@
 				}
 			],
 			"relations": [
-				"2dacfa37-24a3-40ff-9623-03b4d99f135c"
+				"9a523021-a95b-4065-9cea-34717a947e7e"
 			],
 			"lines": [],
 			"keys": [
 				{
-					"id": "898ca6e2-e862-4eda-9531-b405f4f6b63b",
+					"id": "46b03394-12b1-4b13-a286-04d60d1b5e69",
 					"name": "Primary key",
 					"isPk": true,
 					"using": "na",
@@ -824,7 +898,7 @@
 			],
 			"indexes": [
 				{
-					"id": "0ab57489-3344-46ae-bb6c-c90dfb89f91b",
+					"id": "a4aa6370-facb-43c2-a00b-fa31cc5c9fc8",
 					"name": "pk_person_status_type",
 					"unique": false,
 					"fulltext": false,
@@ -838,7 +912,7 @@
 					"cols": []
 				},
 				{
-					"id": "a5731a69-24f9-4718-be97-729b86d6e4e3",
+					"id": "7e40a942-ca14-4cdc-a169-2869d8a2951c",
 					"name": "ak_person_status_type_name",
 					"unique": false,
 					"fulltext": false,
@@ -863,40 +937,165 @@
 		}
 	},
 	"relations": {
-		"9aebdb72-ff36-45cd-9686-e4670e9441a3": {
-			"id": "9aebdb72-ff36-45cd-9686-e4670e9441a3",
+		"9eac0449-1057-44d9-84a8-6e8d9aa225fb": {
+			"id": "9eac0449-1057-44d9-84a8-6e8d9aa225fb",
 			"visible": true,
-			"name": "country_person",
+			"name": "fk_tootaja_tootaja_seisundi_liik_kood",
 			"desc": "",
 			"type": "identifying",
-			"parent_key": "e5b604e7-c3bd-424c-a727-d240796cea1f",
-			"parent": "f3722de0-1460-4aba-a774-11c2455a2fcc",
-			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"parent_key": "06b2ca2a-8771-41d5-80b7-1df5b8863147",
+			"parent": "131458ad-be72-4206-8d4d-fab2e9560298",
+			"child": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
 			"c_mp": "true",
-			"c_mch": "true",
+			"c_mch": "false",
 			"c_p": "one",
 			"c_ch": "many",
 			"c_cp": "",
 			"c_cch": "",
 			"cols": [
 				{
-					"id": "9f5d1cca-fcd3-4e8b-92c2-531ea5a54dea",
-					"parentcol": "5bdaa4a9-160a-4a85-844d-44e0e0fe08b6",
-					"childcol": "a06c6e26-3fa5-4a0e-af0e-7e5ab41e964c"
+					"id": "f13ef6f5-8ff3-4b4a-8e4e-72aa24845868",
+					"parentcol": "b32e087c-3e8c-442c-9108-e4820a13a23c",
+					"childcol": "74415e62-97c0-4372-9960-42b6252c96d0"
 				}
 			],
 			"generate": true,
 			"generateCustomCode": true
 		},
-		"2dacfa37-24a3-40ff-9623-03b4d99f135c": {
-			"id": "2dacfa37-24a3-40ff-9623-03b4d99f135c",
+		"860c07c4-c6a5-4f04-b5a4-c12408371c5b": {
+			"id": "860c07c4-c6a5-4f04-b5a4-c12408371c5b",
+			"visible": true,
+			"name": "fk_employee_person_id",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "9c459788-369c-447e-a7f9-0d1db2c09187",
+			"parent": "97eec710-6c48-49de-a8de-92f9a6a7346d",
+			"child": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
+			"c_mp": "true",
+			"c_mch": "false",
+			"c_p": "one",
+			"c_ch": "one",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "a7279769-259e-482c-b770-b2bc641e4d47",
+					"parentcol": "c73f3a18-b8ae-4645-a56e-bf9f1fe28da6",
+					"childcol": "64a841d7-c94b-4aa0-a0f0-015a3196e399"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"b14d09cc-77f3-4702-9374-ae2f78f68070": {
+			"id": "b14d09cc-77f3-4702-9374-ae2f78f68070",
+			"visible": true,
+			"name": "fk_employment_person_id",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "9d9ce6a0-a2e9-47d9-aa40-ba7b4b6cb121",
+			"parent": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
+			"child": "247d1d46-d97b-41f2-90a0-bbcd1027e32b",
+			"c_mp": "true",
+			"c_mch": "false",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "796a910e-caa8-4065-9f73-d391038b50d1",
+					"parentcol": "64a841d7-c94b-4aa0-a0f0-015a3196e399",
+					"childcol": "7af61220-559e-4021-8dcf-edd2a3373636"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"137a7406-c7c4-46ef-b74a-7946b2a9b688": {
+			"id": "137a7406-c7c4-46ef-b74a-7946b2a9b688",
+			"visible": true,
+			"name": "fk_employment_occupation_code",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "4ebeea31-e103-4a95-9001-28d0cab674f3",
+			"parent": "83ad3849-13b9-49b3-8f6e-020242e52923",
+			"child": "247d1d46-d97b-41f2-90a0-bbcd1027e32b",
+			"c_mp": "true",
+			"c_mch": "false",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "1c195d52-93ee-49a0-a87e-1f9cb71ea4d5",
+					"parentcol": "31c7f77a-0ffa-4bb1-8d4e-b619c9366434",
+					"childcol": "4c69bc9a-8fe2-45ad-9965-2d2ce3d5c3d1"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"f731b107-1726-4170-8a9d-aaef9b871fe1": {
+			"id": "f731b107-1726-4170-8a9d-aaef9b871fe1",
+			"visible": true,
+			"name": "fk_employee_mentor_id",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "9d9ce6a0-a2e9-47d9-aa40-ba7b4b6cb121",
+			"parent": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
+			"child": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
+			"c_mp": "false",
+			"c_mch": "true",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "2ab32bd4-1af8-4e72-bf4e-d93a6df4cbfe",
+					"parentcol": "64a841d7-c94b-4aa0-a0f0-015a3196e399",
+					"childcol": "3dc09b61-fffc-44e3-9130-21d4f3f18fcb"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"8502fa9d-a41e-4ae4-abfe-29fe8c57131f": {
+			"id": "8502fa9d-a41e-4ae4-abfe-29fe8c57131f",
+			"visible": true,
+			"name": "fk_person_country_code",
+			"desc": "",
+			"type": "identifying",
+			"parent_key": "382af637-7456-4ce8-8138-1daea0d02a67",
+			"parent": "80794c16-4b35-4329-9b92-43418257351c",
+			"child": "97eec710-6c48-49de-a8de-92f9a6a7346d",
+			"c_mp": "true",
+			"c_mch": "false",
+			"c_p": "one",
+			"c_ch": "many",
+			"c_cp": "",
+			"c_cch": "",
+			"cols": [
+				{
+					"id": "7813fecd-8b9a-4272-8237-9665b334ba42",
+					"parentcol": "90433279-1c7e-4b78-9690-a70eb914a48b",
+					"childcol": "8d862ef8-1f35-45c6-831e-65d4dbeb4605"
+				}
+			],
+			"generate": true,
+			"generateCustomCode": true
+		},
+		"9a523021-a95b-4065-9cea-34717a947e7e": {
+			"id": "9a523021-a95b-4065-9cea-34717a947e7e",
 			"visible": true,
 			"name": "person_status_type_person",
 			"desc": "",
 			"type": "identifying",
-			"parent_key": "898ca6e2-e862-4eda-9531-b405f4f6b63b",
-			"parent": "9236ec17-7e99-4717-b1a8-70e739823c8f",
-			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
+			"parent_key": "46b03394-12b1-4b13-a286-04d60d1b5e69",
+			"parent": "51caa57f-b1e6-4ce9-9aff-065be55b820c",
+			"child": "97eec710-6c48-49de-a8de-92f9a6a7346d",
 			"c_mp": "true",
 			"c_mch": "true",
 			"c_p": "one",
@@ -905,9 +1104,9 @@
 			"c_cch": "",
 			"cols": [
 				{
-					"id": "6d0e5efd-6434-487b-9375-166a6f275596",
+					"id": "e0178ae2-e031-439d-b90e-2ac5a59d5a59",
 					"parentcol": "414db3f2-07f1-4a6d-a2dc-6c654746d052",
-					"childcol": "7a3f42f6-d249-4578-a8ab-fa849eca0f70"
+					"childcol": "017a987f-b389-4dc0-9783-6cbd582ef6ef"
 				}
 			],
 			"generate": true,
@@ -915,68 +1114,11 @@
 		}
 	},
 	"notes": {},
-	"lines": {
-		"b13efc26-f84b-43cd-92cc-af2ba4762922": {
-			"id": "b13efc26-f84b-43cd-92cc-af2ba4762922",
-			"visible": true,
-			"name": "tootaja-isik",
-			"desc": "",
-			"style": "solid",
-			"parent": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-			"child": "7b459b43-d686-41f3-8761-3dff0085042f",
-			"lineColor": "transparent",
-			"markerStart": "none",
-			"markerEnd": "none",
-			"linegraphics": "basic",
-			"generate": true
-		},
-		"a396b142-55b1-4738-9fe4-75ae909afc5e": {
-			"id": "a396b142-55b1-4738-9fe4-75ae909afc5e",
-			"visible": true,
-			"name": "tootaja-ametis_tootamine",
-			"desc": "",
-			"style": "solid",
-			"parent": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-			"child": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
-			"lineColor": "transparent",
-			"markerStart": "none",
-			"markerEnd": "none",
-			"linegraphics": "basic",
-			"generate": true
-		},
-		"5ca124fd-36a0-4534-9b76-8cf0867b228c": {
-			"id": "5ca124fd-36a0-4534-9b76-8cf0867b228c",
-			"visible": true,
-			"name": "tootaja_seisundi_liik-tootaja",
-			"desc": "",
-			"style": "solid",
-			"parent": "8fb4a47f-730d-476a-a466-9293620a8b7d",
-			"child": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-			"lineColor": "transparent",
-			"markerStart": "none",
-			"markerEnd": "none",
-			"linegraphics": "basic",
-			"generate": true
-		},
-		"44344ae1-c68c-40e4-91cb-6d0d7307951a": {
-			"id": "44344ae1-c68c-40e4-91cb-6d0d7307951a",
-			"visible": true,
-			"name": "amet-ametis_tootamine",
-			"desc": "",
-			"style": "solid",
-			"parent": "ce10a936-4fb2-46a2-affb-79318812bb9c",
-			"child": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
-			"lineColor": "transparent",
-			"markerStart": "none",
-			"markerEnd": "none",
-			"linegraphics": "basic",
-			"generate": true
-		}
-	},
+	"lines": {},
 	"model": {
-		"name": "mongodb_emb_eng_exp",
-		"id": "108a7ad2-a7e3-417e-a6a5-44ef9f020e3a",
-		"activeDiagram": "1701cf5f-7790-4570-9a86-a6126e957dfe",
+		"name": "mongodb_ref_exp",
+		"id": "7d5f38eb-5c50-46d2-8423-6ac43b6e4e8d",
+		"activeDiagram": "3b514c17-4076-4cf1-af67-059222810276",
 		"desc": "",
 		"path": "",
 		"type": "MONGODB",
@@ -1002,15 +1144,15 @@
 		"def_validationAction": "na",
 		"def_collation": "",
 		"def_others": "",
-		"lastSaved": "Sat May 07 2022 09:43:27 GMT+0300 (Eastern European Summer Time)",
-		"writeFileParam": false
+		"writeFileParam": false,
+		"lastSaved": "5/22/2022"
 	},
 	"otherObjects": {},
 	"diagrams": {
-		"1701cf5f-7790-4570-9a86-a6126e957dfe": {
+		"3b514c17-4076-4cf1-af67-059222810276": {
 			"name": "Main Diagram",
 			"description": "",
-			"id": "1701cf5f-7790-4570-9a86-a6126e957dfe",
+			"id": "3b514c17-4076-4cf1-af67-059222810276",
 			"keysgraphics": true,
 			"linegraphics": "detailed",
 			"zoom": 1,
@@ -1019,21 +1161,21 @@
 			"isOpen": true,
 			"main": true,
 			"diagramItems": {
-				"7b459b43-d686-41f3-8761-3dff0085042f": {
-					"referencedItemId": "7b459b43-d686-41f3-8761-3dff0085042f",
-					"x": 519,
-					"y": 38,
-					"gHeight": 358,
-					"gWidth": 325,
+				"97eec710-6c48-49de-a8de-92f9a6a7346d": {
+					"referencedItemId": "97eec710-6c48-49de-a8de-92f9a6a7346d",
+					"x": 484,
+					"y": 250,
+					"gHeight": 224,
+					"gWidth": 269,
 					"color": "#ffffff",
 					"background": "#03a9f4",
-					"resized": true,
+					"resized": false,
 					"autoExpand": true
 				},
-				"f3722de0-1460-4aba-a774-11c2455a2fcc": {
-					"referencedItemId": "f3722de0-1460-4aba-a774-11c2455a2fcc",
-					"x": 220,
-					"y": 58,
+				"80794c16-4b35-4329-9b92-43418257351c": {
+					"referencedItemId": "80794c16-4b35-4329-9b92-43418257351c",
+					"x": 156,
+					"y": 267,
 					"gHeight": 80,
 					"gWidth": 219,
 					"color": "#ffffff",
@@ -1041,21 +1183,43 @@
 					"resized": false,
 					"autoExpand": true
 				},
-				"8fb4a47f-730d-476a-a466-9293620a8b7d": {
-					"referencedItemId": "8fb4a47f-730d-476a-a466-9293620a8b7d",
-					"x": 215,
-					"y": 460,
-					"gHeight": 106,
-					"gWidth": 269,
+				"6f7ec45a-586a-43b5-b5f4-a70d483f0c1b": {
+					"referencedItemId": "6f7ec45a-586a-43b5-b5f4-a70d483f0c1b",
+					"x": 476,
+					"y": 508,
+					"gHeight": 98,
+					"gWidth": 285,
 					"color": "#ffffff",
 					"background": "#03a9f4",
-					"resized": true,
+					"resized": false,
 					"autoExpand": true
 				},
-				"ce10a936-4fb2-46a2-affb-79318812bb9c": {
-					"referencedItemId": "ce10a936-4fb2-46a2-affb-79318812bb9c",
-					"x": 877,
-					"y": 604,
+				"131458ad-be72-4206-8d4d-fab2e9560298": {
+					"referencedItemId": "131458ad-be72-4206-8d4d-fab2e9560298",
+					"x": 103,
+					"y": 526,
+					"gHeight": 98,
+					"gWidth": 285,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"247d1d46-d97b-41f2-90a0-bbcd1027e32b": {
+					"referencedItemId": "247d1d46-d97b-41f2-90a0-bbcd1027e32b",
+					"x": 843,
+					"y": 509,
+					"gHeight": 116,
+					"gWidth": 222,
+					"color": "#ffffff",
+					"background": "#03a9f4",
+					"resized": false,
+					"autoExpand": true
+				},
+				"83ad3849-13b9-49b3-8f6e-020242e52923": {
+					"referencedItemId": "83ad3849-13b9-49b3-8f6e-020242e52923",
+					"x": 841,
+					"y": 645,
 					"gHeight": 98,
 					"gWidth": 222,
 					"color": "#ffffff",
@@ -1063,32 +1227,10 @@
 					"resized": false,
 					"autoExpand": true
 				},
-				"3db654e7-b9ba-4b30-b304-e5a5c8a88dc3": {
-					"referencedItemId": "3db654e7-b9ba-4b30-b304-e5a5c8a88dc3",
-					"x": 537,
-					"y": 441,
-					"gHeight": 142,
-					"gWidth": 286,
-					"color": "#ffffff",
-					"background": "#8bc34a",
-					"resized": true,
-					"autoExpand": true
-				},
-				"08b127c6-9f2c-432d-82a7-3c15ffb1465f": {
-					"referencedItemId": "08b127c6-9f2c-432d-82a7-3c15ffb1465f",
-					"x": 881,
-					"y": 475,
-					"gHeight": 88,
-					"gWidth": 209,
-					"color": "#ffffff",
-					"background": "#8bc34a",
-					"resized": true,
-					"autoExpand": true
-				},
-				"9236ec17-7e99-4717-b1a8-70e739823c8f": {
-					"referencedItemId": "9236ec17-7e99-4717-b1a8-70e739823c8f",
-					"x": 938,
-					"y": 72,
+				"51caa57f-b1e6-4ce9-9aff-065be55b820c": {
+					"referencedItemId": "51caa57f-b1e6-4ce9-9aff-065be55b820c",
+					"x": 803,
+					"y": 286,
 					"gHeight": 98,
 					"gWidth": 269,
 					"color": "#ffffff",

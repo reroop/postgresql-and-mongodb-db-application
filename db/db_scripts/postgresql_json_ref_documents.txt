@@ -90,6 +90,6 @@ CREATE UNIQUE INDEX idx_ak_country_name ON Country((CAST (data ->> 'name' AS VAR
 CREATE UNIQUE INDEX idx_ak_employee_status_type_name ON Employee_status_type((CAST (data ->> 'name' AS VARCHAR)));
 CREATE UNIQUE INDEX idx_ak_occupation_name ON Occupation((CAST (data ->> 'name' AS VARCHAR)));
 CREATE UNIQUE INDEX idx_ak_person_country_and_nat_id_code ON Person(country_code, (CAST (data ->> 'nat_id_code' AS VARCHAR)));
-CREATE UNIQUE INDEX idx_ak_person_e_mail ON Person((CAST (data ->> 'e_mail' AS VARCHAR)));
+CREATE UNIQUE INDEX idx_ak_person_e_mail ON Person(LOWER(CAST (data ->> 'e_mail' AS VARCHAR)));
 CREATE UNIQUE INDEX idx_ak_employment_person_id_occupation_code_start_time ON Employment(person_id, occupation_code, (CAST (data ->> 'start_time' AS VARCHAR)));
 CREATE UNIQUE INDEX idx_ak_person_status_type_name ON Person_status_type((CAST (data ->> 'name' AS VARCHAR)));

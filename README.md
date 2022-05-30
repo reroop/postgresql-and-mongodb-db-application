@@ -10,8 +10,8 @@ Requirements for the data (what data is needed and what rules the data must sati
 functional and non-functional requirements of the application, and the user interface of
 the application are the same in all the cases. However, different database management
 systems (DBMSs) and physical database design solutions are used. Databases are created
-in one SQL DBMS (PostgreSQL) and in one document-based NoSQL DBMS
-(MongoDB).
+in one SQL DBMS (PostgreSQL ver 14) and in one document-based NoSQL DBMS
+(MongoDB ver 5).
 
 The main differences in the designs are the usage of embedded (nested; hierarchical) and
 referenced (non-hierarchical) JSON documents, which also affects the data validation in

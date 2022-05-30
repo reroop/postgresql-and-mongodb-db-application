@@ -217,7 +217,7 @@
 				is_navigable 	TRUE)
 			    (object Role "$UNNAMED$14"
 				quid       	"621204380175"
-				supplier   	"Use Case View::Use-Case Model::Use Cases::Vaata töötaja andmeid"
+				supplier   	"Use Case View::Use-Case Model::Use Cases::Vaata töötajat"
 				quidu      	"621202FC0106")))
 		    (object Association "$UNNAMED$15"
 			quid       	"6212046603DB"
@@ -248,7 +248,7 @@
 			roles      	(list role_list
 			    (object Role "$UNNAMED$22"
 				quid       	"6212049803D3"
-				supplier   	"Use Case View::Use-Case Model::Use Cases::Vaata töötaja andmeid"
+				supplier   	"Use Case View::Use-Case Model::Use Cases::Vaata töötajat"
 				quidu      	"621202FC0106"
 				is_navigable 	TRUE)
 			    (object Role "$UNNAMED$23"
@@ -438,7 +438,7 @@
 				quid       	"6212031002EB")
 			    (object UseCase "Vaata ametite/töötajate koondaruannet"
 				quid       	"6212032A02DD")
-			    (object UseCase "Vaata töötaja andmeid"
+			    (object UseCase "Vaata töötajat"
 				quid       	"621202FC0106")
 			    (object UseCase "Vabasta töötaja töölt"
 				quid       	"6215E3380125")
@@ -514,7 +514,7 @@
 				fill_color 	13434879
 				quidu      	"6212031002EB"
 				height     	118)
-			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Vaata töötaja andmeid" @3
+			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Vaata töötajat" @3
 				location   	(896, 256)
 				font       	(object Font
 				    size       	9
@@ -533,7 +533,7 @@
 				    nlines     	2
 				    max_width  	630
 				    justify    	0
-				    label      	"Vaata töötaja andmeid")
+				    label      	"Vaata töötajat")
 				icon_style 	"Icon"
 				line_color 	3342489
 				fill_color 	13434879
@@ -565,7 +565,7 @@
 					supplier   	@2
 					vertices   	(list Points
 					    (565, 506)
-					    (421, 614))
+					    (423, 613))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$14" @6
 					Parent_View 	@4
@@ -577,7 +577,7 @@
 					supplier   	@3
 					vertices   	(list Points
 					    (565, 506)
-					    (683, 417))
+					    (707, 399))
 					line_style 	0)))
 			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Muuda töötajat" @7
 				location   	(896, 960)
@@ -630,7 +630,7 @@
 					supplier   	@2
 					vertices   	(list Points
 					    (624, 815)
-					    (352, 672))
+					    (459, 728))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$17" @10
 					Parent_View 	@8
@@ -642,10 +642,10 @@
 					supplier   	@7
 					vertices   	(list Points
 					    (624, 815)
-					    (789, 901))
+					    (789, 902))
 					line_style 	0)))
 			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Kustuta töötaja" @11
-				location   	(880, 1344)
+				location   	(896, 1344)
 				font       	(object Font
 				    size       	9
 				    face       	"Arial"
@@ -658,7 +658,7 @@
 				    default_color 	TRUE)
 				label      	(object ItemLabel
 				    Parent_View 	@11
-				    location   	(880, 1482)
+				    location   	(896, 1482)
 				    anchor_loc 	1
 				    nlines     	2
 				    max_width  	630
@@ -670,7 +670,7 @@
 				quidu      	"621202E702E5"
 				height     	118)
 			    (object AssociationViewNew "$UNNAMED$18" @12
-				location   	(644, 1045)
+				location   	(651, 1043)
 				font       	(object Font
 				    size       	9
 				    face       	"Arial"
@@ -687,27 +687,27 @@
 				roleview_list 	(list RoleViews
 				    (object RoleView "$UNNAMED$19" @13
 					Parent_View 	@12
-					location   	(-1052, 5)
+					location   	(-1045, 3)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"6212046E0141"
 					client     	@12
 					supplier   	@2
 					vertices   	(list Points
-					    (644, 1045)
-					    (476, 833))
+					    (651, 1043)
+					    (455, 800))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$20" @14
 					Parent_View 	@12
-					location   	(-1052, 5)
+					location   	(-1045, 3)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"6212046E0144"
 					client     	@12
 					supplier   	@11
 					vertices   	(list Points
-					    (644, 1045)
-					    (834, 1286))
+					    (651, 1043)
+					    (848, 1286))
 					line_style 	0)))
 			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Lisa töötaja" @15
 				location   	(912, 624)
@@ -772,7 +772,7 @@
 					supplier   	@15
 					vertices   	(list Points
 					    (631, 643)
-					    (802, 627))
+					    (802, 629))
 					line_style 	0)))
 			    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::Võta töötaja ametisse" @19
 				location   	(1920, 320)
@@ -904,7 +904,7 @@
 					supplier   	@3
 					vertices   	(list Points
 					    (1240, 550)
-					    (1085, 417))
+					    (1084, 417))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$23" @25
 					Parent_View 	@23
@@ -916,7 +916,7 @@
 					supplier   	@22
 					vertices   	(list Points
 					    (1240, 550)
-					    (1397, 683))
+					    (1397, 684))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$3" @26
 				location   	(1200, 834)
@@ -944,7 +944,7 @@
 					supplier   	@7
 					vertices   	(list Points
 					    (1200, 834)
-					    (1004, 912))
+					    (1004, 913))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$5" @28
 					Parent_View 	@26
@@ -956,10 +956,10 @@
 					supplier   	@22
 					vertices   	(list Points
 					    (1200, 834)
-					    (1395, 755))
+					    (1397, 756))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$6" @29
-				location   	(1154, 1051)
+				location   	(1161, 1052)
 				font       	(object Font
 				    size       	9
 				    face       	"Arial"
@@ -976,27 +976,27 @@
 				roleview_list 	(list RoleViews
 				    (object RoleView "$UNNAMED$7" @30
 					Parent_View 	@29
-					location   	(-798, 379)
+					location   	(-791, 380)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"621204130229"
 					client     	@29
 					supplier   	@11
 					vertices   	(list Points
-					    (1154, 1051)
-					    (930, 1286))
+					    (1161, 1052)
+					    (943, 1286))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$8" @31
 					Parent_View 	@29
-					location   	(-798, 379)
+					location   	(-791, 380)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"62120413022B"
 					client     	@29
 					supplier   	@22
 					vertices   	(list Points
-					    (1154, 1051)
-					    (1369, 827))
+					    (1161, 1052)
+					    (1380, 818))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$0" @32
 				location   	(1208, 682)
@@ -1024,7 +1024,7 @@
 					supplier   	@15
 					vertices   	(list Points
 					    (1208, 682)
-					    (1020, 643))
+					    (1020, 645))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$2" @34
 					Parent_View 	@32
@@ -1036,7 +1036,7 @@
 					supplier   	@22
 					vertices   	(list Points
 					    (1208, 682)
-					    (1395, 718))
+					    (1397, 720))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$27" @35
 				location   	(1626, 580)
@@ -1064,7 +1064,7 @@
 					supplier   	@19
 					vertices   	(list Points
 					    (1626, 580)
-					    (1737, 481))
+					    (1739, 481))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$29" @37
 					Parent_View 	@35
@@ -1076,7 +1076,7 @@
 					supplier   	@22
 					vertices   	(list Points
 					    (1626, 580)
-					    (1513, 678))
+					    (1513, 680))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$30" @38
 				location   	(1661, 754)
@@ -1104,7 +1104,7 @@
 					supplier   	@20
 					vertices   	(list Points
 					    (1661, 754)
-					    (1808, 767))
+					    (1810, 770))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$32" @40
 					Parent_View 	@38
@@ -1119,7 +1119,7 @@
 					    (1513, 739))
 					line_style 	0)))
 			    (object AssociationViewNew "$UNNAMED$33" @41
-				location   	(1694, 984)
+				location   	(1709, 999)
 				font       	(object Font
 				    size       	9
 				    face       	"Arial"
@@ -1136,26 +1136,26 @@
 				roleview_list 	(list RoleViews
 				    (object RoleView "$UNNAMED$34" @42
 					Parent_View 	@41
-					location   	(-34, 744)
+					location   	(-19, 759)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"6215E352010F"
 					client     	@41
 					supplier   	@21
 					vertices   	(list Points
-					    (1694, 984)
-					    (1877, 1173))
+					    (1709, 999)
+					    (1876, 1173))
 					line_style 	0)
 				    (object RoleView "$UNNAMED$35" @43
 					Parent_View 	@41
-					location   	(-34, 744)
+					location   	(-19, 759)
 					stereotype 	TRUE
 					line_color 	3342489
 					quidu      	"6215E3520111"
 					client     	@41
 					supplier   	@22
 					vertices   	(list Points
-					    (1694, 984)
+					    (1709, 999)
 					    (1542, 826))
 					line_style 	0)))))
 		    (object UseCaseDiagram "Kasutusjuhud_klassifikaatoritega"
@@ -13817,25 +13817,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF01E5"
-					compartment 	(object Compartment
-					    Parent_View 	@349
-					    location   	(2397, 2818)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	9
-					    max_width  	1084
-					    justify    	1)
 					width      	1176
 					height     	598
 					annotation 	8
@@ -13868,25 +13849,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF020E"
-					compartment 	(object Compartment
-					    Parent_View 	@350
-					    location   	(175, 2681)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1047
-					    justify    	1)
 					width      	1140
 					height     	552
 					annotation 	8
@@ -13919,25 +13881,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF01A0"
-					compartment 	(object Compartment
-					    Parent_View 	@351
-					    location   	(2953, 1899)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	12
-					    max_width  	1347
-					    justify    	1)
 					width      	1440
 					height     	740
 					annotation 	8
@@ -14022,7 +13965,7 @@
 						supplier   	@349
 						vertices   	(list Points
 						    (3290, 2571)
-						    (3217, 2660))
+						    (3215, 2660))
 						line_style 	0
 						label      	(object SegLabel @356
 						    Parent_View 	@354
@@ -14089,7 +14032,7 @@
 						supplier   	@351
 						vertices   	(list Points
 						    (3290, 2571)
-						    (3363, 2482))
+						    (3360, 2482))
 						line_style 	0
 						label      	(object SegLabel @359
 						    Parent_View 	@357
@@ -14141,25 +14084,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF0265"
-					compartment 	(object Compartment
-					    Parent_View 	@360
-					    location   	(30, 1761)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	7
-					    max_width  	1209
-					    justify    	1)
 					width      	1302
 					height     	504
 					annotation 	8
@@ -14192,25 +14116,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF01D3"
-					compartment 	(object Compartment
-					    Parent_View 	@361
-					    location   	(1491, 1906)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	11
-					    max_width  	944
-					    justify    	1)
 					width      	1036
 					height     	694
 					annotation 	8
@@ -14468,7 +14373,7 @@
 						supplier   	@350
 						vertices   	(list Points
 						    (1356, 2453)
-						    (1231, 2523))
+						    (1226, 2523))
 						line_style 	0
 						label      	(object SegLabel @374
 						    Parent_View 	@372
@@ -14535,7 +14440,7 @@
 						supplier   	@361
 						vertices   	(list Points
 						    (1356, 2453)
-						    (1481, 2384))
+						    (1481, 2382))
 						line_style 	0
 						label      	(object SegLabel @377
 						    Parent_View 	@375
@@ -14639,7 +14544,7 @@
 						supplier   	@361
 						vertices   	(list Points
 						    (2730, 2102)
-						    (2518, 2100))
+						    (2518, 2099))
 						line_style 	0
 						label      	(object SegLabel @382
 						    Parent_View 	@380
@@ -14706,7 +14611,7 @@
 						supplier   	@351
 						vertices   	(list Points
 						    (2730, 2102)
-						    (2943, 2105))
+						    (2943, 2103))
 						line_style 	0
 						label      	(object SegLabel @385
 						    Parent_View 	@383
@@ -14758,25 +14663,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF0247"
-					compartment 	(object Compartment
-					    Parent_View 	@386
-					    location   	(1335, 164)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	29
-					    max_width  	1256
-					    justify    	1)
 					width      	1348
 					height     	1586
 					annotation 	8
@@ -14861,7 +14747,7 @@
 						supplier   	@360
 						vertices   	(list Points
 						    (1157, 1469)
-						    (989, 1603))
+						    (986, 1603))
 						line_style 	0
 						label      	(object SegLabel @391
 						    Parent_View 	@389
@@ -14928,7 +14814,7 @@
 						supplier   	@386
 						vertices   	(list Points
 						    (1157, 1469)
-						    (1325, 1336))
+						    (1325, 1333))
 						line_style 	0
 						label      	(object SegLabel @394
 						    Parent_View 	@392
@@ -15151,25 +15037,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6273B27F01D1"
-					compartment 	(object Compartment
-					    Parent_View 	@403
-					    location   	(2951, 1129)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1000
-					    justify    	1)
 					width      	1092
 					height     	552
 					annotation 	8
@@ -15231,7 +15098,7 @@
 						supplier   	@386
 						vertices   	(list Points
 						    (2807, 1043)
-						    (2674, 1003))
+						    (2674, 1002))
 						line_style 	0
 						label      	(object SegLabel @407
 						    Parent_View 	@406
@@ -15374,25 +15241,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6273B27F01D1"
-					compartment 	(object Compartment
-					    Parent_View 	@412
-					    location   	(1991, 2185)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1000
-					    justify    	1)
 					width      	1092
 					height     	552
 					annotation 	8
@@ -15425,25 +15273,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF0265"
-					compartment 	(object Compartment
-					    Parent_View 	@413
-					    location   	(574, 2193)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	7
-					    max_width  	1210
-					    justify    	1)
 					width      	1302
 					height     	504
 					annotation 	8
@@ -15476,25 +15305,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"621274AF0247"
-					compartment 	(object Compartment
-					    Parent_View 	@414
-					    location   	(1158, 347)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	29
-					    max_width  	1312
-					    justify    	1)
 					width      	1350
 					height     	1540
 					annotation 	8
@@ -15750,7 +15560,7 @@
 						supplier   	@413
 						vertices   	(list Points
 						    (1400, 1882)
-						    (1331, 2035))
+						    (1330, 2035))
 						line_style 	0
 						label      	(object SegLabel @427
 						    Parent_View 	@425
@@ -15817,7 +15627,7 @@
 						supplier   	@414
 						vertices   	(list Points
 						    (1400, 1882)
-						    (1469, 1730))
+						    (1468, 1730))
 						line_style 	0
 						label      	(object SegLabel @430
 						    Parent_View 	@428
@@ -21501,25 +21311,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D1440097"
-					compartment 	(object Compartment
-					    Parent_View 	@490
-					    location   	(2636, 3586)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	9
-					    max_width  	1085
-					    justify    	1)
 					width      	1178
 					height     	598
 					annotation 	8
@@ -21570,25 +21361,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D14400A6"
-					compartment 	(object Compartment
-					    Parent_View 	@493
-					    location   	(390, 3577)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1066
-					    justify    	1)
 					width      	1158
 					height     	552
 					annotation 	8
@@ -21639,25 +21411,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D144007A"
-					compartment 	(object Compartment
-					    Parent_View 	@496
-					    location   	(3312, 2778)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	10
-					    max_width  	822
-					    justify    	1)
 					width      	914
 					height     	646
 					annotation 	8
@@ -21751,7 +21504,7 @@
 						supplier   	@490
 						vertices   	(list Points
 						    (3478, 3347)
-						    (3423, 3428))
+						    (3421, 3428))
 						line_style 	0
 						label      	(object SegLabel @502
 						    Parent_View 	@500
@@ -21818,7 +21571,7 @@
 						supplier   	@496
 						vertices   	(list Points
 						    (3478, 3347)
-						    (3534, 3267))
+						    (3532, 3267))
 						line_style 	0
 						label      	(object SegLabel @505
 						    Parent_View 	@503
@@ -21879,25 +21632,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D14400D3"
-					compartment 	(object Compartment
-					    Parent_View 	@507
-					    location   	(254, 2089)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1210
-					    justify    	1)
 					width      	1302
 					height     	552
 					annotation 	8
@@ -21948,25 +21682,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D1440089"
-					compartment 	(object Compartment
-					    Parent_View 	@510
-					    location   	(1747, 2275)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	11
-					    max_width  	944
-					    justify    	1)
 					width      	1036
 					height     	692
 					annotation 	8
@@ -22051,7 +21766,7 @@
 						supplier   	@493
 						vertices   	(list Points
 						    (1570, 3114)
-						    (1249, 3419))
+						    (1248, 3419))
 						line_style 	0
 						label      	(object SegLabel @515
 						    Parent_View 	@513
@@ -22118,7 +21833,7 @@
 						supplier   	@510
 						vertices   	(list Points
 						    (1570, 3114)
-						    (1891, 2810))
+						    (1889, 2810))
 						line_style 	0
 						label      	(object SegLabel @518
 						    Parent_View 	@516
@@ -22395,7 +22110,7 @@
 						supplier   	@510
 						vertices   	(list Points
 						    (3038, 2713)
-						    (2774, 2629))
+						    (2774, 2628))
 						line_style 	0
 						label      	(object SegLabel @531
 						    Parent_View 	@529
@@ -22514,25 +22229,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D14400C4"
-					compartment 	(object Compartment
-					    Parent_View 	@535
-					    location   	(1676, 427)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	27
-					    max_width  	1085
-					    justify    	1)
 					width      	1178
 					height     	1444
 					annotation 	8
@@ -22626,7 +22322,7 @@
 						supplier   	@507
 						vertices   	(list Points
 						    (1434, 1724)
-						    (1203, 1931))
+						    (1202, 1931))
 						line_style 	0
 						label      	(object SegLabel @541
 						    Parent_View 	@539
@@ -22693,7 +22389,7 @@
 						supplier   	@535
 						vertices   	(list Points
 						    (1434, 1724)
-						    (1666, 1518))
+						    (1666, 1515))
 						line_style 	0
 						label      	(object SegLabel @544
 						    Parent_View 	@542
@@ -22925,25 +22621,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6273CB97018B"
-					compartment 	(object Compartment
-					    Parent_View 	@554
-					    location   	(2909, 1657)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1019
-					    justify    	1)
 					width      	1112
 					height     	552
 					annotation 	8
@@ -23067,7 +22744,7 @@
 						supplier   	@554
 						vertices   	(list Points
 						    (2938, 1437)
-						    (3032, 1499))
+						    (3033, 1499))
 						line_style 	0
 						label      	(object SegLabel @562
 						    Parent_View 	@561
@@ -23133,25 +22810,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D14400D3"
-					compartment 	(object Compartment
-					    Parent_View 	@563
-					    location   	(686, 1817)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1209
-					    justify    	1)
 					width      	1302
 					height     	552
 					annotation 	8
@@ -23184,25 +22842,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6273CB97018B"
-					compartment 	(object Compartment
-					    Parent_View 	@564
-					    location   	(2061, 1817)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1019
-					    justify    	1)
 					width      	1112
 					height     	552
 					annotation 	8
@@ -23235,25 +22874,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6218D14400C4"
-					compartment 	(object Compartment
-					    Parent_View 	@565
-					    location   	(1372, 219)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	27
-					    max_width  	1084
-					    justify    	1)
 					width      	1178
 					height     	1444
 					annotation 	8
@@ -23338,7 +22958,7 @@
 						supplier   	@563
 						vertices   	(list Points
 						    (1518, 1582)
-						    (1477, 1659))
+						    (1476, 1659))
 						line_style 	0
 						label      	(object SegLabel @570
 						    Parent_View 	@568
@@ -23405,7 +23025,7 @@
 						supplier   	@565
 						vertices   	(list Points
 						    (1518, 1582)
-						    (1560, 1506))
+						    (1558, 1506))
 						line_style 	0
 						label      	(object SegLabel @573
 						    Parent_View 	@571
@@ -23509,7 +23129,7 @@
 						supplier   	@564
 						vertices   	(list Points
 						    (2406, 1582)
-						    (2450, 1659))
+						    (2449, 1659))
 						line_style 	0
 						label      	(object SegLabel @578
 						    Parent_View 	@576
@@ -23576,7 +23196,7 @@
 						supplier   	@565
 						vertices   	(list Points
 						    (2406, 1582)
-						    (2363, 1506))
+						    (2362, 1506))
 						line_style 	0
 						label      	(object SegLabel @581
 						    Parent_View 	@579
@@ -27947,25 +27567,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6224CB10038E"
-					compartment 	(object Compartment
-					    Parent_View 	@651
-					    location   	(374, 2521)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1066
-					    justify    	1)
 					width      	1158
 					height     	552
 					annotation 	8
@@ -27998,25 +27599,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6224CB100361"
-					compartment 	(object Compartment
-					    Parent_View 	@652
-					    location   	(2429, 2690)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	9
-					    max_width  	1084
-					    justify    	1)
 					width      	1176
 					height     	598
 					annotation 	8
@@ -28390,25 +27972,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6224CB11001B"
-					compartment 	(object Compartment
-					    Parent_View 	@669
-					    location   	(142, 1625)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1210
-					    justify    	1)
 					width      	1302
 					height     	552
 					annotation 	8
@@ -28459,25 +28022,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6224CB1003DC"
-					compartment 	(object Compartment
-					    Parent_View 	@672
-					    location   	(1580, 156)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	29
-					    max_width  	1084
-					    justify    	1)
 					width      	1178
 					height     	1538
 					annotation 	8
@@ -28562,7 +28106,7 @@
 						supplier   	@669
 						vertices   	(list Points
 						    (1371, 1326)
-						    (1173, 1467))
+						    (1170, 1467))
 						line_style 	0
 						label      	(object SegLabel @677
 						    Parent_View 	@675
@@ -28629,7 +28173,7 @@
 						supplier   	@672
 						vertices   	(list Points
 						    (1371, 1326)
-						    (1570, 1185))
+						    (1570, 1183))
 						line_style 	0
 						label      	(object SegLabel @680
 						    Parent_View 	@678
@@ -28699,25 +28243,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6273B6D503B8"
-					compartment 	(object Compartment
-					    Parent_View 	@683
-					    location   	(2941, 1001)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	8
-					    max_width  	1019
-					    justify    	1)
 					width      	1112
 					height     	552
 					annotation 	8
@@ -28797,7 +28322,7 @@
 						supplier   	@672
 						vertices   	(list Points
 						    (2840, 947)
-						    (2749, 923))
+						    (2749, 922))
 						line_style 	0
 						label      	(object SegLabel @689
 						    Parent_View 	@688
@@ -28841,7 +28366,7 @@
 						supplier   	@683
 						vertices   	(list Points
 						    (2840, 947)
-						    (2931, 971))
+						    (2931, 970))
 						line_style 	0
 						label      	(object SegLabel @691
 						    Parent_View 	@690
@@ -29008,25 +28533,6 @@
 					line_color 	3342489
 					fill_color 	13434879
 					quidu      	"6224CB1003DC"
-					compartment 	(object Compartment
-					    Parent_View 	@696
-					    location   	(1180, 476)
-					    font       	(object Font
-						size       	9
-						face       	"Arial"
-						charSet    	186
-						bold       	FALSE
-						italics    	FALSE
-						underline  	FALSE
-						strike     	FALSE
-						color      	0
-						default_color 	TRUE)
-					    icon_style 	"Icon"
-					    fill_color 	16777215
-					    anchor     	2
-					    nlines     	29
-					    max_width  	1085
-					    justify    	1)
 					width      	1178
 					height     	1538
 					annotation 	8
@@ -29111,7 +28617,7 @@
 						supplier   	@694
 						vertices   	(list Points
 						    (2214, 1918)
-						    (2248, 1979))
+						    (2247, 1979))
 						line_style 	0
 						label      	(object SegLabel @701
 						    Parent_View 	@699
@@ -29178,7 +28684,7 @@
 						supplier   	@696
 						vertices   	(list Points
 						    (2214, 1918)
-						    (2181, 1857))
+						    (2180, 1857))
 						line_style 	0
 						label      	(object SegLabel @704
 						    Parent_View 	@702
@@ -29282,7 +28788,7 @@
 						supplier   	@695
 						vertices   	(list Points
 						    (1235, 1918)
-						    (1197, 1979))
+						    (1195, 1979))
 						line_style 	0
 						label      	(object SegLabel @709
 						    Parent_View 	@707
@@ -29349,7 +28855,7 @@
 						supplier   	@696
 						vertices   	(list Points
 						    (1235, 1918)
-						    (1274, 1857))
+						    (1272, 1857))
 						line_style 	0
 						label      	(object SegLabel @712
 						    Parent_View 	@710
